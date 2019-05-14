@@ -5,6 +5,12 @@ total = 250
 functionality: collect 250 questions with numeric answers from another API,
 each request max 50 questions
 apiUrl = 'https://opentdb.com/api.php?amount=50&type=multiple'
+format: json 
+  {
+    "question": "How many countries does Spain have a land border with?",
+    "answer": 5,
+    "difficulty": "medium"
+  }
 */
 
 var data = []    
@@ -13,19 +19,23 @@ var fs = require('fs')
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
 var apiUrl = 'https://opentdb.com/api.php?amount=50&type=multiple'
 
+/* Create json file and write all data in format {question:'..', answer:'...'} */
 function createJson(){
   var json = JSON.stringify(data)
   fs.writeFile('data.json', json, 'utf8', callback);
 }
 
+/* Show succe message efter file writer */
 function callback(){
   console.log("'data.json' was successfully created, size="+data.length)
 }
 
+/* Filter for corect answer, check if numeric */
 function isNumeric(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+/* Collect valid data, not all fields, only 'question' and 'answer' */
 function collectValidQuestions(result){
   console.log(data.length)
   for(let i=0; i<result.length; i++){
@@ -41,7 +51,8 @@ function collectValidQuestions(result){
       if(!exist){
         let element = {
           question: result[i].question, 
-          answer: parseInt(result[i].correct_answer)
+          answer: parseInt(result[i].correct_answer),
+          difficulty: result[i].difficulty
         }
         data.push(element)
       }
@@ -56,6 +67,7 @@ function collectValidQuestions(result){
   }
 }
 
+/* Grab data from API */
 function grab(){
   var xhr = new XMLHttpRequest()
   xhr.onreadystatechange = function() {
