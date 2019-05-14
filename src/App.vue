@@ -1,28 +1,13 @@
 <template>
   <div id="app">
-  <GameLeader/>
-
-  <b-container class="bv-example-row">
-      <b-row>
-        <b-col sm="6" offset="3">
-          <QuestionBox 
-                   
-          />
-          
-        </b-col>
-      </b-row>
-    </b-container>
-</div>
+    <router-view/>
+  </div>
 </template>
 
 <script>
-import GameLeader from './components/GameLeader.vue'
 
 export default {
-  name: 'app',
-  components: {
-    GameLeader
-  }
+  name: 'app'
 }
 </script>
 
