@@ -1,7 +1,7 @@
 /*
 API
 functionality: return quiz questions with numeric answers  
-run: node app.js
+run: node src/api/api.js
 return format: json {
                       question: "...", 
                       answer:   "..."
