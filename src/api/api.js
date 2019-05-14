@@ -44,15 +44,13 @@ function statistic(){
   console.log('\n')
 }
 
-
-
-
-function getData(total){
+/* Filter data by difficulty and amount */
+function getData(total, difficulty){
   let result = []
   let counter = 0
   while(counter < total){
     let randomIndex = Math.floor(Math.random() * (data.length -1))
-    if(!result.includes(data[randomIndex])){
+    if((!result.includes(data[randomIndex])) && (data[randomIndex].difficulty === difficulty)){
       result.push(data[randomIndex])
       counter++
     }
@@ -61,7 +59,7 @@ function getData(total){
 }
 
 app.get('/', (req, res) => res.send('API'))
-app.get('/data/:total', (req, res) => res.send(getData(req.params.total)))
+app.get('/data/:total/:difficulty', (req, res) => res.send(getData(req.params.total, req.params.difficulty)))
 app.listen(port, () => console.log(`API listening on port ${port}!`))
 statistic() 
 
