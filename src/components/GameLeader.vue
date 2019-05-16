@@ -1,25 +1,8 @@
 <template>
   <b-container fluid class="text-center">
     <b-row align-v="center">
-      <b-col sm="1" md="3" lg="4" align-self="center">
-        <b-input-group>
-
-    <b-form-input type="number" min="0.00"></b-form-input>
-
-    <b-input-group-append>
-      <b-button variant="outline-secondary">Button</b-button>
-    </b-input-group-append>
-  </b-input-group>
-        <b-img class="img-responsive" src="http://www.freespins24h.se/wp-content/uploads/2017/02/faq.png" alt="Responsive image"></b-img>
-      </b-col>
-      <b-col sm="1" md="3" lg="4">
-        <b-form-input  v-model="text" placeholder="Enter bot answer"></b-form-input>
-        <b-img class="img-responsive" src="http://www.freespins24h.se/wp-content/uploads/2017/02/faq.png" alt="Responsive image"></b-img>
-      </b-col>
-      <b-col sm="1" md="3" lg="4">
-        <b-form-input v-model="text" placeholder="Enter bot answer"></b-form-input>
-        <b-img class="img-responsive" src="http://www.freespins24h.se/wp-content/uploads/2017/02/faq.png" alt="Responsive image"></b-img>
-      </b-col>
+      
+      
     </b-row>
     <b-row>
     <b-col align-self="end">

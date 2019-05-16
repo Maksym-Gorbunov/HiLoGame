@@ -1,5 +1,5 @@
 <template>
-
+    <templateFix/>
 </template>
 
 
@@ -7,10 +7,10 @@
 <script>
 export default {
     name: "Bot1",
-    nrOfGuesses: 0,  //Nödvändig?   Gemensam?
-    points: 0,
-    guesses: [],  //Bara för aktuell fråga (även andras svar?), rensa efter rätt svar (Även om det är nån annan)
-                  //...gemensam lista för gissningar som alla kan hantera?
+    // nrOfGuesses: 0,  //Nödvändig?   Gemensam?
+    // points: 0,
+    // guesses: [],  //Bara för aktuell fråga (även andras svar?), rensa efter rätt svar (Även om det är nån annan)
+    //               //...gemensam lista för gissningar som alla kan hantera?
     props: {
     msg: String
     },
@@ -18,7 +18,7 @@ export default {
         return {
         text: ''
         }
-    }
+    },
     methods: {
         autoGuess() {            //Någon smart algoritm för att gissa logiskt? (mha föregående fråga?)
 

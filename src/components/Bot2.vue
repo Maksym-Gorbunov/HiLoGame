@@ -1,4 +1,5 @@
 <template>
+    <templateFix/>
 </template>
 
 <script>
@@ -15,7 +16,7 @@ export default {
         return {
         text: ''
         }
-    }
+    },
     methods: {
         autoGuess() {            //Ta emot max  eller hämta från frågan och lägga i variabler?
                                  //Denna spelaren ska gissa mer slumpartat, men hur slumpartat?
