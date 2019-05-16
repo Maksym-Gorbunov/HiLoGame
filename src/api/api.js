@@ -10,7 +10,7 @@ return format: json
   }
 API listening on port 3000
 http://localhost:3000          return 'API', for test only 
-http://localhost:3000/data/3   return 3 question 
+http://localhost:3000/data/3/easy   return 3 easy question object
 max 249 questions
 */
 
@@ -44,15 +44,13 @@ function statistic(){
   console.log('\n')
 }
 
-
-
-
-function getData(total){
+/* Filter data by difficulty and amount */
+function getData(total, difficulty){
   let result = []
   let counter = 0
   while(counter < total){
     let randomIndex = Math.floor(Math.random() * (data.length -1))
-    if(!result.includes(data[randomIndex])){
+    if((!result.includes(data[randomIndex])) && (data[randomIndex].difficulty === difficulty)){
       result.push(data[randomIndex])
       counter++
     }
@@ -61,7 +59,10 @@ function getData(total){
 }
 
 app.get('/', (req, res) => res.send('API'))
-app.get('/data/:total', (req, res) => res.send(getData(req.params.total)))
+app.get('/data/:total/:difficulty', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5000')
+  res.send(getData(req.params.total, req.params.difficulty))
+});
 app.listen(port, () => console.log(`API listening on port ${port}!`))
 statistic() 
 
