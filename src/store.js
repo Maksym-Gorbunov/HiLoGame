@@ -8,6 +8,7 @@ export default new Vuex.Store({
         scoreToWin: 0,
         gameActive: false,
         roundActive: false,
+        turn: 0,
         players: [],
         questions: [],
         currentPlayer: null,
@@ -32,9 +33,11 @@ export default new Vuex.Store({
         nextTurn(state){
             if(state.turn < 2){
                 state.turn++;
+                state.currentPlayer = state.players[state.turn];
             }
             else{
                 state.turn = 0;
+                state.currentPlayer = state.players[0];
             }
         }
     },

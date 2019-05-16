@@ -10,8 +10,6 @@ export default {
   name: 'start'
 }
 
-//Hårdkodad 5a för tillfället. Bör ändras :)
-var rounds = 5;
 var xhr = new XMLHttpRequest();
 
 xhr.onreadystatechange = function(){
