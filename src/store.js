@@ -11,24 +11,27 @@ export default new Vuex.Store({
         gameActive: false,
         roundActive: false,
         user: {
+            type: "user",
             name: "",
             score: 0,
             imgURL: "",
             active: false
         },
         bot1: {
+            type: "bot",
             name: "bot1",
             score: 0,
             imgURL: "",
             active: false
         },
         bot2: {
+            type: "bot",
             name: "bot2",
             score: 0,
             imgURL: "",
             active: false
         },
-        players: [],
+        players: [], 
         questions: [],
         currentPlayer: null,
         currentQuestion: null
