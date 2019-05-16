@@ -11,7 +11,7 @@ export default new Vuex.Store({
         gameActive: false,
         roundActive: false,
         user: {
-            name: "",
+            name: "player",
             score: 0,
             imgURL: "",
             active: false

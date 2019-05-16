@@ -11,6 +11,10 @@ export default {
     // points: 0,
     // guesses: [],  //Bara för aktuell fråga (även andras svar?), rensa efter rätt svar (Även om det är nån annan)
     //               //...gemensam lista för gissningar som alla kan hantera?
+
+    components:{
+        templateFix
+    },
     props: {
     msg: String
     },
@@ -19,6 +23,7 @@ export default {
         text: ''
         }
     },
+    
     methods: {
         autoGuess() {            //Någon smart algoritm för att gissa logiskt? (mha föregående fråga?)
 

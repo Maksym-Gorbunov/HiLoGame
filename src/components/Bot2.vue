@@ -1,14 +1,23 @@
 <template>
+<div>
     <templateFix/>
+</div>
 </template>
 
 <script>
+
+import templateFix from './templateFix.vue'
+
 export default {
     name: "Bot2",
     nrOfGuesses: 0,  //Nödvändig?   Gemensam?
     points: 0,
     guesses: [],  //Bara för aktuell fråga (även andras svar?), rensa efter rätt svar (Även om det är nån annan)
                   //...gemensam lista för gissningar som alla kan hantera?
+    components:{
+        templateFix
+
+    },
     props: {
     msg: String
     },
