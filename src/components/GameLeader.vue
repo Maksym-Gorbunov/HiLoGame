@@ -26,6 +26,16 @@ export default {
     created() {
       this.$store.commit("setGameActive", true);
       this.newRound();
+    },
+    methods: {
+      newRound() {
+        this.$store.commit("nextQuestion"); //Fixa i store
+        this.$store.commit("nextTurn"); //Fixa i store
+        this.$store.commit("setRoundActive", true);
+        //TODO
+        //Set min/max. Hur löser vi?
+        //Var skriver vi ut frågan?
+      }
     }
 };
 </script>
