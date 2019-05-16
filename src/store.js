@@ -5,14 +5,10 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-<<<<<<< HEAD
-        scoreToWin: 0,
-=======
         answerMin: 0,
         answerMax: 0,
         scoreToWin: 0,
         turn: 0,
->>>>>>> 34a76d74a6994e85760490f5e2e902681c98a20c
         gameActive: false,
         roundActive: false,
         players: [],
