@@ -5,16 +5,24 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        answerMin: 0,
+        answerMax: 0,
         scoreToWin: 0,
+        turn: 0,
         gameActive: false,
         roundActive: false,
-        turn: 0,
         players: [],
         questions: [],
         currentPlayer: null,
         currentQuestion: null
     },
     mutations:{
+        setAnswerMin(state, value){
+            state.answerMax = value;
+        },
+        setAnswerMax(state, value){
+            state.answerMin = value;
+        },
         setScoreToWin(state, value){
             state.scoreToWin = value;
         },
@@ -39,9 +47,17 @@ export default new Vuex.Store({
                 state.turn = 0;
                 state.currentPlayer = state.players[0];
             }
+            state.answerMin = 0;
+            state.answerMax = 0;
         }
     },
     getters:{
+        getAnswerMin(state){
+            return state.answerMax;
+        },
+        getAnswerMax(state){
+            return state.answerMin;
+        },
         getScoreToWin(state){
             return state.scoreToWin;
         },
