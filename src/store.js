@@ -5,8 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        answerMin: 0,
-        answerMax: 0,
+        answerMin: null,
+        answerMax: null,
         scoreToWin: 0,
         gameActive: false,
         roundActive: false,
@@ -22,12 +22,17 @@ export default new Vuex.Store({
             name: "bot2",
             score: 0,
         },
-        players: [player, bot1, bot2],
+        players: [],
         questions: [],
         currentPlayer: null,
         currentQuestion: null
     },
     mutations:{
+        initPlayers(state){
+            state.players.push(state.player);
+            state.players.push(state.bot1);
+            state.players.push(state.bot2);
+        },
         setAnswerMin(state, value){
             state.answerMax = value;
         },
