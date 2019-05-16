@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { stat } from "fs";
 
 Vue.use(Vuex);
 
@@ -8,10 +9,6 @@ export default new Vuex.Store({
         answerMin: 0,
         answerMax: 0,
         scoreToWin: 0,
-<<<<<<< HEAD
-=======
-        turn: 0,
->>>>>>> a41f94804738e6aa52d79d66834862f40316061f
         gameActive: false,
         roundActive: false,
         player: {
@@ -52,6 +49,7 @@ export default new Vuex.Store({
         },
         setPlayerName(state, name){
             state.player.name = name;
+            console.log(state.player.name);
         },
         setQuestions(state, data){
             state.questions = data;
