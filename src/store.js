@@ -8,6 +8,10 @@ export default new Vuex.Store({
         answerMin: 0,
         answerMax: 0,
         scoreToWin: 0,
+<<<<<<< HEAD
+=======
+        turn: 0,
+>>>>>>> a41f94804738e6aa52d79d66834862f40316061f
         gameActive: false,
         roundActive: false,
         player: {
