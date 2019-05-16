@@ -1,7 +1,5 @@
 <template>
-<div>
     <templateFix/>
-</div>
 </template>
 
 <script>
