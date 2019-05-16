@@ -5,9 +5,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        scoreToWin = 0,
-        gameActive = false,
-        roundActive = false,
+        scoreToWin: 0,
+        gameActive: false,
+        roundActive: false,
         players: [],
         questions: [],
         currentPlayer: null,
