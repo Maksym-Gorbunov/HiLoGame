@@ -611,6 +611,7 @@ input.checkbox:checked:after {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
+<<<<<<< HEAD
 .colorlib-bubbles li:nth-child(10) {
   left: 90%;
   width: 160px;
@@ -909,6 +910,8 @@ input.checkbox:checked:after {
 
 Hårdkodad 5a för tillfället. Bör ändras :)
 var rounds = 5;
+=======
+>>>>>>> 79d3c4fcabf057744588a2f301877d95431433cc
 var xhr = new XMLHttpRequest();
 
 xhr.onreadystatechange = function(){
