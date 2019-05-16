@@ -11,24 +11,27 @@ export default new Vuex.Store({
         gameActive: false,
         roundActive: false,
         user: {
-            name: "player",
+            type: "user",
+            name: "",
             score: 0,
             imgURL: "",
             active: false
         },
         bot1: {
+            type: "bot",
             name: "bot1",
             score: 0,
             imgURL: "",
             active: false
         },
         bot2: {
+            type: "bot",
             name: "bot2",
             score: 0,
             imgURL: "",
             active: false
         },
-        players: [],
+        players: [], 
         questions: [],
         currentPlayer: null,
         currentQuestion: null
@@ -68,7 +71,7 @@ export default new Vuex.Store({
             console.log('question:' + data[0].difficulty)
         },
         nextTurn(state){
-            let indexOfCurrentPlayer = players.indexOf(state.currentPlayer);
+            let indexOfCurrentPlayer = this.players.indexOf(state.currentPlayer);
 
             if (indexOfCurrentPlayer < 2) {
                 state.currentPlayer = state.players[indexOfCurrentPlayer++];
