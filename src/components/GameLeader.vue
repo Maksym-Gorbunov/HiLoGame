@@ -22,6 +22,10 @@ export default {
       return {
         text: ''
       }
+    },
+    created() {
+      this.$store.commit("setGameActive", true);
+      this.newRound();
     }
 };
 </script>
