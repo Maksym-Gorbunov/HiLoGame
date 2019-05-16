@@ -35,12 +35,31 @@ export default {
         //TODO
         //Set min/max. Hur löser vi?
         //Var skriver vi ut frågan?
-      }
+      },
+      checkAnswer(answer) {
+        if (answer > this.$store.getters.currentQuestion.answer) {
+          //TODO - Vid fel för högt svar?
+          //Feedback skrivs var?
+          if (answer < this.$store.getters.answerMax) { //Kontrollera hur vi gör med min/max
+            this.$store.commit("setAnswerMax", answer);
+          }
+          return false;
+        } else if (answer < this.$store.getters.currentQuestion.answer) {
+          //TODO - Vid fel för lågt svar?
+          //Feedback skrivs var?
+          if (answer > this.$store.getters.answerMin) { //Kontrollera hur vi gör med min/max
+            this.$store.commit("setAnswerMin", answer);
+          }
+          return false;
+        } else {
+          return true;
+        }
+      },
     },
     mounted() {
       EventBus.$on("answerSent", (answer) => {
         if (this.checkAnswer(answer)) {
-          this.$store.getters.currentPlayer.score++;
+          this.$store.getters.currentPlayer.score++; //Var Gustavs punkt men då jag(Anton) kontrollerar svaret så passar det bäst in här
           if (this.$store.getters.currentPlayer.score === this.$store.getters.scoreToWin) {
             this.$store.commit("setGameActive", false);
             //TODO - Vid Vinst?
