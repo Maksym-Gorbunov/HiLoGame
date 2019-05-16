@@ -13,14 +13,17 @@ export default new Vuex.Store({
         player: {
             name: "",
             score: 0,
+            imgURL: ""
         },
         bot1: {
             name: "bot1",
             score: 0,
+            imgURL: ""
         },
         bot2: {
             name: "bot2",
             score: 0,
+            imgURL: ""
         },
         players: [],
         questions: [],
@@ -87,6 +90,15 @@ export default new Vuex.Store({
         },
         getRoundActive(state){
             return state.roundActive;
+        },
+        getPlayer(state){
+            return state.player;
+        },
+        getBot1(state){
+            return state.bot1;
+        },
+        getBot2(state){
+            return state.bot2;
         },
         getPlayers(state){
             return state.players;
