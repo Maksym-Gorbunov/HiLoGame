@@ -72,6 +72,7 @@
 
 <script>
 
+
 export default {
   name: 'start',
   props: [],
@@ -89,6 +90,7 @@ export default {
       let difficulty = this.$refs.difficulty.value
       let total = (score * 3) - 2
       this.getDataFromApi(total, difficulty);
+      // this.router.push('game')
     },
     getDataFromApi(total, difficulty){
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
@@ -112,6 +114,7 @@ export default {
     },
     sendData(data){
       console.log(data)
+      this.$store.commit("setQuestions", data);
     }
   },
   created() {

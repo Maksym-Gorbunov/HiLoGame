@@ -35,8 +35,11 @@ export default new Vuex.Store({
         setPlayers(state, value){
             state.players = value;
         },
-        setQuestions(state, value){
-            state.questions = value;
+        setQuestions(state, data){
+            state.questions = data;
+            console.log('question:' + data[0].question)
+            console.log('question:' + data[0].answer)
+            console.log('question:' + data[0].difficulty)
         },
         nextTurn(state){
             if(state.turn < 2){
