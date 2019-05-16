@@ -33,7 +33,7 @@
 						</label> -->
 						<div class="clear"> </div>
 					</div>
-					<input @click.prevent="getFormValues()" type="submit" value="START">
+					<input @click.prevent="start()" type="submit" value="START">
 				</form>
 				<!-- <p>Don't have an Account? <a href="#"> Login Now!</a></p> -->
 			</div>
@@ -84,13 +84,14 @@ export default {
         }, false
       ) 
     },
-    getFormValues() {
+    start() {
       let name = this.$refs.name.value
       let score = this.$refs.score.value
       let difficulty = this.$refs.difficulty.value
       let total = (score * 3) - 2
-      this.getDataFromApi(total, difficulty);
-      // this.router.push('game')
+      this.getDataFromApi(total, difficulty)
+      this.$router.push({ name: 'game' })
+      this.sendName(name)
     },
     getDataFromApi(total, difficulty){
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
@@ -113,8 +114,10 @@ export default {
       xhr.send();
     },
     sendData(data){
-      console.log(data)
       this.$store.commit("setQuestions", data);
+    },
+    sendName(name){
+      this.$store.commit("setPlayerName", name)
     }
   },
   created() {
@@ -908,23 +911,3 @@ input.checkbox:checked:after {
 
 
 
-
-/*
-
-Hårdkodad 5a för tillfället. Bör ändras :)
-var rounds = 5;
-=======
->>>>>>> 79d3c4fcabf057744588a2f301877d95431433cc
-var xhr = new XMLHttpRequest();
-
-xhr.onreadystatechange = function(){
-  if(xhr.readyState == 4 && xhr.status == 200){
-    this.$store.state.questions = xhr.response;
-  }
-}
-
-xhr.open("GET", "http://localhost:3000/data/" + rounds);
-xhr.responseType = "json";
-xhr.send();
-
-*/
