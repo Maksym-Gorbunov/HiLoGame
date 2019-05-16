@@ -1,10 +1,10 @@
 <template>
-    <templateFix/>
+    <templateFix v-bind:player="this.$store.getters.getBot1"/>
 </template>
 
 <script>
 import { EventBus } from './event-bus.js';
-import templateFix from './templateFix.vue';
+import templateFix from './templateFix.vue'
 
 export default {
     name: "Bot1",

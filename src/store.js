@@ -98,7 +98,7 @@ export default new Vuex.Store({
             return state.roundActive;
         },
         getUser(state){
-            return state.player;
+            return state.user;
         },
         getBot1(state){
             return state.bot1;
