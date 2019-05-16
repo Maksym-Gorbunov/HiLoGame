@@ -1,5 +1,5 @@
 <template>
-    <templateFix/>
+    <templateFix v-bind:player="this.$store.getters.getBot2"/>
 </template>
 
 <script>
