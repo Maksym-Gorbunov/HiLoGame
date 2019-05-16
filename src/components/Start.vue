@@ -33,7 +33,7 @@
 						</label> -->
 						<div class="clear"> </div>
 					</div>
-					<input @click.prevent="getFormValues()" type="submit" value="START">
+					<input @click.prevent="start()" type="submit" value="START">
 				</form>
 				<!-- <p>Don't have an Account? <a href="#"> Login Now!</a></p> -->
 			</div>
@@ -84,13 +84,14 @@ export default {
         }, false
       ) 
     },
-    getFormValues() {
+    start() {
       let name = this.$refs.name.value
       let score = this.$refs.score.value
       let difficulty = this.$refs.difficulty.value
       let total = (score * 3) - 2
-      this.getDataFromApi(total, difficulty);
-      // this.router.push('game')
+      this.getDataFromApi(total, difficulty)
+      this.$router.push({ name: 'game' })
+      this.sendName(name)
     },
     getDataFromApi(total, difficulty){
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
@@ -113,8 +114,10 @@ export default {
       xhr.send();
     },
     sendData(data){
-      console.log(data)
       this.$store.commit("setQuestions", data);
+    },
+    sendName(name){
+      this.$store.commit("setPlayerName", name)
     }
   },
   created() {
@@ -612,4 +615,287 @@ input.checkbox:checked:after {
   -webkit-animation-duration: 40s;
   animation-duration: 40s;
   background-color: rgba(255, 255, 255, 0.3);
+
 }
+
+.colorlib-bubbles li:nth-child(10) {
+  left: 90%;
+  width: 160px;
+  height: 160px;
+  -webkit-animation-delay: 11s;
+  animation-delay: 11s;
+}
+
+@-webkit-keyframes square {
+  0% {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  100% {
+    -webkit-transform: translateY(-700px) rotate(600deg);
+    -moz-transform: translateY(-700px) rotate(600deg);
+    -o-transform: translateY(-700px) rotate(600deg);
+    -ms-transform: translateY(-700px) rotate(600deg);
+    transform: translateY(-700px) rotate(600deg);
+  }
+}
+
+@keyframes square {
+  0% {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -o-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  100% {
+    -webkit-transform: translateY(-700px) rotate(600deg);
+    -moz-transform: translateY(-700px) rotate(600deg);
+    -o-transform: translateY(-700px) rotate(600deg);
+    -ms-transform: translateY(-700px) rotate(600deg);
+    transform: translateY(-700px) rotate(600deg);
+  }
+}
+
+/*-- responsive-design --*/
+@media(max-width:1440px) {
+  input[type="text"], input[type="email"], input[type="password"] {
+    width: 94%;
+  }
+}
+
+@media(max-width:1366px) {
+  h1 {
+    font-size: 2.6em;
+  }
+
+  .agileits-top {
+    padding: 2.5em;
+  }
+
+  .main-agileinfo {
+    margin: 2em auto;
+  }
+
+  .main-agileinfo {
+    width: 36%;
+  }
+}
+
+@media(max-width:1280px) {
+  .main-agileinfo {
+    width: 40%;
+  }
+}
+
+@media(max-width:1080px) {
+  .main-agileinfo {
+    width: 46%;
+  }
+}
+
+@media(max-width:1024px) {
+  .main-agileinfo {
+    width: 49%;
+  }
+}
+
+@media(max-width:991px) {
+  h1 {
+    font-size: 2.4em;
+  }
+
+  .main-w3layouts {
+    padding: 2em 0 1em;
+  }
+}
+
+@media(max-width:900px) {
+  .main-agileinfo {
+    width: 58%;
+  }
+
+  input[type="text"], input[type="email"], input[type="password"] {
+    width: 93%;
+  }
+}
+
+@media(max-width:800px) {
+  h1 {
+    font-size: 2.2em;
+  }
+}
+
+@media(max-width:736px) {
+  .main-agileinfo {
+    width: 62%;
+  }
+}
+
+@media(max-width:667px) {
+  .main-agileinfo {
+    width: 67%;
+  }
+}
+
+@media(max-width:600px) {
+  .agileits-top {
+    padding: 2.2em;
+  }
+
+  input.email, input.text.w3lpass {
+    margin: 1.5em 0;
+  }
+
+  input[type="submit"] {
+    margin: 2em 0;
+  }
+
+  h1 {
+    font-size: 2em;
+    letter-spacing: 3px;
+  }
+}
+
+@media(max-width:568px) {
+  .main-agileinfo {
+    width: 75%;
+  }
+
+  .colorlibcopy-agile p {
+    padding: 0 2em;
+  }
+}
+
+@media(max-width:480px) {
+  h1 {
+    font-size: 1.8em;
+    letter-spacing: 3px;
+  }
+
+  .agileits-top {
+    padding: 1.8em;
+  }
+
+  input[type="text"], input[type="email"], input[type="password"] {
+    width: 91%;
+  }
+
+  .agileits-top p {
+    font-size: 0.9em;
+  }
+}
+
+@media(max-width:414px) {
+  h1 {
+    font-size: 1.8em;
+    letter-spacing: 2px;
+  }
+
+  .main-agileinfo {
+    width: 85%;
+    margin: 1.5em auto;
+  }
+
+  .text:focus, .text:valid {
+    background-position: 0 0px;
+  }
+
+  .wthree-text ul li, .wthree-text ul li:nth-child(2) {
+    display: block;
+    float: none;
+  }
+
+  .wthree-text ul li:nth-child(2) {
+    margin-top: 1.5em;
+  }
+
+  input[type="submit"] {
+    margin: 2em 0 1.5em;
+    letter-spacing: 3px;
+  }
+
+  input[type="submit"] {
+    margin: 2em 0 1.5em;
+  }
+
+  .colorlibcopy-agile {
+    margin: 1em 0 1em;
+  }
+}
+
+@media(max-width:384px) {
+  .main-agileinfo {
+    width: 88%;
+  }
+
+  .colorlibcopy-agile p {
+    padding: 0 1em;
+  }
+}
+
+@media(max-width:375px) {
+  .agileits-top p {
+    letter-spacing: 0px;
+  }
+}
+
+@media(max-width:320px) {
+  .main-w3layouts {
+    padding: 1.5em 0 0;
+  }
+
+  .agileits-top {
+    padding: 1.2em;
+  }
+
+  .colorlibcopy-agile {
+    margin: 0 0 1em;
+  }
+
+  input[type="text"], input[type="email"], input[type="password"] {
+    width: 89.5%;
+    font-size: 0.85em;
+  }
+
+  h1 {
+    font-size: 1.7em;
+    letter-spacing: 0px;
+  }
+
+  .main-agileinfo {
+    width: 92%;
+    margin: 1em auto;
+  }
+
+  .text:focus, .text:valid {
+    background-position: 0 0px;
+  }
+
+  input[type="submit"] {
+    margin: 1.5em 0;
+    padding: 0.8em;
+    font-size: .85em;
+  }
+
+  .colorlibcopy-agile p {
+    font-size: .85em;
+  }
+
+  .wthree-text label {
+    font-size: 0.85em;
+  }
+
+  .main-w3layouts {
+    padding: 1em 0 0;
+  }
+  option{
+    background-color: #ccc;
+  }
+}
+</style>

@@ -5,18 +5,34 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        answerMin: 0,
-        answerMax: 0,
+        answerMin: null,
+        answerMax: null,
         scoreToWin: 0,
-        turn: 0,
         gameActive: false,
         roundActive: false,
+        player: {
+            name: "",
+            score: 0,
+        },
+        bot1: {
+            name: "bot1",
+            score: 0,
+        },
+        bot2: {
+            name: "bot2",
+            score: 0,
+        },
         players: [],
         questions: [],
         currentPlayer: null,
         currentQuestion: null
     },
     mutations:{
+        initPlayers(state){
+            state.players.push(state.player);
+            state.players.push(state.bot1);
+            state.players.push(state.bot2);
+        },
         setAnswerMin(state, value){
             state.answerMax = value;
         },
@@ -35,6 +51,10 @@ export default new Vuex.Store({
         setPlayers(state, value){
             state.players = value;
         },
+        setPlayerName(state, name){
+            state.player.name = name;
+            console.log(state.player.name);
+        },
         setQuestions(state, data){
             state.questions = data;
             console.log('question:' + data[0].question)
@@ -42,16 +62,14 @@ export default new Vuex.Store({
             console.log('question:' + data[0].difficulty)
         },
         nextTurn(state){
-            if(state.turn < 2){
-                state.turn++;
-                state.currentPlayer = state.players[state.turn];
+            let indexOfCurrentPlayer = players.indexOf(state.currentPlayer);
+
+            if (indexOfCurrentPlayer < 2) {
+                state.currentPlayer = state.players[indexOfCurrentPlayer++];
             }
             else{
-                state.turn = 0;
                 state.currentPlayer = state.players[0];
             }
-            state.answerMin = 0;
-            state.answerMax = 0;
         }
     },
     getters:{
