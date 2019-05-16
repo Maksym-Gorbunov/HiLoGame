@@ -10,17 +10,23 @@ export default new Vuex.Store({
         scoreToWin: 0,
         gameActive: false,
         roundActive: false,
-        player: {
+        user: {
             name: "",
             score: 0,
+            imgURL: "",
+            active: false
         },
         bot1: {
             name: "bot1",
             score: 0,
+            imgURL: "",
+            active: false
         },
         bot2: {
             name: "bot2",
             score: 0,
+            imgURL: "",
+            active: false
         },
         players: [],
         questions: [],
@@ -29,7 +35,7 @@ export default new Vuex.Store({
     },
     mutations:{
         initPlayers(state){
-            state.players.push(state.player);
+            state.players.push(state.user);
             state.players.push(state.bot1);
             state.players.push(state.bot2);
         },
@@ -51,9 +57,9 @@ export default new Vuex.Store({
         setPlayers(state, value){
             state.players = value;
         },
-        setPlayerName(state, name){
-            state.player.name = name;
-            console.log(state.player.name);
+        setUserName(state, name){
+            state.user.name = name;
+            console.log(state.user.name);
         },
         setQuestions(state, data){
             state.questions = data;
@@ -87,6 +93,15 @@ export default new Vuex.Store({
         },
         getRoundActive(state){
             return state.roundActive;
+        },
+        getUser(state){
+            return state.player;
+        },
+        getBot1(state){
+            return state.bot1;
+        },
+        getBot2(state){
+            return state.bot2;
         },
         getPlayers(state){
             return state.players;

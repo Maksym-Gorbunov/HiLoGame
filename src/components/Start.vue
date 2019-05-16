@@ -117,7 +117,7 @@ export default {
       this.$store.commit("setQuestions", data);
     },
     sendName(name){
-      this.$store.commit("setPlayerName", name)
+      this.$store.commit("setUserName", name)
     }
   },
   created() {
