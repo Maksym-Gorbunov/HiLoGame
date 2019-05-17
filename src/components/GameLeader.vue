@@ -75,22 +75,24 @@ export default {
     },
     mounted() {
       EventBus.$on("answerSent", (answer) => {
-        if (this.checkAnswer(answer)) {
-          this.$store.getters.currentPlayer.score++; //Var Gustavs punkt men då jag(Anton) kontrollerar svaret så passar det bäst in här
-          if (this.$store.getters.currentPlayer.score === this.$store.getters.scoreToWin) {
-            this.$store.commit("setGameActive", false);
-            //TODO - Vid Vinst?
-            //Vinnarfras?
-            //Knapp för att spela igen?
+        setTimeout(() => {
+          if (this.checkAnswer(answer)) {
+            this.$store.getters.currentPlayer.score++; //Var Gustavs punkt men då jag(Anton) kontrollerar svaret så passar det bäst in här
+            if (this.$store.getters.currentPlayer.score === this.$store.getters.scoreToWin) {
+              this.$store.commit("setGameActive", false);
+              //TODO - Vid Vinst?
+              //Vinnarfras?
+              //Knapp för att spela igen?
+            } else {
+              //TODO - Vid rätt svar?
+              //Feedback skrivs var?
+              //Knapp för att gå till nästa fråga eller automatiskt?
+            }
+            this.$store.commit("setRoundActive", false);
           } else {
-            //TODO - Vid rätt svar?
-            //Feedback skrivs var?
-            //Knapp för att gå till nästa fråga eller automatiskt?
+            this.$store.commit("nextTurn");
           }
-          this.$store.commit("setRoundActive", false);
-        } else {
-          this.$store.commit("nextTurn");
-        }
+          }, 2000);
       });
     }
 };
