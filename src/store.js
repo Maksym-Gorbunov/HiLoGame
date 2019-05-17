@@ -123,10 +123,10 @@ export default new Vuex.Store({
             return state.questions;
         },
         getCurrentPlayer(state){
-            return state.scoreToWin;
+            return state.currentPlayer;
         },
         getCurrentQuestion(state){
-            return state.scoreToWin;
+            return state.currentQuestion;
         }
     }
 })
