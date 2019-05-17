@@ -119,6 +119,10 @@ a {
  padding: 3rem;
 }
 
+img{
+  height: 300px;
+}
+
 .jumbotron{
  background: #ee0979;  /* fallback for old browsers */
  background: -webkit-linear-gradient(to right, #ff6a00, #ee0979);  /* Chrome 10-25, Safari 5.1-6 */
