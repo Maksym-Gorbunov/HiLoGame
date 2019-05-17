@@ -15,7 +15,7 @@
         <b-row>
         <b-card style="max-width: 20rem;">
           <b-card-text width="100">
-            Fråga ställs i denna rutan! Frågor på det?
+            {{ question }}
           </b-card-text>
         </b-card>
         </b-row>
@@ -31,7 +31,7 @@
 </template>
   <script>
   import { EventBus } from '../event-bus.js';
-  
+
 export default {
   name: "GameLeader",
   props: {
@@ -39,7 +39,7 @@ export default {
   },
   data() {
       return {
-        text: ''
+        question: ""
       }
     },
     created() {
@@ -48,9 +48,10 @@ export default {
     },
     methods: {
       newRound() {
-        this.$store.commit("nextQuestion"); //Fixa i store
-        this.$store.commit("nextTurn"); //Fixa i store
+        this.$store.commit("nextQuestion"); 
+        this.$store.commit("nextTurn"); 
         this.$store.commit("setRoundActive", true);
+        this.question = this.$store.getters.getCurrentQuestion.question;
         //TODO
         //Set min/max. Hur löser vi?
         //Var skriver vi ut frågan?
