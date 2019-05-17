@@ -1,5 +1,5 @@
 <template>
-    <templateFix v-bind:player="this.$store.getters.getBot2"/>
+    <templateFix v-bind:player="this.$store.getters.getBot2" v-bind:guess="guess"/>
 </template>
 
 <script>
@@ -17,7 +17,7 @@ export default {
     },
     data() {
         return {
-        text: ''
+        guess: ''
         }
     },
     methods: {
@@ -26,22 +26,18 @@ export default {
             let min = this.$store.getters.getAnswerMin;  //Get min and max values from question 
             let max = this.$store.getters.getAnswerMax;
 
-            let guess = randomNr(min, max);  
+            let guess = randomNr(min, max)
 
-            //Vad händer här? hur hanteras gissningen?     return eller skicka?
-            //Hur plussa poäng?
-            EventBus.$emit('bot-guessings', guess);
+            setTimeout(() => {
+                this.guess = guess
+                EventBus.$emit('answerSent', guess);
+            }, 3000);        
 
         },
         randomNr(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
     },
-    mutations: {
-        addPoint() {     //Använda detta?
-            points++;
-        }
-    }
 };
 </script>
 
