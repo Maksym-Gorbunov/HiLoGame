@@ -71,7 +71,7 @@ export default new Vuex.Store({
             console.log('question:' + data[0].difficulty)
         },
         nextTurn(state){
-            let indexOfCurrentPlayer = this.players.findIndex(i => i.active);
+            let indexOfCurrentPlayer = state.players.findIndex(i => i.active);
 
             if (indexOfCurrentPlayer < 2) {
                 state.currentPlayer = state.players[indexOfCurrentPlayer++];
@@ -80,12 +80,14 @@ export default new Vuex.Store({
                 state.currentPlayer = state.players[0];
             }
         },
-        nextQuestion(){
-            if(currentQuestion == null){
-                currentQuestion = questions[0];
+        nextQuestion(state){
+            if(state.currentQuestion == null){
+                state.currentQuestion = state.questions[0];
             }
             else{
-                let indexOfCurrentPlayer = this.questions.findIndex(i => i.que);
+                let indexOfCurrentQuestion = state.questions.findIndex(i => i.question == state.currentQuestion.question);
+
+                state.currentQuestion = state.questions[indexOfCurrentQuestion++];
             }
         }
     },
