@@ -11,7 +11,7 @@ export default {
     points: 0,    
     components:{
         templateFix
-    },    
+    },
     props: {
         msg: String
     },
