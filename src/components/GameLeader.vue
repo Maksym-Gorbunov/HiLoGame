@@ -30,6 +30,8 @@
   </b-container>
 </template>
   <script>
+  import { EventBus } from '../event-bus.js';
+  
 export default {
   name: "GameLeader",
   props: {
