@@ -23,8 +23,17 @@ export default {
     methods: {
         autoGuess() {            
 
-            let min = this.$store.getters.getAnswerMin;  //Get min and max values from question 
-            let max = this.$store.getters.getAnswerMax;
+            let min;
+            let max;
+
+            if(getAnswerMin == null || getAnswerMax == null) {
+                min = this.$store.getters.getAnswerMin;  //Get min and max values from question 
+                max = this.$store.getters.getAnswerMax;
+            }
+            else {
+                min = 1;
+                max = 1000000;
+            }   
 
             let guess = randomNr(min, max)
 
