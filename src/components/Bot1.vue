@@ -34,7 +34,7 @@ export default {
                 max = 1000000;
             }  
 
-            let guess = randomNr(min, max)
+            let guess = this.randomNr(min, max)
 
             setTimeout(() => {
                 this.guess = guess
