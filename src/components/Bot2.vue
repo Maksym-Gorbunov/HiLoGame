@@ -23,15 +23,14 @@ export default {
     methods: {
         autoGuess() {            
 
-            let min;
-            let max;
+            let min = this.$store.getters.getAnswerMin;  //Get min and max values from question 
+            let max = this.$store.getters.getAnswerMax;
 
-            if(getAnswerMin == null || getAnswerMax == null) {
-                min = this.$store.getters.getAnswerMin;  //Get min and max values from question 
-                max = this.$store.getters.getAnswerMax;
+            if(min == null) {
+                min = 1;                  
             }
-            else {
-                min = 1;
+
+            if(max == null) {                
                 max = 1000000;
             }   
 

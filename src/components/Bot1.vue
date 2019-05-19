@@ -26,6 +26,14 @@ export default {
             let min = this.$store.getters.getAnswerMin;  //Get min and max values from question 
             let max = this.$store.getters.getAnswerMax;
 
+            if(min == null) {
+                min = 1;                  
+            }
+
+            if(max == null) {                
+                max = 1000000;
+            }  
+
             let guess = randomNr(min, max)
 
             setTimeout(() => {
