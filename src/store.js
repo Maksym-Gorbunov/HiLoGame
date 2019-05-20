@@ -79,7 +79,7 @@ export default new Vuex.Store({
                 state.currentPlayer.active = false;
 
                 if (indexOfCurrentPlayer < 2) {
-                    state.currentPlayer = state.players[indexOfCurrentPlayer++];
+                    state.currentPlayer = state.players[indexOfCurrentPlayer + 1];
                 }
                 else{
                     state.currentPlayer = state.players[0];
