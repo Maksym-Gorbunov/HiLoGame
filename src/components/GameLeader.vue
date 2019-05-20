@@ -81,9 +81,8 @@ export default {
           this.$store.commit("setAnswerMin", answer);
         }
         return false;
-      } else {
-        return true;
       }
+      return true;
     },
     evaluatePlayerAnswer() {
       if (this.checkAnswer(answer)) {
@@ -108,6 +107,9 @@ export default {
     EventBus.$on("answerSent", answer => {
       this.evaluatePlayerAnswer(answer);
     });
+  },
+  beforeDestroy() {
+    EventBus.$off('answerSent')
   }
 };
 </script>
