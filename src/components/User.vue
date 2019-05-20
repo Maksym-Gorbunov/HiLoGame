@@ -3,7 +3,7 @@
 </template>
 
 <script>
-
+import { EventBus } from "../event-bus.js";
 import templateFix from './templateFix.vue'
 
 export default {
