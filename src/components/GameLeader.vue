@@ -22,6 +22,7 @@
         <br>
         <b-row>
           <b-alert v-bind:variant="feedbackType" v-bind:show="showFeedback">{{ feedbackPhrase }}</b-alert>
+          <b-button v-if="!this.$store.getters.getRoundActive" v-on:click="buttonClicked()" class="newQuestion">{{ buttonText }}</b-button>
         </b-row>
       </b-col>
     </b-row>
@@ -31,6 +32,7 @@
   
 <script>
 import { EventBus } from "../event-bus.js";
+import { setTimeout } from 'timers';
 
 export default {
   name: "GameLeader",
@@ -39,23 +41,17 @@ export default {
   },
   data() {
     return {
-      mainPhrase: "",
-      feedbackPhrase: "",
-      feedbackType: "danger",
+      mainPhrase: "Welcome to the HiLo game!",
+      feedbackPhrase: "Are you ready?",
+      feedbackType: "info",
       showFeedback: true,
-      buttonText: ""
+      buttonText: "Ok!"
     }
-  },
-  created() {
-    // this.mainPhrase = "Welcome to the HiLo game!";
-    // this.feedbackPhrase = "Are you ready?";
-    // this.buttonText = "Ok!"
-    this.newRound();
   },
   methods: {
     buttonClicked() {
-      if (this.gameActive) {
-        this.nextQuestion();
+      if (this.$store.getters.getGameActive) {
+        this.newRound();
       } else {
         //TODO
         // this.$store.commit("resetState");
@@ -66,6 +62,7 @@ export default {
       this.$store.commit("nextQuestion");
       this.$store.commit("nextTurn");
       this.mainPhrase = this.$store.getters.getCurrentQuestion.question;
+      this.showFeedback = false;
       this.$store.commit("setAnswerMin", 0);//Kontrollera
       this.$store.commit("setAnswerMin", 0);//Kontrollera
       this.$store.commit("setRoundActive", true);
@@ -85,33 +82,42 @@ export default {
           this.$store.commit("setAnswerMin", answer);
         }
         return false;
+      }
+      return true;
+    },
+    checkIfPlayerWon() {
+      if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
+        this.$store.commit("setGameActive", false);
+        this.mainPhrase = "Congratulations " + this.currentPlayer.name + "! You won!";
+        this.feedbackPhrase = "Play again?";
+        this.buttonText = "Ok!"
       } else {
-        return true;
+        this.feedbackPhrase = "Correct!";
+        this.feedbackType = "success";
+        this.buttonText = "Next question"
       }
     },
-    evaluatePlayerAnswer() {
+    evaluatePlayerAnswer(answer) {
       if (this.checkAnswer(answer)) {
         this.$store.getters.getCurrentPlayer.score++; 
-        if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
-          this.$store.commit("setGameActive", false);
-          this.mainPhrase = "Congratulations " + this.currentPlayer.name + "! You won!";
-          this.feedbackPhrase = "Play again?";
-          this.buttonText = "Ok!"
-        } else {
-          this.feedbackPhrase = "Correct!";
-          this.feedbackType = "success";
-          this.buttonText = "Next question"
-        }
+        this.checkIfPlayerWon();
         this.$store.commit("setRoundActive", false);
       } else {
-        this.$store.commit("nextTurn");
+        setTimeout(() => {
+          this.$store.commit("nextTurn");
+        }, 2000);
       }
     }
   },
   mounted() {
     EventBus.$on("answerSent", answer => {
-      this.evaluatePlayerAnswer(answer);
+      setTimeout(() => {
+        this.evaluatePlayerAnswer(answer);
+      }, 2000);
     });
+  },
+  beforeDestroy() {
+    EventBus.$off('answerSent')
   }
 };
 </script>
