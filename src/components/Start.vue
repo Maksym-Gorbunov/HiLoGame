@@ -126,6 +126,7 @@ export default {
       this.sendName(name)
       this.$store.commit("setGameActive", true);
       this.$store.commit("initPlayers");
+      this.$store.commit("setScoreToWin", score);
     },
     getDataFromApi(total, difficulty){
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
