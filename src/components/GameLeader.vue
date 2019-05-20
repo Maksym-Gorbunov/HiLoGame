@@ -32,6 +32,7 @@
   
 <script>
 import { EventBus } from "../event-bus.js";
+import { setTimeout } from 'timers';
 
 export default {
   name: "GameLeader",
@@ -102,13 +103,17 @@ export default {
         this.checkIfPlayerWon();
         this.$store.commit("setRoundActive", false);
       } else {
-        this.$store.commit("nextTurn");
+        setTimeout(() => {
+          this.$store.commit("nextTurn");
+        }, 2000);
       }
     }
   },
   mounted() {
     EventBus.$on("answerSent", answer => {
-      this.evaluatePlayerAnswer(answer);
+      setTimeout(() => {
+        this.evaluatePlayerAnswer(answer);
+      }, 2000);
     });
   },
   beforeDestroy() {
