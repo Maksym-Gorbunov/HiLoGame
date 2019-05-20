@@ -46,16 +46,8 @@ export default {
   color: white;
 }
 
-<<<<<<< HEAD
 img {
   height: 300px;
   padding-top: 10px;
-=======
-img{
-
-    height: 250px;
-    padding-top: 10px;
-
->>>>>>> andreas
 }
 </style>

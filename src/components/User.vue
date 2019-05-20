@@ -8,14 +8,14 @@
                 <b-button variant="info" v-on:click="sendAnswer()">Submit</b-button>
             </b-input-group-append>
     </b-input-group>
-		 <templateFix v-bind:player="this.$store.getters.getUser"/>
+		 <playerData v-bind:player="this.$store.getters.getUser"/>
   </b-col>
  
 </template>
 
 <script>
   import { EventBus } from "../event-bus.js";
-  import templateFix from "./templateFix.vue";
+  import playerData from "./playerData.vue";
 
   export default {
 		data() {
@@ -24,7 +24,7 @@
 			}
 		},
 		components: {
-			templateFix
+			playerData
 		},
 		methods: {
 			sendAnswer(e) {
@@ -37,9 +37,5 @@
 <style scoped>
 .img_responsive {
   margin-top: 10rem;
-}
-
-.button{
-	background-color: black;
 }
 </style>
