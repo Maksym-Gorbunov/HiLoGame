@@ -5,7 +5,7 @@
 		 v-bind:class="{active:this.$store.getters.getUser.active}">
         <b-form-input v-model="userInput" type="number" ></b-form-input>
             <b-input-group-append>
-                <b-button variant="outline-secondary" v-on:click="sendAnswer()">Button</b-button>
+                <b-button variant="info" v-on:click="sendAnswer()">Submit</b-button>
             </b-input-group-append>
     </b-input-group>
 		 <templateFix v-bind:player="this.$store.getters.getUser"/>
@@ -37,5 +37,9 @@
 <style scoped>
 .img_responsive {
   margin-top: 10rem;
+}
+
+.button{
+	background-color: black;
 }
 </style>

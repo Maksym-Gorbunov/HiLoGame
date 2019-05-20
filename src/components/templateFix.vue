@@ -33,7 +33,7 @@ export default {
 
 img{
 
-    height: 300px;
+    height: 250px;
     padding-top: 10px;
 
 }
