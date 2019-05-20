@@ -21,8 +21,7 @@
         </b-row>
         <br />
         <b-row>
-                <b-alert variant="success" show>Success Alert</b-alert>
-                <b-alert variant="danger" show>För högt/För lågt</b-alert>
+                <b-alert v-bind:variant="feedbackType" v-bind:show="showFeedback">{{ feedback }}</b-alert>
         </b-row>
       </b-col>
     </b-row>
@@ -39,7 +38,10 @@ export default {
   },
   data() {
       return {
-        question: ""
+        question: "",
+        feedback: "",
+        feedbackType: "danger",
+        showFeedback: false
       }
     },
     created() {
@@ -54,19 +56,16 @@ export default {
         this.question = this.$store.getters.getCurrentQuestion.question;
         //TODO
         //Set min/max. Hur löser vi?
-        //Var skriver vi ut frågan?
       },
       checkAnswer(answer) {
         if (answer > this.$store.getters.getCurrentQuestion.answer) {
-          //TODO - Vid fel för högt svar?
-          //Feedback skrivs var?
+          this.feedback = "Lower!";
           if (answer < this.$store.getters.getAnswerMax) { //Kontrollera hur vi gör med min/max
             this.$store.commit("setAnswerMax", answer);
           }
           return false;
         } else if (answer < this.$store.getters.getCurrentQuestion.answer) {
-          //TODO - Vid fel för lågt svar?
-          //Feedback skrivs var?
+          this.feedback = "Higher!";
           if (answer > this.$store.getters.getAnswerMin) { //Kontrollera hur vi gör med min/max
             this.$store.commit("setAnswerMin", answer);
           }
@@ -83,12 +82,10 @@ export default {
             this.$store.getters.getCurrentPlayer.score++; //Var Gustavs punkt men då jag(Anton) kontrollerar svaret så passar det bäst in här
             if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
               this.$store.commit("setGameActive", false);
-              //TODO - Vid Vinst?
               //Vinnarfras?
               //Knapp för att spela igen?
             } else {
-              //TODO - Vid rätt svar?
-              //Feedback skrivs var?
+              this.feedback = "Correct!";
               //Knapp för att gå till nästa fråga eller automatiskt?
             }
             this.$store.commit("setRoundActive", false);
