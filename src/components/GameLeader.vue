@@ -22,6 +22,7 @@
         <br>
         <b-row>
           <b-alert v-bind:variant="feedbackType" v-bind:show="showFeedback">{{ feedbackPhrase }}</b-alert>
+          <b-button class="newQuestion">New Question</b-button>
         </b-row>
       </b-col>
     </b-row>
