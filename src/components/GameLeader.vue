@@ -9,7 +9,7 @@
     <b-row class="justify-content-md-center">
       <b-col col lg="2">
         <b-img
-          src="https://cdn.pixabay.com/photo/2017/12/21/10/30/mascot-3031512_960_720.png"
+          v-bind:src="getImgUrl()"
           height="400px"
         ></b-img>
       </b-col>
@@ -33,6 +33,7 @@
 <script>
 import { EventBus } from "../event-bus.js";
 import { setTimeout } from 'timers';
+import Master from "@/assets/Master.png";
 
 export default {
   name: "GameLeader",
@@ -49,6 +50,9 @@ export default {
     }
   },
   methods: {
+    getImgUrl(){
+      return Master
+    },
     buttonClicked() {
       if (this.$store.getters.getGameActive) {
         this.newRound();

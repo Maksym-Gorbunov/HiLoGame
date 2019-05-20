@@ -6,17 +6,6 @@
 		<div class="main-agileinfo">
 			<div class="agileits-top">
 				<form>
-          <!-- <b-form-group
-      id="fieldset-1"
-      description="Let us know your name."
-      label="Enter your name"
-      label-for="input-1"
-      :invalid-feedback="invalidFeedback"
-      :valid-feedback="validFeedback"
-      :state="state"
-    >
-      <b-form-input id="input-1" v-model="name" :state="state" trim></b-form-input>
-    </b-form-group> -->
 					<input ref="name" class="text" type="text" name="Name" placeholder="Name" required="">
 					<input ref="score" class="text" type="text" name="Score To Win" placeholder="Score To Win" required="">
 					<select ref="difficulty" name="difficulty">
@@ -54,27 +43,6 @@
 
 
 export default {
-  // computed:{
-  //   state() {
-  //       return this.name.length >= 1 ? true : false
-  //     },
-  //     invalidFeedback() {
-  //       if (this.name.length > 0) {
-  //         return ''
-  //       } else if (this.name.length > 0) {
-  //         return 'Enter at least 4 characters'
-  //       } else {
-  //         return 'Please enter something'
-  //       }
-  //     },
-  //     validFeedback() {
-  //       return this.state === true ? 'Thank you' : ''
-  //     }},
-  //     data() {
-  //     return {
-  //       name: ''
-  //     }
-  //   },
   name: 'start',
   props: [],
   components: {},
@@ -87,6 +55,7 @@ export default {
     },
     start() {
       let name = this.$refs.name.value
+      name = name.charAt(0).toUpperCase() + name.slice(1);
       let score = this.$refs.score.value
       let difficulty = this.$refs.difficulty.value
       let total = (score * 3) - 2
