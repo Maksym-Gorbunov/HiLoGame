@@ -97,7 +97,7 @@ export default {
         this.buttonText = "Next question"
       }
     },
-    evaluatePlayerAnswer() {
+    evaluatePlayerAnswer(answer) {
       if (this.checkAnswer(answer)) {
         this.$store.getters.getCurrentPlayer.score++; 
         this.checkIfPlayerWon();
