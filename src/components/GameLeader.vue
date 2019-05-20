@@ -42,21 +42,31 @@ export default {
       mainPhrase: "",
       feedbackPhrase: "",
       feedbackType: "danger",
-      showFeedback: false,
-      buttonText = ""
-    };
+      showFeedback: true,
+      buttonText: ""
+    }
   },
   created() {
-    this.$store.commit("setGameActive", true);
-    this.newRound();
+    this.mainPhrase = "Welcome to the HiLo game!";
+    this.feedbackPhrase = "Are you ready?";
+    this.buttonText = "Ok!"
   },
   methods: {
+    buttonClicked() {
+      if (this.gameActive) {
+        this.nextQuestion();
+      } else {
+        //TODO
+        // this.$store.commit("resetState");
+        // this.$router.replace("/"); //Route to start page
+      }
+    },
     newRound() {
       this.$store.commit("nextQuestion");
       this.$store.commit("nextTurn");
       this.mainPhrase = this.$store.getters.getCurrentQuestion.question;
-      this.$store.commit("setMinGuess", 0);//Kontrollera
-      this.$store.commit("setMaxGuess", 0);//Kontrollera
+      this.$store.commit("setAnswerMin", 0);//Kontrollera
+      this.$store.commit("setAnswerMin", 0);//Kontrollera
       this.$store.commit("setRoundActive", true);
     },
     checkAnswer(answer) {
