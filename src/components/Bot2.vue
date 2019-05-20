@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     currentPlayer() {
-        this.$store.getters.getCurrentPlayer;
+        return this.$store.getters.getCurrentPlayer;
     }
   },
   watch: {
@@ -64,7 +64,7 @@ export default {
         if (!this.$store.getters.getBot2.active) {
             return;
         }
-    this.autoGuess();
+        this.autoGuess();
     }
   }
 };

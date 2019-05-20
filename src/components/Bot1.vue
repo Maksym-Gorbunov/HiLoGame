@@ -15,15 +15,13 @@
 <script>
 import { EventBus } from "../event-bus.js";
 import templateFix from "./templateFix.vue";
+import { constants } from 'crypto';
 
 export default {
   name: "Bot1",
   points: 0,
   components: {
     templateFix
-  },
-  props: {
-    msg: String
   },
   data() {
     return {
@@ -58,18 +56,19 @@ export default {
   },
   computed: {
     currentPlayer() {
-        this.$store.getters.getCurrentPlayer;
+        return this.$store.getters.getCurrentPlayer;
     }
   },
   watch: {
     currentPlayer() {
+        console.log("test")
         if (!this.$store.getters.getBot1.active) {
             return;
         }
-    this.autoGuess();
+        this.autoGuess();
     }
   }
-};
+}
 </script>
 
 <style>

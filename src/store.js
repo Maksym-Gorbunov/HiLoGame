@@ -87,6 +87,7 @@ export default new Vuex.Store({
             }
 
             state.currentPlayer.active = true;
+            console.log(state.currentPlayer);
         },
         nextQuestion(state){
             if(state.currentQuestion == null){
