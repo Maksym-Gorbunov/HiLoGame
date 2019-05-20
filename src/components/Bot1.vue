@@ -55,6 +55,19 @@ export default {
     randomNr(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+  },
+  computed: {
+    currentPlayer() {
+        this.$store.getters.getCurrentPlayer;
+    }
+  },
+  watch: {
+    currentPlayer() {
+        if (!this.$store.getters.getBot1.active) {
+            return;
+        }
+    this.autoGuess();
+    }
   }
 };
 </script>
