@@ -16,7 +16,7 @@
       <b-col col lg="2">
         <b-row>
           <b-card style="max-width: 20rem;">
-            <b-card-text width="100">{{ mainPhrase }}</b-card-text>
+            <b-card-text v-html="mainPhrase" width="100"></b-card-text>
           </b-card>
         </b-row>
         <br>
@@ -47,9 +47,10 @@ export default {
     }
   },
   created() {
-    this.mainPhrase = "Welcome to the HiLo game!";
-    this.feedbackPhrase = "Are you ready?";
-    this.buttonText = "Ok!"
+    // this.mainPhrase = "Welcome to the HiLo game!";
+    // this.feedbackPhrase = "Are you ready?";
+    // this.buttonText = "Ok!"
+    this.newRound();
   },
   methods: {
     buttonClicked() {
