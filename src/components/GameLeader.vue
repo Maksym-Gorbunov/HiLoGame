@@ -1,36 +1,36 @@
 <template>
   <b-container fluid class="text-center">
-    <b-row align-v="center">
-    </b-row>
+    <b-row align-v="center"></b-row>
     <b-row>
-    <b-col align-self="end">
-      <b-button class="rules">Rules</b-button>
-    </b-col>
-    </b-row>
-    <b-row class="justify-content-md-center"> 
-      <b-col col lg=2>
-        <b-img src="https://cdn.pixabay.com/photo/2017/12/21/10/30/mascot-3031512_960_720.png" height="400px"></b-img>
+      <b-col align-self="end">
+        <b-button class="rules">Rules</b-button>
       </b-col>
-      <b-col col lg=2>
+    </b-row>
+    <b-row class="justify-content-md-center">
+      <b-col col lg="2">
+        <b-img
+          src="https://cdn.pixabay.com/photo/2017/12/21/10/30/mascot-3031512_960_720.png"
+          height="400px"
+        ></b-img>
+      </b-col>
+      <b-col col lg="2">
         <b-row>
-        <b-card style="max-width: 20rem;">
-          <b-card-text width="100">
-            {{ question }}
-          </b-card-text>
-        </b-card>
+          <b-card style="max-width: 20rem;">
+            <b-card-text v-html="mainPhrase" width="100"></b-card-text>
+          </b-card>
         </b-row>
-        <br />
+        <br>
         <b-row>
-                <b-alert variant="success" show>Success Alert</b-alert>
-                <b-alert variant="danger" show>För högt/För lågt</b-alert>
+          <b-alert v-bind:variant="feedbackType" v-bind:show="showFeedback">{{ feedbackPhrase }}</b-alert>
         </b-row>
       </b-col>
     </b-row>
     <b-row>&nbsp;</b-row>
   </b-container>
 </template>
-  <script>
-  import { EventBus } from '../event-bus.js';
+  
+<script>
+import { EventBus } from "../event-bus.js";
 
 export default {
   name: "GameLeader",
@@ -38,156 +38,188 @@ export default {
     msg: String
   },
   data() {
-      return {
-        question: ""
+    return {
+      mainPhrase: "",
+      feedbackPhrase: "",
+      feedbackType: "danger",
+      showFeedback: true,
+      buttonText: ""
+    }
+  },
+  created() {
+    // this.mainPhrase = "Welcome to the HiLo game!";
+    // this.feedbackPhrase = "Are you ready?";
+    // this.buttonText = "Ok!"
+    this.newRound();
+  },
+  methods: {
+    buttonClicked() {
+      if (this.gameActive) {
+        this.nextQuestion();
+      } else {
+        //TODO
+        // this.$store.commit("resetState");
+        // this.$router.replace("/"); //Route to start page
       }
     },
-    created() {
-      this.$store.commit("setGameActive", true);
-      this.newRound();
+    newRound() {
+      this.$store.commit("nextQuestion");
+      this.$store.commit("nextTurn");
+      this.mainPhrase = this.$store.getters.getCurrentQuestion.question;
+      this.$store.commit("setAnswerMin", 0);//Kontrollera
+      this.$store.commit("setAnswerMin", 0);//Kontrollera
+      this.$store.commit("setRoundActive", true);
     },
-    methods: {
-      newRound() {
-        this.$store.commit("nextQuestion"); 
-        this.$store.commit("nextTurn"); 
-        this.$store.commit("setRoundActive", true);
-        this.question = this.$store.getters.getCurrentQuestion.question;
-        //TODO
-        //Set min/max. Hur löser vi?
-        //Var skriver vi ut frågan?
-      },
-      checkAnswer(answer) {
-        if (answer > this.$store.getters.getCurrentQuestion.answer) {
-          //TODO - Vid fel för högt svar?
-          //Feedback skrivs var?
-          if (answer < this.$store.getters.getAnswerMax) { //Kontrollera hur vi gör med min/max
-            this.$store.commit("setAnswerMax", answer);
-          }
-          return false;
-        } else if (answer < this.$store.getters.getCurrentQuestion.answer) {
-          //TODO - Vid fel för lågt svar?
-          //Feedback skrivs var?
-          if (answer > this.$store.getters.getAnswerMin) { //Kontrollera hur vi gör med min/max
-            this.$store.commit("setAnswerMin", answer);
-          }
-          return false;
-        } else {
-          return true;
+    checkAnswer(answer) {
+      if (answer > this.$store.getters.getCurrentQuestion.answer) {
+        this.feedbackPhrase = "Lower!";
+        this.feedbackType = "danger";
+        if (answer < this.$store.getters.getAnswerMax) {
+          this.$store.commit("setAnswerMax", answer);
         }
-      },
+        return false;
+      } else if (answer < this.$store.getters.getCurrentQuestion.answer) {
+        this.feedbackPhrase = "Higher!";
+        this.feedbackType = "danger";
+        if (answer > this.$store.getters.getAnswerMin) {
+          this.$store.commit("setAnswerMin", answer);
+        }
+        return false;
+      } else {
+        return true;
+      }
     },
-    mounted() {
-      EventBus.$on("answerSent", (answer) => {
-        setTimeout(() => {
-          if (this.checkAnswer(answer)) {
-            this.$store.getters.getCurrentPlayer.score++; //Var Gustavs punkt men då jag(Anton) kontrollerar svaret så passar det bäst in här
-            if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
-              this.$store.commit("setGameActive", false);
-              //TODO - Vid Vinst?
-              //Vinnarfras?
-              //Knapp för att spela igen?
-            } else {
-              //TODO - Vid rätt svar?
-              //Feedback skrivs var?
-              //Knapp för att gå till nästa fråga eller automatiskt?
-            }
-            this.$store.commit("setRoundActive", false);
-          } else {
-            this.$store.commit("nextTurn");
-          }
-          }, 2000);
-      });
+    evaluatePlayerAnswer() {
+      if (this.checkAnswer(answer)) {
+        this.$store.getters.getCurrentPlayer.score++; 
+        if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
+          this.$store.commit("setGameActive", false);
+          this.mainPhrase = "Congratulations " + this.currentPlayer.name + "! You won!";
+          this.feedbackPhrase = "Play again?";
+          this.buttonText = "Ok!"
+        } else {
+          this.feedbackPhrase = "Correct!";
+          this.feedbackType = "success";
+          this.buttonText = "Next question"
+        }
+        this.$store.commit("setRoundActive", false);
+      } else {
+        this.$store.commit("nextTurn");
+      }
     }
+  },
+  mounted() {
+    EventBus.$on("answerSent", answer => {
+      this.evaluatePlayerAnswer(answer);
+    });
+  }
 };
 </script>
 
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
- margin: 40px 0 0;
+  margin: 40px 0 0;
 }
 ul {
- list-style-type: none;
- padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 li {
- display: inline-block;
- margin: 0 10px;
+  display: inline-block;
+  margin: 0 10px;
 }
 a {
- color: #42b983;
+  color: #42b983;
 }
 
-.imgDiv{
- padding: 3rem;
+.imgDiv {
+  padding: 3rem;
 }
 
-img{
+img {
   height: 300px;
 }
 
-.jumbotron{
- background: #ee0979;  /* fallback for old browsers */
- background: -webkit-linear-gradient(to right, #ff6a00, #ee0979);  /* Chrome 10-25, Safari 5.1-6 */
- background: linear-gradient(to right, #ff6a00, #ee0979); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
- background-size: cover;
- height: 100vh;
- width: 100vh;
-
+.jumbotron {
+  background: #ee0979; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ff6a00,
+    #ee0979
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ff6a00,
+    #ee0979
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-size: cover;
+  height: 100vh;
+  width: 100vh;
 }
 
-.submit{
- background: #000000;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+.submit {
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.submit:hover{
- cursor: pointer;
-   box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
-   transform: translateY(-0.1rem);
-   transition: transform 150ms;
+.submit:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
 }
 
-.rules{
-  background: #000000;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+.rules {
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-.rules:hover{
- cursor: pointer;
-   box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
-   transform: translateY(-0.1rem);
-   transition: transform 150ms;
+.rules:hover {
+  cursor: pointer;
+  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
+  transform: translateY(-0.1rem);
+  transition: transform 150ms;
 }
 
-.formss{
- margin: 2rem;
- margin-left: 20rem;
-
+.formss {
+  margin: 2rem;
+  margin-left: 20rem;
 }
 
-.img{
- width: 200px;
- display: flex;
-
-
+.img {
+  width: 200px;
+  display: flex;
 }
 
-.rules{
-
- float:right;
+.rules {
+  float: right;
 }
 
-.imageRow{
- margin-left: 17rem;
- display: flex;
+.imageRow {
+  margin-left: 17rem;
+  display: flex;
 }
 
 .boxed {
- border: 1px solid green ;
+  border: 1px solid green;
 }
 </style>
