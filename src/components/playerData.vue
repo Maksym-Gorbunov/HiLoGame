@@ -10,6 +10,7 @@
 import UserImage from "@/assets/User.png";
 import RobotImage from "@/assets/Robot.png";
 import AlbertImage from "@/assets/Albert.png";
+import PlayerDefault from "@/assets/PlayerDefault.png";
 
 export default {
   name: "User",
@@ -29,7 +30,7 @@ export default {
         case "Robot.png":
           return RobotImage;
         default:
-          return;
+          return PlayerDefault;
       }
     }
   }

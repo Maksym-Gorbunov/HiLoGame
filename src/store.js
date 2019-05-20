@@ -19,14 +19,14 @@ export default new Vuex.Store({
         },
         bot1: {
             type: "bot",
-            name: "bot1",
+            name: "Bot 1",
             score: 0,
             imgURL: "Robot.png",
             active: false
         },
         bot2: {
             type: "bot",
-            name: "bot2",
+            name: "Bot 2",
             score: 0,
             imgURL: "Albert.png",
             active: false
