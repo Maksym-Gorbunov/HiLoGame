@@ -68,7 +68,7 @@ export default {
       this.mainPhrase = this.$store.getters.getCurrentQuestion.question;
       this.showFeedback = false;
       this.$store.commit("setAnswerMin", 0);//Kontrollera
-      this.$store.commit("setAnswerMin", 0);//Kontrollera
+      this.$store.commit("setAnswerMax", this.$store.getters.getCurrentQuestion.answer * 2);//Kontrollera
       this.$store.commit("setRoundActive", true);
     },
     checkAnswer(answer) {
@@ -90,9 +90,9 @@ export default {
       return true;
     },
     checkIfPlayerWon() {
-      if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
+      if (this.$store.getters.getCurrentPlayer.score == this.$store.getters.getScoreToWin) { //Ändra till === när vi fixar number secure
         this.$store.commit("setGameActive", false);
-        this.mainPhrase = "Congratulations " + this.currentPlayer.name + "! You won!";
+        this.mainPhrase = "Congratulations " + this.$store.getters.getCurrentPlayer.name + "! You won!";
         this.feedbackPhrase = "Play again?";
         this.buttonText = "Ok!"
       } else {

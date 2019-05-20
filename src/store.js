@@ -95,7 +95,7 @@ export default new Vuex.Store({
             else{
                 let indexOfCurrentQuestion = state.questions.findIndex(i => i.question == state.currentQuestion.question);
 
-                state.currentQuestion = state.questions[indexOfCurrentQuestion++];
+                state.currentQuestion = state.questions[indexOfCurrentQuestion + 1];
             }
         }
     },

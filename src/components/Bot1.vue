@@ -7,6 +7,7 @@
       placeholder="Fixed height textarea"
       rows="3"
       no-resize
+      v-model="guess"
     ></b-form-textarea>
     <playerData v-bind:player="this.$store.getters.getBot1" v-bind:guess="guess"/>
   </b-col>
@@ -21,9 +22,6 @@ export default {
   points: 0,
   components: {
     playerData
-  },
-  props: {
-    msg: String
   },
   data() {
     return {
@@ -58,18 +56,18 @@ export default {
   },
   computed: {
     currentPlayer() {
-      this.$store.getters.getCurrentPlayer;
+        return this.$store.getters.getCurrentPlayer;
     }
   },
   watch: {
     currentPlayer() {
-      if (!this.$store.getters.getBot1.active) {
-        return;
-      }
-      this.autoGuess();
+        if (!this.$store.getters.getBot1.active) {
+            return;
+        }
+        this.autoGuess();
     }
   }
-};
+}
 </script>
 
 <style>
