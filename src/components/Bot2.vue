@@ -63,6 +63,7 @@ export default {
   watch: {
     currentPlayer() {
         if (!this.$store.getters.getBot2.active) {
+            this.guess = "";//FIXA BÄTTRE LÖSNING
             return;
         }
         this.autoGuess();
