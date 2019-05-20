@@ -6,7 +6,7 @@
       v-else-if="player.active"
       src="http://www.freespins24h.se/wp-content/uploads/2017/02/faq.png">
     </b-img>
-    <div>Name: {{player.name}}</div>
+    <div>{{player.name}}</div>
     <div>Score: {{player.score}}</div>
   </div>
 </template>
@@ -47,7 +47,7 @@ export default {
 }
 
 img {
-  height: 300px;
+  height: 250px;
   padding-top: 10px;
 }
 </style>
