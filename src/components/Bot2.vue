@@ -8,19 +8,19 @@
       rows="3"
       no-resize
     ></b-form-textarea>
-    <templateFix v-bind:player="this.$store.getters.getBot2" v-bind:guess="guess"/>
+    <playerData v-bind:player="this.$store.getters.getBot2" v-bind:guess="guess"/>
   </b-col>
 </template>
 
 <script>
 import { EventBus } from "../event-bus.js";
-import templateFix from "./templateFix.vue";
+import playerData from "./playerData.vue";
 
 export default {
   name: "Bot2",
   points: 0,
   components: {
-    templateFix
+    playerData
   },
   props: {
     msg: String
@@ -56,15 +56,15 @@ export default {
   },
   computed: {
     currentPlayer() {
-        this.$store.getters.getCurrentPlayer;
+      this.$store.getters.getCurrentPlayer;
     }
   },
   watch: {
     currentPlayer() {
-        if (!this.$store.getters.getBot2.active) {
-            return;
-        }
-    this.autoGuess();
+      if (!this.$store.getters.getBot2.active) {
+        return;
+      }
+      this.autoGuess();
     }
   }
 };

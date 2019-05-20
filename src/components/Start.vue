@@ -1,31 +1,11 @@
 <template>
   <div id="app">
-    
-<!--
-<script type="application/x-javascript"> 
-  addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-</script>
--->
-<!-- <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet"> -->
-
 
 	<div class="main-w3layouts wrapper">
 		<h1>High Low Game</h1>
 		<div class="main-agileinfo">
 			<div class="agileits-top">
-				<!-- <form action="#" method="post"> -->
 				<form>
-          <!-- <b-form-group
-      id="fieldset-1"
-      description="Let us know your name."
-      label="Enter your name"
-      label-for="input-1"
-      :invalid-feedback="invalidFeedback"
-      :valid-feedback="validFeedback"
-      :state="state"
-    >
-      <b-form-input id="input-1" v-model="name" :state="state" trim></b-form-input>
-    </b-form-group> -->
 					<input ref="name" class="text" type="text" name="Name" placeholder="Name" required="">
 					<input ref="score" class="text" type="text" name="Score To Win" placeholder="Score To Win" required="">
 					<select ref="difficulty" name="difficulty">
@@ -33,28 +13,16 @@
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
-          <!-- <input ref="difficulty" class="text" type="text" name="Difficulty" placeholder="Difficulty" required=""> -->
-					<!-- <input class="text email" type="email" name="email" placeholder="Email" required=""> -->
-					<!-- <input class="text" type="password" name="password" placeholder="Password" required=""> -->
-					<!-- <input class="text w3lpass" type="password" name="password" placeholder="Confirm Password" required=""> -->
 					<div class="wthree-text">
-						<!-- <label class="anim">
-							<input type="checkbox" class="checkbox" required="">
-							<span>I Agree To The Terms & Conditions</span>
-						</label> -->
 						<div class="clear"> </div>
 					</div>
 					<input @click.prevent="start()" type="submit" value="START">
 				</form>
-				<!-- <p>Don't have an Account? <a href="#"> Login Now!</a></p> -->
 			</div>
 		</div>
-		<!-- copyright -->
 		<div class="colorlibcopy-agile">
-			<!-- <p>© 2018 Colorlib Signup Form. All rights reserved | Design by <a href="https://colorlib.com/" target="_blank">Colorlib</a></p> -->
 			<p>© 2019 IT-Högskolan &nbsp;|&nbsp; Source code on <a href="https://github.com/Maksym-Gorbunov/HiLoGame" target="_blank">GitHub</a></p>
 		</div>
-		<!-- //copyright -->
 		<ul class="colorlib-bubbles">
 			<li></li>
 			<li></li>
@@ -68,16 +36,6 @@
 			<li></li>
 		</ul>
 	</div> 
-
-
-
- 
- 
- 
- 
- 
- 
-    <!-- <h1>START ....</h1> -->
   </div>
 </template>
 
@@ -85,27 +43,6 @@
 
 
 export default {
-  // computed:{
-  //   state() {
-  //       return this.name.length >= 1 ? true : false
-  //     },
-  //     invalidFeedback() {
-  //       if (this.name.length > 0) {
-  //         return ''
-  //       } else if (this.name.length > 0) {
-  //         return 'Enter at least 4 characters'
-  //       } else {
-  //         return 'Please enter something'
-  //       }
-  //     },
-  //     validFeedback() {
-  //       return this.state === true ? 'Thank you' : ''
-  //     }},
-  //     data() {
-  //     return {
-  //       name: ''
-  //     }
-  //   },
   name: 'start',
   props: [],
   components: {},
@@ -118,6 +55,7 @@ export default {
     },
     start() {
       let name = this.$refs.name.value
+      name = name.charAt(0).toUpperCase() + name.slice(1);
       let score = this.$refs.score.value
       let difficulty = this.$refs.difficulty.value
       let total = (score * 3) - 2
