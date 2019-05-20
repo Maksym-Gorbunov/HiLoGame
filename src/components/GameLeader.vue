@@ -86,9 +86,9 @@ export default {
       return true;
     },
     checkIfPlayerWon() {
-      if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
+      if (this.$store.getters.getCurrentPlayer.score == this.$store.getters.getScoreToWin) { //Ändra till === när vi fixar number secure
         this.$store.commit("setGameActive", false);
-        this.mainPhrase = "Congratulations " + this.currentPlayer.name + "! You won!";
+        this.mainPhrase = "Congratulations " + this.$store.getters.getCurrentPlayer.name + "! You won!";
         this.feedbackPhrase = "Play again?";
         this.buttonText = "Ok!"
       } else {
