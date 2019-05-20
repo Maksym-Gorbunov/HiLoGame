@@ -7,6 +7,7 @@
       placeholder="Fixed height textarea"
       rows="3"
       no-resize
+      v-model="guess"
     ></b-form-textarea>
     <templateFix v-bind:player="this.$store.getters.getBot1" v-bind:guess="guess"/>
   </b-col>
