@@ -101,10 +101,13 @@ export default {
       if (this.checkAnswer(answer)) {
         this.$store.getters.getCurrentPlayer.score++; 
         this.checkIfPlayerWon();
+        this.showFeedback = true;
         this.$store.commit("setRoundActive", false);
       } else {
+        this.showFeedback = true;
         setTimeout(() => {
           this.$store.commit("nextTurn");
+          this.showFeedback = false;
         }, 2000);
       }
     }
