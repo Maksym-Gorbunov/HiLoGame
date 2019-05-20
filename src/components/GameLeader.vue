@@ -42,7 +42,8 @@ export default {
       mainPhrase: "",
       feedbackPhrase: "",
       feedbackType: "danger",
-      showFeedback: false
+      showFeedback: false,
+      buttonText = ""
     };
   },
   created() {
@@ -60,13 +61,15 @@ export default {
     },
     checkAnswer(answer) {
       if (answer > this.$store.getters.getCurrentQuestion.answer) {
-        this.feedback = "Lower!";
+        this.feedbackPhrase = "Lower!";
+        this.feedbackType = "danger";
         if (answer < this.$store.getters.getAnswerMax) {
           this.$store.commit("setAnswerMax", answer);
         }
         return false;
       } else if (answer < this.$store.getters.getCurrentQuestion.answer) {
-        this.feedback = "Higher!";
+        this.feedbackPhrase = "Higher!";
+        this.feedbackType = "danger";
         if (answer > this.$store.getters.getAnswerMin) {
           this.$store.commit("setAnswerMin", answer);
         }
@@ -77,17 +80,16 @@ export default {
     },
     evaluatePlayerAnswer() {
       if (this.checkAnswer(answer)) {
-        this.$store.getters.getCurrentPlayer.score++; //Var Gustavs punkt men då jag(Anton) kontrollerar svaret så passar det bäst in här
-        if (
-          this.$store.getters.getCurrentPlayer.score ===
-          this.$store.getters.getScoreToWin
-        ) {
+        this.$store.getters.getCurrentPlayer.score++; 
+        if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
           this.$store.commit("setGameActive", false);
-          //Vinnarfras?
-          //Knapp för att spela igen?
+          this.mainPhrase = "Congratulations " + this.currentPlayer.name + "! You won!";
+          this.feedbackPhrase = "Play again?";
+          this.buttonText = "Ok!"
         } else {
-          this.feedback = "Correct!";
-          //Knapp för att gå till nästa fråga eller automatiskt?
+          this.feedbackPhrase = "Correct!";
+          this.feedbackType = "success";
+          this.buttonText = "Next question"
         }
         this.$store.commit("setRoundActive", false);
       } else {
