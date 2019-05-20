@@ -22,7 +22,7 @@
         <br>
         <b-row>
           <b-alert v-bind:variant="feedbackType" v-bind:show="showFeedback">{{ feedbackPhrase }}</b-alert>
-          <b-button class="newQuestion">New Question</b-button>
+          <b-button v-if="!this.$store.getters.getRoundActive" v-on:click="buttonClicked()" class="newQuestion">{{ buttonText }}</b-button>
         </b-row>
       </b-col>
     </b-row>
@@ -40,22 +40,17 @@ export default {
   },
   data() {
     return {
-      mainPhrase: "",
-      feedbackPhrase: "",
-      feedbackType: "danger",
+      mainPhrase: "Welcome to the HiLo game!",
+      feedbackPhrase: "Are you ready?",
+      feedbackType: "info",
       showFeedback: true,
-      buttonText: ""
+      buttonText: "Ok!"
     }
-  },
-  created() {
-    this.mainPhrase = "Welcome to the HiLo game!";
-    this.feedbackPhrase = "Are you ready?";
-    this.buttonText = "Ok!"
   },
   methods: {
     buttonClicked() {
-      if (this.gameActive) {
-        this.nextQuestion();
+      if (this.$store.getters.getGameActive) {
+        this.newRound();
       } else {
         //TODO
         // this.$store.commit("resetState");
@@ -66,6 +61,7 @@ export default {
       this.$store.commit("nextQuestion");
       this.$store.commit("nextTurn");
       this.mainPhrase = this.$store.getters.getCurrentQuestion.question;
+      this.showFeedback = false;
       this.$store.commit("setAnswerMin", 0);//Kontrollera
       this.$store.commit("setAnswerMin", 0);//Kontrollera
       this.$store.commit("setRoundActive", true);
