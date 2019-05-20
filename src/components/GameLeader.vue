@@ -64,7 +64,7 @@ export default {
       this.mainPhrase = this.$store.getters.getCurrentQuestion.question;
       this.showFeedback = false;
       this.$store.commit("setAnswerMin", 0);//Kontrollera
-      this.$store.commit("setAnswerMin", 0);//Kontrollera
+      this.$store.commit("setAnswerMax", this.$store.getters.getCurrentQuestion.answer * 2);//Kontrollera
       this.$store.commit("setRoundActive", true);
     },
     checkAnswer(answer) {
