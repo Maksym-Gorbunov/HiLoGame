@@ -37,65 +37,65 @@ export default {
     msg: String
   },
   data() {
-      return {
-        question: "",
-        feedback: "",
-        feedbackType: "danger",
-        showFeedback: false
+    return {
+      question: "",
+      feedback: "",
+      feedbackType: "danger",
+      showFeedback: false
+    }
+  },
+  created() {
+    this.$store.commit("setGameActive", true);
+    this.newRound();
+  },  
+  methods: {
+    newRound() {
+      this.$store.commit("nextQuestion"); 
+      this.$store.commit("nextTurn"); 
+      this.$store.commit("setRoundActive", true);
+      this.question = this.$store.getters.getCurrentQuestion.question;
+      //TODO
+      //Set min/max. Hur löser vi?
+    },
+    checkAnswer(answer) {
+      if (answer > this.$store.getters.getCurrentQuestion.answer) {
+        this.feedback = "Lower!";
+        if (answer < this.$store.getters.getAnswerMax) { //Kontrollera hur vi gör med min/max
+          this.$store.commit("setAnswerMax", answer);          }
+          return false;
+      } else if (answer < this.$store.getters.getCurrentQuestion.answer) {
+        this.feedback = "Higher!";
+        if (answer > this.$store.getters.getAnswerMin) { //Kontrollera hur vi gör med min/max
+          this.$store.commit("setAnswerMin", answer);
+        }
+        return false;
+      } else {
+        return true;
       }
     },
-    created() {
-      this.$store.commit("setGameActive", true);
-      this.newRound();
-    },
-    methods: {
-      newRound() {
-        this.$store.commit("nextQuestion"); 
-        this.$store.commit("nextTurn"); 
-        this.$store.commit("setRoundActive", true);
-        this.question = this.$store.getters.getCurrentQuestion.question;
-        //TODO
-        //Set min/max. Hur löser vi?
-      },
-      checkAnswer(answer) {
-        if (answer > this.$store.getters.getCurrentQuestion.answer) {
-          this.feedback = "Lower!";
-          if (answer < this.$store.getters.getAnswerMax) { //Kontrollera hur vi gör med min/max
-            this.$store.commit("setAnswerMax", answer);
-          }
-          return false;
-        } else if (answer < this.$store.getters.getCurrentQuestion.answer) {
-          this.feedback = "Higher!";
-          if (answer > this.$store.getters.getAnswerMin) { //Kontrollera hur vi gör med min/max
-            this.$store.commit("setAnswerMin", answer);
-          }
-          return false;
+    evaluatePlayerAnswer() {
+      if (this.checkAnswer(answer)) {
+        this.$store.getters.getCurrentPlayer.score++; //Var Gustavs punkt men då jag(Anton) kontrollerar svaret så passar det bäst in här
+        if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
+          this.$store.commit("setGameActive", false);
+          //Vinnarfras?
+          //Knapp för att spela igen?
         } else {
-          return true;
+          this.feedback = "Correct!";
+          //Knapp för att gå till nästa fråga eller automatiskt?
         }
-      },
-    },
-    mounted() {
-      EventBus.$on("answerSent", (answer) => {
-        setTimeout(() => {
-          if (this.checkAnswer(answer)) {
-            this.$store.getters.getCurrentPlayer.score++; //Var Gustavs punkt men då jag(Anton) kontrollerar svaret så passar det bäst in här
-            if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
-              this.$store.commit("setGameActive", false);
-              //Vinnarfras?
-              //Knapp för att spela igen?
-            } else {
-              this.feedback = "Correct!";
-              //Knapp för att gå till nästa fråga eller automatiskt?
-            }
-            this.$store.commit("setRoundActive", false);
-          } else {
-            this.$store.commit("nextTurn");
-          }
-          }, 2000);
-      });
+        this.$store.commit("setRoundActive", false);
+      } else {
+        this.$store.commit("nextTurn");
+      }
     }
-};
+  },
+  mounted() {
+    EventBus.$on("answerSent", (answer) => {
+      this.evaluatePlayerAnswer(answer);
+    });
+  }
+}
 </script>
 
   <!-- Add "scoped" attribute to limit CSS to this component only -->
