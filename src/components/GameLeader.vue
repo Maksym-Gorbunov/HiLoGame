@@ -84,19 +84,22 @@ export default {
       }
       return true;
     },
+    checkIfPlayerWon() {
+      if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
+        this.$store.commit("setGameActive", false);
+        this.mainPhrase = "Congratulations " + this.currentPlayer.name + "! You won!";
+        this.feedbackPhrase = "Play again?";
+        this.buttonText = "Ok!"
+      } else {
+        this.feedbackPhrase = "Correct!";
+        this.feedbackType = "success";
+        this.buttonText = "Next question"
+      }
+    },
     evaluatePlayerAnswer() {
       if (this.checkAnswer(answer)) {
         this.$store.getters.getCurrentPlayer.score++; 
-        if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) {
-          this.$store.commit("setGameActive", false);
-          this.mainPhrase = "Congratulations " + this.currentPlayer.name + "! You won!";
-          this.feedbackPhrase = "Play again?";
-          this.buttonText = "Ok!"
-        } else {
-          this.feedbackPhrase = "Correct!";
-          this.feedbackType = "success";
-          this.buttonText = "Next question"
-        }
+        this.checkIfPlayerWon();
         this.$store.commit("setRoundActive", false);
       } else {
         this.$store.commit("nextTurn");
