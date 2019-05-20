@@ -1,41 +1,51 @@
 <template>
+    <templateFix v-bind:player="this.$store.getters.getBot2" v-bind:guess="guess"/>
 </template>
 
 <script>
+import { EventBus } from '../event-bus.js';
+import templateFix from './templateFix.vue';
+
 export default {
     name: "Bot2",
-    nrOfGuesses: 0,  //Nödvändig?   Gemensam?
-    points: 0,
-    guesses: [],  //Bara för aktuell fråga (även andras svar?), rensa efter rätt svar (Även om det är nån annan)
-                  //...gemensam lista för gissningar som alla kan hantera?
+    points: 0,    
+    components:{
+        templateFix
+    },
     props: {
-    msg: String
+        msg: String
     },
     data() {
         return {
-        text: ''
+        guess: ''
         }
-    }
+    },
     methods: {
-        autoGuess() {            //Ta emot max  eller hämta från frågan och lägga i variabler?
-                                 //Denna spelaren ska gissa mer slumpartat, men hur slumpartat?
+        autoGuess() {            
 
-            let max = 2000000;  //Bestämma max efter antal siffror i svaret eller nåt?
+            let min = this.$store.getters.getAnswerMin;  //Get min and max values from question 
+            let max = this.$store.getters.getAnswerMax;
 
-            //Loop controlling unique guesses, looping when (while) the current guess has already been made
-            do {
-                let guess = randomNr(max);  //Vart kommer min och max från?
-          
-            } while(guesses.includes(guess));  //Funkar detta villkoret?   Om guesses[] är tom? 
-            
-            guesses = guess;  //Egen lista eller gemensam?
+            if(min == null) {
+                min = 1;                  
+            }
 
-            //Vad händer här? hur hanteras gissningen?     return eller skicka?
+            if(max == null) {                
+                max = 1000000;
+            }   
+
+            let guess = this.randomNr(min, max)
+
+            setTimeout(() => {
+                this.guess = guess
+                EventBus.$emit('answerSent', guess);
+            }, 3000);        
+
         },
-        randomNr(max) {
-            return Math.floor(Math.random() * max);
+        randomNr(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-    }
+    },
 };
 </script>
 

@@ -117,7 +117,7 @@ export default {
       this.$store.commit("setQuestions", data);
     },
     sendName(name){
-      this.$store.commit("setPlayerName", name)
+      this.$store.commit("setUserName", name)
     }
   },
   created() {
@@ -136,7 +136,7 @@ export default {
 
 
 
-<style>
+<style scoped>
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, dl, dt, dd, ol, nav ul, nav li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
@@ -615,9 +615,9 @@ input.checkbox:checked:after {
   -webkit-animation-duration: 40s;
   animation-duration: 40s;
   background-color: rgba(255, 255, 255, 0.3);
+
 }
 
-<<<<<<< HEAD
 .colorlib-bubbles li:nth-child(10) {
   left: 90%;
   width: 160px;
@@ -899,15 +899,3 @@ input.checkbox:checked:after {
   }
 }
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
