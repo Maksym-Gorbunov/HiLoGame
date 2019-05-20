@@ -125,6 +125,7 @@ export default {
       this.$router.push({ name: 'game' })
       this.sendName(name)
       this.$store.commit("setGameActive", true);
+      this.$store.commit("initPlayers");
     },
     getDataFromApi(total, difficulty){
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
