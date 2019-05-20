@@ -43,10 +43,10 @@ export default new Vuex.Store({
             state.players.push(state.bot2);
         },
         setAnswerMin(state, value){
-            state.answerMax = value;
+            state.answerMin = value;
         },
         setAnswerMax(state, value){
-            state.answerMin = value;
+            state.answerMax = value;
         },
         setScoreToWin(state, value){
             state.scoreToWin = value;
@@ -71,14 +71,22 @@ export default new Vuex.Store({
             console.log('question:' + data[0].difficulty)
         },
         nextTurn(state){
-            let indexOfCurrentPlayer = state.players.findIndex(i => i.active);
-
-            if (indexOfCurrentPlayer < 2) {
-                state.currentPlayer = state.players[indexOfCurrentPlayer++];
-            }
-            else{
+            if(state.currentPlayer === null){
                 state.currentPlayer = state.players[0];
             }
+            else{
+                let indexOfCurrentPlayer = state.players.findIndex(i => i.active);
+                state.currentPlayer.active = false;
+
+                if (indexOfCurrentPlayer < 2) {
+                    state.currentPlayer = state.players[indexOfCurrentPlayer++];
+                }
+                else{
+                    state.currentPlayer = state.players[0];
+                }
+            }
+
+            state.currentPlayer.active = true;
         },
         nextQuestion(state){
             if(state.currentQuestion == null){
@@ -93,10 +101,10 @@ export default new Vuex.Store({
     },
     getters:{
         getAnswerMin(state){
-            return state.answerMax;
+            return state.answerMin;
         },
         getAnswerMax(state){
-            return state.answerMin;
+            return state.answerMax;
         },
         getScoreToWin(state){
             return state.scoreToWin;
