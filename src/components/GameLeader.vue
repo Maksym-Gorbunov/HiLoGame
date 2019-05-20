@@ -48,10 +48,9 @@ export default {
     }
   },
   created() {
-    // this.mainPhrase = "Welcome to the HiLo game!";
-    // this.feedbackPhrase = "Are you ready?";
-    // this.buttonText = "Ok!"
-    this.newRound();
+    this.mainPhrase = "Welcome to the HiLo game!";
+    this.feedbackPhrase = "Are you ready?";
+    this.buttonText = "Ok!"
   },
   methods: {
     buttonClicked() {
