@@ -1,15 +1,6 @@
 <template>
   <div>
     <GameLeader/>
-<<<<<<< HEAD
-    <!-- <b-container class="bv-example-row">
-        <b-row>
-          <b-col sm="6" offset="3">
-            <QuestionBox />
-          </b-col>
-        </b-row>
-      </b-container> -->
-=======
     <b-container fluid class="text-center">
     <b-row align-v="center">
     <User/>
@@ -17,7 +8,6 @@
     <Bot2/>
     </b-row>
     </b-container>   
->>>>>>> 5339a5224f8132f798f8ceefc52d818d5a80f006
   </div>
 </template>
 
