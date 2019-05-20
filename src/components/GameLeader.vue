@@ -16,12 +16,12 @@
       <b-col col lg="2">
         <b-row>
           <b-card style="max-width: 20rem;">
-            <b-card-text width="100">{{ question }}</b-card-text>
+            <b-card-text width="100">{{ mainPhrase }}</b-card-text>
           </b-card>
         </b-row>
         <br>
         <b-row>
-          <b-alert v-bind:variant="feedbackType" v-bind:show="showFeedback">{{ feedback }}</b-alert>
+          <b-alert v-bind:variant="feedbackType" v-bind:show="showFeedback">{{ feedbackPhrase }}</b-alert>
         </b-row>
       </b-col>
     </b-row>
@@ -39,8 +39,8 @@ export default {
   },
   data() {
     return {
-      question: "",
-      feedback: "",
+      mainPhrase: "",
+      feedbackPhrase: "",
       feedbackType: "danger",
       showFeedback: false
     };
@@ -53,23 +53,21 @@ export default {
     newRound() {
       this.$store.commit("nextQuestion");
       this.$store.commit("nextTurn");
+      this.mainPhrase = this.$store.getters.getCurrentQuestion.question;
+      this.$store.commit("setMinGuess", 0);//Kontrollera
+      this.$store.commit("setMaxGuess", 0);//Kontrollera
       this.$store.commit("setRoundActive", true);
-      this.question = this.$store.getters.getCurrentQuestion.question;
-      //TODO
-      //Set min/max. Hur löser vi?
     },
     checkAnswer(answer) {
       if (answer > this.$store.getters.getCurrentQuestion.answer) {
         this.feedback = "Lower!";
         if (answer < this.$store.getters.getAnswerMax) {
-          //Kontrollera hur vi gör med min/max
           this.$store.commit("setAnswerMax", answer);
         }
         return false;
       } else if (answer < this.$store.getters.getCurrentQuestion.answer) {
         this.feedback = "Higher!";
         if (answer > this.$store.getters.getAnswerMin) {
-          //Kontrollera hur vi gör med min/max
           this.$store.commit("setAnswerMin", answer);
         }
         return false;
