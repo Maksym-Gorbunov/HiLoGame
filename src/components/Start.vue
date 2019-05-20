@@ -92,6 +92,7 @@ export default {
       this.getDataFromApi(total, difficulty)
       this.$router.push({ name: 'game' })
       this.sendName(name)
+      this.$store.commit("setGameActive", true);
     },
     getDataFromApi(total, difficulty){
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
