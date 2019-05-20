@@ -62,7 +62,6 @@ export default {
   },
   watch: {
     currentPlayer() {
-        console.log("test")
         if (!this.$store.getters.getBot1.active) {
             return;
         }
