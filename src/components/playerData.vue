@@ -1,11 +1,6 @@
 <template>
   <div>
     <b-img class="img-responsive" v-if="player.imgURL" v-bind:src="getImgUrl(player.imgURL)"></b-img>
-    <b-img
-      class="img-responsive"
-      v-else-if="player.active"
-      src="http://www.freespins24h.se/wp-content/uploads/2017/02/faq.png">
-    </b-img>
     <div>{{player.name}}</div>
     <div>Score: {{player.score}}</div>
   </div>
