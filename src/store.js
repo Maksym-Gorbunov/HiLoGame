@@ -34,13 +34,17 @@ export default new Vuex.Store({
         players: [],
         questions: [],
         currentPlayer: null,
-        currentQuestion: null
+        currentQuestion: null,
+        data: [] //maks 
     },
     mutations:{
         initPlayers(state){
             state.players.push(state.user);
             state.players.push(state.bot1);
             state.players.push(state.bot2);
+        },
+        setData(state, data){
+            state.data = data;
         },
         setAnswerMin(state, value){
             state.answerMin = value;
@@ -108,6 +112,9 @@ export default new Vuex.Store({
         },
         getScoreToWin(state){
             return state.scoreToWin;
+        },
+        getData(state){
+            return state.data;
         },
         getGameActive(state){
             return state.gameActive;
