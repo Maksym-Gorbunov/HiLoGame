@@ -29,6 +29,9 @@
 		methods: {
 			sendAnswer(e) {
 				EventBus.$emit("answerSent", Number(this.userInput)); //Fixa mer hållbar lösning
+				setTimeout(() => { //FIXA BÄTTRE LÖSNING
+					this.userInput = "";
+				}, 2000);
 			}
 		}
   }  
