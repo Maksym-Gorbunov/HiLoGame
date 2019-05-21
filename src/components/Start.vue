@@ -6,7 +6,7 @@
 		<div class="main-agileinfo">
 			<div class="agileits-top">
 				<form>
-					<input ref="name" class="text" type="text" name="Name" placeholder="Name" required="">
+					<input id="inputName" ref="name" class="text" type="text" name="Name" placeholder="Name" required="">
 					<input ref="score" class="text" type="text" name="Score To Win" placeholder="Score To Win" required="">
 					<select ref="difficulty" name="difficulty">
             <option value="easy">Easy</option>
@@ -16,7 +16,7 @@
 					<div class="wthree-text">
 						<div class="clear"> </div>
 					</div>
-					<input @click.prevent="start()" type="submit" value="START">
+					<input @click.prevent="start()" id="btnStart" type="submit" value="START">
 				</form>
 			</div>
 		</div>
@@ -90,10 +90,41 @@ export default {
     },
     sendName(name){
       this.$store.commit("setUserName", name)
+    },
+    btnListener(){
+      // if($('inputName').html.length>3){
+      //   $("#btnStart").prop("disabled", true)
+
+      // }
+
+
+
+    //   $('.field input').keyup(function() {
+
+    //     var empty = false;
+    //     $('.field input').each(function() {
+    //         if ($(this).val() == '') {
+    //             empty = true;
+    //         }
+    //     });
+
+    //     if (empty) {
+    //         $('.actions input').attr('disabled', true);
+    //     } else {
+    //         $('.actions input').attr('disabled', false);
+    //     }
+    // });
+
+
+
     }
   },
   created() {
     this.hideUrlBarMobile()
+  },
+  mounted() {
+    this.btnListener()
+
   }
 }
 

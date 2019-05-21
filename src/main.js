@@ -8,6 +8,11 @@ import store from './store'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+
+window.$ = require('jquery')
+window.JQuery = require('jquery')
+
+
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
