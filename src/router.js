@@ -15,6 +15,11 @@ export default new Router({
       path: '/game',
       name: 'game',
       component: () => import('./components/Game.vue')
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('./components/Settings.vue')
     }
   ]
 })

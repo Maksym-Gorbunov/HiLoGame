@@ -2,6 +2,7 @@
   <div id="app">
 
 	<div class="main-w3layouts wrapper">
+      <button @click="settings()">settings</button>
 		<h1>High Low Game</h1>
 		<div class="main-agileinfo">
 			<div class="agileits-top">
@@ -52,6 +53,9 @@ export default {
         setTimeout(window.scrollTo(0,1), 0) 
         }, false
       ) 
+    },
+    settings(){
+      this.$router.push({ name: 'settings' })
     },
     start() {
       let name = this.$refs.name.value
