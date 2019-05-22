@@ -58,11 +58,21 @@ function getData(total, difficulty){
   return result  
 }
 
+function getAllData(){
+  return data  
+}
+
 app.get('/', (req, res) => res.send('API'))
 app.get('/data/:total/:difficulty', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5000')
   res.send(getData(req.params.total, req.params.difficulty))
 });
+
+app.get('/data', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5000')
+  res.send(getAllData())
+});
+
 app.listen(port, () => console.log(`API listening on port ${port}!`))
 statistic() 
 

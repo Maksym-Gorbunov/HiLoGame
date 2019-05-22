@@ -34,13 +34,17 @@ export default new Vuex.Store({
         players: [],
         questions: [],
         currentPlayer: null,
-        currentQuestion: null
+        currentQuestion: null,
+        data: [] //maks 
     },
     mutations:{
         initPlayers(state){
             state.players.push(state.user);
             state.players.push(state.bot1);
             state.players.push(state.bot2);
+        },
+        setData(state, data){
+            state.data = data;
         },
         setAnswerMin(state, value){
             state.answerMin = value;
@@ -79,7 +83,7 @@ export default new Vuex.Store({
                 state.currentPlayer.active = false;
 
                 if (indexOfCurrentPlayer < 2) {
-                    state.currentPlayer = state.players[indexOfCurrentPlayer++];
+                    state.currentPlayer = state.players[indexOfCurrentPlayer + 1];
                 }
                 else{
                     state.currentPlayer = state.players[0];
@@ -95,7 +99,7 @@ export default new Vuex.Store({
             else{
                 let indexOfCurrentQuestion = state.questions.findIndex(i => i.question == state.currentQuestion.question);
 
-                state.currentQuestion = state.questions[indexOfCurrentQuestion++];
+                state.currentQuestion = state.questions[indexOfCurrentQuestion + 1];
             }
         }
     },
@@ -108,6 +112,9 @@ export default new Vuex.Store({
         },
         getScoreToWin(state){
             return state.scoreToWin;
+        },
+        getData(state){
+            return state.data;
         },
         getGameActive(state){
             return state.gameActive;
