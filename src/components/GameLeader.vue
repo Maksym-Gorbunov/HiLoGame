@@ -4,6 +4,7 @@
     <b-row>
       <b-col align-self="end">
         <b-button class="rules">Rules</b-button>
+        <b-button class="rules">Restart</b-button>
       </b-col>
     </b-row>
     <b-row class="justify-content-md-center">
