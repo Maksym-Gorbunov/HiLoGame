@@ -25,6 +25,11 @@ export default {
     User,
     Bot1,
     Bot2
+  },
+  created() {
+    if (!this.$store.getters.getGameActive) {
+      this.$router.replace("/");
+    }
   }
 }
 </script>
