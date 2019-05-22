@@ -76,6 +76,7 @@ export default {
       this.$store.commit("initPlayers");
       this.$store.commit("setScoreToWin", score);
       }
+      else {this.$refs.name.placeholder="You have to pick a name!"}
     },
     getDataFromApi(total, difficulty){
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest
