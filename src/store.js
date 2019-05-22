@@ -19,16 +19,37 @@ export default new Vuex.Store({
         },
         bot1: {
             type: "bot",
-            name: "Bot 1",
+            name: "Bot",
             score: 0,
             imgURL: "Robot.png",
             active: false
         },
         bot2: {
             type: "bot",
-            name: "Bot 2",
+            name: "Einstein",
             score: 0,
             imgURL: "Albert.png",
+            active: false
+        },
+        bot3: {
+            type: "bot",
+            name: "Monkey",
+            score: 0,
+            imgURL: "Monkey.png",
+            active: false
+        },
+        bot4: {
+            type: "bot",
+            name: "The thinker",
+            score: 0,
+            imgURL: "Thinker.png",
+            active: false
+        },
+        bot5: {
+            type: "bot",
+            name: "Dwarf",
+            score: 0,
+            imgURL: "Dwarf.png",
             active: false
         },
         players: [],
@@ -130,6 +151,15 @@ export default new Vuex.Store({
         },
         getBot2(state){
             return state.bot2;
+        },
+        getBot3(state){
+            return state.bot3;
+        },
+        getBot4(state){
+            return state.bot4;
+        },
+        getBot5(state){
+            return state.bot5;
         },
         getPlayers(state){
             return state.players;
