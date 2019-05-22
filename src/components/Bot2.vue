@@ -4,6 +4,7 @@
       v-if="this.$store.getters.getBot2.active"
       v-bind:class="{active:this.$store.getters.getBot2.active}"
       id="textarea-no-resize"
+      disabled 
       rows="3"
       no-resize
       v-model="guess"
