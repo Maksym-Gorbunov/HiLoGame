@@ -3,6 +3,9 @@
     <b-img class="img-responsive" v-if="player.imgURL" v-bind:src="getImgUrl(player.imgURL)"></b-img>
     <div>{{player.name}}</div>
     <div>Score: {{player.score}}</div>
+    <div>
+    <b-progress :value="counter" :max="max" show-progress animated></b-progress>
+  </div>
   </div>
 </template>
 
