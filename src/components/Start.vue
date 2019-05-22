@@ -8,7 +8,11 @@
 			<div class="agileits-top">
 				<form>
 					<input id="inputName" ref="name" class="text" type="text" name="Name" placeholder="Name" required="">
-					<input ref="score" class="text" type="text" name="Score To Win" placeholder="Score To Win" required="">
+					<select ref="score" name="Score To Win">
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+          </select>
 					<select ref="difficulty" name="difficulty">
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
