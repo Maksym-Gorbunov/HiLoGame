@@ -152,6 +152,15 @@ export default new Vuex.Store({
         getBot2(state){
             return state.bot2;
         },
+        getBot3(state){
+            return state.bot3;
+        },
+        getBot4(state){
+            return state.bot4;
+        },
+        getBot5(state){
+            return state.bot5;
+        },
         getPlayers(state){
             return state.players;
         },
