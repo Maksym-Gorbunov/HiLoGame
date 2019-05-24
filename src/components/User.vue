@@ -37,7 +37,7 @@
 		methods: {
 			sendAnswer() {
 				this.answerSent = true;
-				EventBus.$emit("answerSent", this.userInput);
+				EventBus.$emit("answerSent", Number(this.userInput));
 			}
 		},
 		watch: {
