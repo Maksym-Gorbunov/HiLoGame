@@ -7,8 +7,12 @@
 		<div class="main-agileinfo">
 			<div class="agileits-top">
 				<form>
-					<input id="inputName" ref="name" class="text" type="text" name="Name" placeholder="Name" required="">
-					<input ref="score" class="text" type="text" name="Score To Win" placeholder="Score To Win" required="">
+					<input id="inputName" ref="name" class="text" type="text" name="Name" placeholder="Name" required="" :maxlength="12">
+					<select ref="score" name="Score To Win">
+            <option value="3">3</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+          </select>
 					<select ref="difficulty" name="difficulty">
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
@@ -58,6 +62,8 @@ export default {
       this.$router.push({ name: 'settings' })
     },
     start() {
+
+      if(this.$refs.name.value){
       let name = this.$refs.name.value
       name = name.charAt(0).toUpperCase() + name.slice(1);
       let score = this.$refs.score.value
@@ -69,6 +75,8 @@ export default {
       this.$store.commit("setGameActive", true);
       this.$store.commit("initPlayers");
       this.$store.commit("setScoreToWin", score);
+      }
+      else {this.$refs.name.placeholder="You have to pick a name!"}
     },
     getDataFromApi(total, difficulty){
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest

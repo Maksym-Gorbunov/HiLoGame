@@ -1,14 +1,18 @@
 <template>
   <b-col sm="1" md="3" lg="4" align-self="center">
+    <div class="speech-bubble" v-if="this.$store.getters.getBot1.active" v-bind:class="{active:this.$store.getters.getBot1.active}">
+			<b-form-input v-model="guess" type="number" disabled></b-form-input>
+		</div>
+    <!--
     <b-form-textarea
       v-if="this.$store.getters.getBot1.active"
       v-bind:class="{active:this.$store.getters.getBot1.active}"
       id="textarea-no-resize"
-      placeholder="Fixed height textarea"
-      rows="3"
+      disabled
+      rows="1"
       no-resize
       v-model="guess"
-    ></b-form-textarea>
+    ></b-form-textarea> -->
     <playerData v-bind:player="this.$store.getters.getBot1" v-bind:guess="guess"/>
   </b-col>
 </template>
@@ -71,5 +75,25 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.speech-bubble {
+	position: relative;
+	background: #ffffff;
+	border-radius: .4em;
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 16px solid transparent;
+	border-top-color: #ffffff;
+	border-bottom: 0;
+	border-right: 0;
+	margin-left: -8px;
+	margin-bottom: -16px;
+}
 </style>

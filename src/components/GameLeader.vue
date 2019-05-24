@@ -4,20 +4,25 @@
     <b-row>
       <b-col align-self="end">
         <b-button class="rules">Rules</b-button>
+        <b-button class="rules">Restart</b-button>
       </b-col>
     </b-row>
     <b-row class="justify-content-md-center">
       <b-col col lg="2">
-        <b-img
+        <b-img class="float-right"
           v-bind:src="getImgUrl()"
-          height="400px"
+          height="400px" 
         ></b-img>
       </b-col>
       <b-col col lg="2">
         <b-row>
-          <b-card style="max-width: 20rem;">
+          <!--
+            <b-card style="max-width: 20rem;">
             <b-card-text v-html="mainPhrase" width="100"></b-card-text>
           </b-card>
+          -->
+          <div class="speech-bubble" v-html="mainPhrase" width="100">
+          </div>
         </b-row>
         <br>
         <b-row>
@@ -234,5 +239,31 @@ img {
 
 .boxed {
   border: 1px solid green;
+}
+
+.speech-bubble {
+	position: relative;
+	background: #ffffff;
+	border-radius: .4em;
+  width: 260px;
+    padding: 40px 10px;
+    margin: 1em 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 100%;
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 7px solid transparent;
+	border-right-color: #ffffff;
+	border-left: 0;
+	margin-top: -7px;
+	margin-left: -7px;
 }
 </style>
