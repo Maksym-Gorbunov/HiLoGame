@@ -12,12 +12,8 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.20",
     "core-js": "^2.6.5",
-<<<<<<< HEAD
     "cors": "^2.8.5",
     "mongodb": "^3.2.5",
-=======
-    "jquery": "^3.4.1",
->>>>>>> 8a13892ee68fdfe3e5d31d2d8d5335bdc0031860
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
     "vuex": "^3.1.1",

@@ -64,15 +64,17 @@ async function updateQuestionInDB(item){
   })
 }
 
+// async function deleteQuestionCollection(fileJson){
+//   const questions = await loadQuestionsCollection();
+//   questions.remove({}, (err, result) => {
+//   })
+// }
+
 async function deleteQuestionCollection(fileJson){
   const questions = await loadQuestionsCollection();
-  questions.remove({}, (err, result) => {
+  questions.deleteMany({}, (err, result) => {
   })
 }
-
-// async function addQuestionToDB(item){
-//   console.log(item)
-// }
 
 
 /* Filter data by difficulty and amount */
