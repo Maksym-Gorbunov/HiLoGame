@@ -80,6 +80,7 @@ export default {
           if (xhr.status == 200) {
             var data = JSON.parse(xhr.responseText)
             that.sendData(data)
+            console.log(data)
           }
           if (xhr.status == 500) {
             console.log("serverfel");
@@ -96,40 +97,33 @@ export default {
     sendName(name){
       this.$store.commit("setUserName", name)
     },
-    btnListener(){
-      // if($('inputName').html.length>3){
-      //   $("#btnStart").prop("disabled", true)
-
-      // }
-
-
-
-    //   $('.field input').keyup(function() {
-
-    //     var empty = false;
-    //     $('.field input').each(function() {
-    //         if ($(this).val() == '') {
-    //             empty = true;
-    //         }
-    //     });
-
-    //     if (empty) {
-    //         $('.actions input').attr('disabled', true);
-    //     } else {
-    //         $('.actions input').attr('disabled', false);
-    //     }
-    // });
-
-
-
+    getAllDataFromApi() {
+      var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+      var apiUrl = `http://localhost:3000/data`;
+      var xhr = new XMLHttpRequest();
+      let that = this;
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
+            let data = JSON.parse(xhr.responseText);
+            that.$store.commit('setData', data)
+          }
+          if (xhr.status == 500) {
+            console.log("serverfel");
+          }
+        }
+      };
+      xhr.open("GET", apiUrl);
+      xhr.responseType = "json";
+      xhr.send();
     }
+  
   },
   created() {
     this.hideUrlBarMobile()
+    this.getAllDataFromApi()
   },
   mounted() {
-    this.btnListener()
-
   }
 }
 

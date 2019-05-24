@@ -46,6 +46,9 @@ export default new Vuex.Store({
         setData(state, data){
             state.data = data;
         },
+        deleteDataItem(state, item){
+            state.data = state.data.filter(function(e) { return e !== item })
+        },
         setAnswerMin(state, value){
             state.answerMin = value;
         },
