@@ -26,6 +26,11 @@ export default {
     Bot1,
     Bot2
   },
+  methods: {
+    restart() {
+      this.$router.replace("/");
+    }
+  },
   created() {
     if (!this.$store.getters.getGameActive) {
       this.$router.replace("/");
