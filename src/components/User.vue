@@ -1,5 +1,5 @@
 <template>
-	<b-col sm="1" md="3" lg="4" align-self="center">
+	<b-col>
 		<div class="speech-bubble" v-if="activePlayer" v-bind:class="{active: activePlayer}">
 			<b-input-group>
 			<b-form-input v-model="userInput" type="number" v-bind:disabled="answerSent"></b-form-input>
@@ -8,6 +8,7 @@
 			</b-input-group-append>
 			</b-input-group>
 		</div>
+		<br>
 		<playerData v-bind:player="this.$store.getters.getUser"/>
 	</b-col>
 </template>

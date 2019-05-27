@@ -25,7 +25,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="colorlibcopy-agile">
+		<div class="colorlibcopy-agile align-text-bottom">
 			<p>© 2019 IT-Högskolan &nbsp;|&nbsp; Source code on <a href="https://github.com/Maksym-Gorbunov/HiLoGame" target="_blank">GitHub</a></p>
 		</div>
 		<ul class="colorlib-bubbles">
@@ -154,6 +154,15 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
@@ -907,5 +916,13 @@ input.checkbox:checked:after {
   option{
     background-color: #ccc;
   }
+
+  .purple-square-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
 }
 </style>
