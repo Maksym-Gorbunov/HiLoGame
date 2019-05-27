@@ -27,9 +27,6 @@ export default {
   components: {
     playerData
   },
-  props: {
-    msg: String
-  },
   data() {
     return {
       guess: ""
