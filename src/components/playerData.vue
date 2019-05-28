@@ -10,6 +10,14 @@
 </template>
 
 <script>
+/*
+Ska jag ha startTimer metod här?
+setTimeout()
+Sätt COUNTER till MAX i början på metod?
+Ska jag ha små setTimeout() i metoden som decresear counter--?
+Uppdatera getImgURL metoden?
+Fler imports?
+*/
 import UserImage from "@/assets/User.png";
 import RobotImage from "@/assets/Robot.png";
 import AlbertImage from "@/assets/Albert.png";
