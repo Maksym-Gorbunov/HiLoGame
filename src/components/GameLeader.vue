@@ -28,6 +28,7 @@
       </b-col>
     </b-row>
     <b-row>&nbsp;</b-row>
+    <b-progress :value="this.$store.state.timerValue" :max="this.$store.state.timerMax"></b-progress>
   </b-container>
 </template>
   
@@ -66,6 +67,7 @@ export default {
     newRound() {
       this.$store.commit("nextQuestion");
       this.$store.commit("nextTurn");
+      this.$store.commit("startTimer");
       this.mainPhrase = this.$store.getters.getCurrentQuestion.question;
       this.showFeedback = false;
       this.$store.commit("setAnswerMin", 0);//Kontrollera
@@ -112,6 +114,7 @@ export default {
         this.showFeedback = true;
         setTimeout(() => {
           this.$store.commit("nextTurn");
+          this.$store.commit("startTimer");
           this.showFeedback = false;
         }, 2000);
       }
