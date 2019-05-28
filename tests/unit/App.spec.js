@@ -7,10 +7,8 @@ var assert = require('assert');
 describe('App.vue', ()=>{
 
     const wrapper = shallowMount(App);
+
     it('name should be equal to \'app\'', ()=>{
-        console.log(wrapper.name());
         assert.equal(wrapper.name(), 'app');
-
-
     })
 })
