@@ -1,50 +1,24 @@
 <template>
-  <!-- <div>
-    <h1>RESULTS</h1>
-  </div>        -->
-  <!-- Modal, shows on game finish -->
-    <div class="modal fade" id="modal" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Yahtzee</h4>
-          </div>
-          <div class="modal-body">
-            <p>Result: 666</p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="reset"
-              class="btn btn-default"
-              id="play_again_btn"
-              <!-- @click="playAgain" -->
-            >Play Again</button>
-          </div>
-        </div>
+  <div>
+    <b-modal v-if="!this.store.getters.getGameActive" showModal ref="my-modal" hide-footer title="Using Component Methods">
+      <div class="d-block text-center">
+        <h3>Hello From My Modal!</h3>
       </div>
-    </div>
+      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button>
+      <b-button class="mt-2" variant="outline-warning" block @click="toggleModal">Toggle Me</b-button>
+    </b-modal>
+  </div>
 </template>
 
 <script>
-
-
-export default {
-  name: "Results",
-  components:{
-      
-  },
-  props: {
-  },
-  data() {
-      return {
-      guess: ''
+  export default {
+    methods: {
+      showModal() {
+        this.$refs['my-modal'].show()
+      },
+      hideModal() {
+        this.$refs['my-modal'].hide()
       }
-  },    
-  methods: {
+    }
   }
-}
 </script>
-
-<style>
-
-</style>

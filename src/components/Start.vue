@@ -2,7 +2,6 @@
   <div id="app">
 
 	<div class="main-w3layouts wrapper">
-      <button @click="settings()">settings</button>
 		<h1>High Low Game</h1>
 		<div class="main-agileinfo">
 			<div class="agileits-top">
@@ -25,6 +24,7 @@
 				</form>
 			</div>
 		</div>
+    <button @click="settings()">Settings</button>
 		<div class="colorlibcopy-agile align-text-bottom">
 			<p>© 2019 IT-Högskolan &nbsp;|&nbsp; Source code on <a href="https://github.com/Maksym-Gorbunov/HiLoGame" target="_blank">GitHub</a></p>
 		</div>
