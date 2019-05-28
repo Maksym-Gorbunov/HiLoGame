@@ -1,11 +1,5 @@
 <template>
   <b-container fluid class="text-center">
-    <b-row>
-      <b-col align-self="end">
-        <b-button class="rules">Rules</b-button>
-        <b-button class="rules">Restart</b-button>
-      </b-col>
-    </b-row>
     <b-row class="justify-content-md-center">
       <b-col cols="6" lg="2">
         <b-img v-bind:src="getImgUrl()"></b-img>
@@ -93,6 +87,7 @@ export default {
     checkIfPlayerWon() {
       if (this.$store.getters.getCurrentPlayer.score == this.$store.getters.getScoreToWin) { //Ändra till === när vi fixar number secure
         this.$store.commit("setGameActive", false);
+        this.$parent.showModal();
         this.mainPhrase = "Congratulations " + this.$store.getters.getCurrentPlayer.name + "! You won!";
         this.feedbackPhrase = "Play again?";
         this.buttonText = "Ok!"
