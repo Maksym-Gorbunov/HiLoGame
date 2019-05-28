@@ -1,6 +1,5 @@
 <template>
   <b-container fluid class="text-center">
-    <b-row align-v="center"></b-row>
     <b-row>
       <b-col align-self="end">
         <b-button class="rules">Rules</b-button>
@@ -8,13 +7,10 @@
       </b-col>
     </b-row>
     <b-row class="justify-content-md-center">
-      <b-col col lg="2">
-        <b-img class="float-right"
-          v-bind:src="getImgUrl()"
-          height="400px" 
-        ></b-img>
+      <b-col cols="6" lg="2">
+        <b-img v-bind:src="getImgUrl()"></b-img>
       </b-col>
-      <b-col col lg="2">
+      <b-col cols="6" lg="2">
         <b-row>
           <!--
             <b-card style="max-width: 20rem;">

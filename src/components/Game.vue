@@ -1,13 +1,19 @@
 <template>
   <div>
     <GameLeader/>
-    <b-container fluid class="text-center">
-    <b-row align-v="center">
-    <User/>
-    <Bot1/>
-    <Bot2/>
-    </b-row>
-    </b-container>   
+    <b-container fluid>
+      <b-row class="some-row align-items-end">
+        <b-col md>
+          <User/>
+        </b-col>
+        <b-col md>
+          <Bot1/>
+        </b-col>
+        <b-col md>
+          <Bot2/>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -40,6 +46,15 @@ export default {
 </script>
 
 <style>
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
 #app {
   height: 100%;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -55,5 +70,9 @@ export default {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+
+.some-row {
+  min-height: 5rem;
 }
 </style>

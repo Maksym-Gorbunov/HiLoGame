@@ -1,18 +1,9 @@
 <template>
-  <b-col sm="1" md="3" lg="4" align-self="center">
+  <b-col>
     <div class="speech-bubble" v-if="this.$store.getters.getBot1.active" v-bind:class="{active:this.$store.getters.getBot1.active}">
 			<b-form-input v-model="guess" type="number" disabled></b-form-input>
 		</div>
-    <!--
-    <b-form-textarea
-      v-if="this.$store.getters.getBot1.active"
-      v-bind:class="{active:this.$store.getters.getBot1.active}"
-      id="textarea-no-resize"
-      disabled
-      rows="1"
-      no-resize
-      v-model="guess"
-    ></b-form-textarea> -->
+    <br>
     <playerData v-bind:player="this.$store.getters.getBot1" v-bind:guess="guess"/>
   </b-col>
 </template>
