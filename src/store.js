@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        timerMax: 100,
+        timerValue: 100,
         answerMin: null,
         answerMax: null,
         scoreToWin: 0,
@@ -113,7 +115,6 @@ export default new Vuex.Store({
                     state.currentPlayer = state.players[0];
                 }
             }
-
             state.currentPlayer.active = true;
         },
         nextQuestion(state){
@@ -125,6 +126,17 @@ export default new Vuex.Store({
 
                 state.currentQuestion = state.questions[indexOfCurrentQuestion + 1];
             }
+        },
+        startTimer(state){
+            state.timerValue = 100;
+            var loop = setInterval(() => {
+                if(state.timerValue == 0){
+                    clearInterval(loop);
+                }
+                else{
+                    state.timerValue -= 1;
+                }
+            }, 50);
         }
     },
     getters:{

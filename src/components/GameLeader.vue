@@ -1,20 +1,10 @@
 <template>
   <b-container fluid class="text-center">
-    <b-row align-v="center"></b-row>
-    <b-row>
-      <b-col align-self="end">
-        <b-button class="rules">Rules</b-button>
-        <b-button class="rules">Restart</b-button>
-      </b-col>
-    </b-row>
     <b-row class="justify-content-md-center">
-      <b-col col lg="2">
-        <b-img class="float-right"
-          v-bind:src="getImgUrl()"
-          height="400px" 
-        ></b-img>
+      <b-col cols="6" lg="2">
+        <b-img v-bind:src="getImgUrl()"></b-img>
       </b-col>
-      <b-col col lg="2">
+      <b-col cols="6" lg="2">
         <b-row>
           <!--
             <b-card style="max-width: 20rem;">
@@ -32,6 +22,7 @@
       </b-col>
     </b-row>
     <b-row>&nbsp;</b-row>
+    <b-progress :value="this.$store.state.timerValue" :max="this.$store.state.timerMax"></b-progress>
   </b-container>
 </template>
   
@@ -70,6 +61,7 @@ export default {
     newRound() {
       this.$store.commit("nextQuestion");
       this.$store.commit("nextTurn");
+      this.$store.commit("startTimer");
       this.mainPhrase = this.$store.getters.getCurrentQuestion.question;
       this.showFeedback = false;
       this.$store.commit("setAnswerMin", 0);//Kontrollera
@@ -97,6 +89,7 @@ export default {
     checkIfPlayerWon() {
       if (this.$store.getters.getCurrentPlayer.score == this.$store.getters.getScoreToWin) { //Ändra till === när vi fixar number secure
         this.$store.commit("setGameActive", false);
+        this.$parent.showModal();
         this.mainPhrase = "Congratulations " + this.$store.getters.getCurrentPlayer.name + "! You won!";
         this.feedbackPhrase = "Play again?";
         this.buttonText = "Ok!"
@@ -116,6 +109,7 @@ export default {
         this.showFeedback = true;
         setTimeout(() => {
           this.$store.commit("nextTurn");
+          this.$store.commit("startTimer");
           this.showFeedback = false;
         }, 2000);
       }
