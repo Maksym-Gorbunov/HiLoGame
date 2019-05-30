@@ -39,7 +39,7 @@ export default {
         var tr, tr_answer, tr_question, tr_difficulty;
         tr = document.getElementById(this.item._id);
         tr.childNodes[4].childNodes[1].classList.add("disabled");
-        tr_question = tr.childNodes[1].innerHTML;
+        tr_question = tr.childNodes[1].innerText;
         tr_difficulty = tr.childNodes[2].innerHTML;
         tr_answer = tr.childNodes[3].innerText;
         console.log(tr_answer);
@@ -49,7 +49,7 @@ export default {
         $("header").removeClass("disabledHeader");
         let new_tr = document.getElementById(this.item._id);
         new_tr.childNodes[4].childNodes[1].classList.remove("disabled");
-        let new_question = new_tr.childNodes[1].innerHTML;
+        let new_question = new_tr.childNodes[1].innerText;
         let new_difficulty = new_tr.childNodes[2].innerHTML;
         let new_answer = new_tr.childNodes[3].innerText;
         this.item.question = new_question;

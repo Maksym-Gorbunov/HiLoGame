@@ -4,7 +4,6 @@
     <div>{{player.name}}</div>
     <div>Score: {{player.score}}</div>
     <div>
-    <b-progress :value="counter" :max="max" show-progress animated></b-progress>
   </div>
   </div>
 </template>
@@ -46,7 +45,7 @@ export default {
 }
 
 img {
-  height: 250px;
+  height: 200px;
   padding-top: 10px;
 }
 </style>

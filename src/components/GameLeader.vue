@@ -1,22 +1,11 @@
 <template>
   <b-container fluid class="text-center">
-    <b-row>
-      <b-col align-self="end">
-        <b-button class="rules">Rules</b-button>
-        <b-button class="rules">Restart</b-button>
-      </b-col>
-    </b-row>
     <b-row class="justify-content-md-center">
       <b-col cols="6" lg="2">
         <b-img v-bind:src="getImgUrl()"></b-img>
       </b-col>
       <b-col cols="6" lg="2">
         <b-row>
-          <!--
-            <b-card style="max-width: 20rem;">
-            <b-card-text v-html="mainPhrase" width="100"></b-card-text>
-          </b-card>
-          -->
           <div class="speech-bubble" v-html="mainPhrase" width="100">
           </div>
         </b-row>
@@ -28,6 +17,7 @@
       </b-col>
     </b-row>
     <b-row>&nbsp;</b-row>
+    <b-progress :value="this.$store.state.timerValue" :max="this.$store.state.timerMax"></b-progress>
   </b-container>
 </template>
   
@@ -66,6 +56,7 @@ export default {
     newRound() {
       this.$store.commit("nextQuestion");
       this.$store.commit("nextTurn");
+      this.$store.commit("startTimer");
       this.mainPhrase = this.$store.getters.getCurrentQuestion.question;
       this.showFeedback = false;
       this.$store.commit("setAnswerMin", 0);//Kontrollera
@@ -93,6 +84,7 @@ export default {
     checkIfPlayerWon() {
       if (this.$store.getters.getCurrentPlayer.score == this.$store.getters.getScoreToWin) { //Ändra till === när vi fixar number secure
         this.$store.commit("setGameActive", false);
+        this.$parent.showModal();
         this.mainPhrase = "Congratulations " + this.$store.getters.getCurrentPlayer.name + "! You won!";
         this.feedbackPhrase = "Play again?";
         this.buttonText = "Ok!"
@@ -112,6 +104,7 @@ export default {
         this.showFeedback = true;
         setTimeout(() => {
           this.$store.commit("nextTurn");
+          this.$store.commit("startTimer");
           this.showFeedback = false;
         }, 2000);
       }
@@ -132,65 +125,9 @@ export default {
 
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-
-.imgDiv {
-  padding: 3rem;
-}
 
 img {
   height: 300px;
-}
-
-.jumbotron {
-  background: #ee0979; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #ff6a00,
-    #ee0979
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #ff6a00,
-    #ee0979
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  background-size: cover;
-  height: 100vh;
-  width: 100vh;
-}
-
-.submit {
-  background: #000000; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-
-.submit:hover {
-  cursor: pointer;
-  box-shadow: 0 0.4rem 1.4rem 0 rgba(86, 185, 235, 0.5);
-  transform: translateY(-0.1rem);
-  transition: transform 150ms;
 }
 
 .rules {
@@ -246,7 +183,7 @@ img {
     margin: 1em 0;
     text-align: center;
     font-weight: bold;
-    font-size: 100%;
+    font-size: 13px;
 }
 
 .speech-bubble:after {
