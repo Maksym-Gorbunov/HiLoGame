@@ -1,5 +1,6 @@
 module.exports = {
   env: {
-    mocha: true
+    mocha: true,
+    chai: true
   }
 }
