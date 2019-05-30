@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-img class="img-responsive" v-if="player.imgURL" v-bind:src="getImgUrl(player.imgURL)"></b-img>
+    <b-img class="mx-auto d-none d-md-block" v-if="player.imgURL" v-bind:src="getImgUrl(player.imgURL)"></b-img>
     <div>{{player.name}}</div>
     <div>Score: {{player.score}}</div>
     <div>
@@ -45,7 +45,7 @@ export default {
 }
 
 img {
-  height: 250px;
+  height: 200px;
   padding-top: 10px;
 }
 </style>

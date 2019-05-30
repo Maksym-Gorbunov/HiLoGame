@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--
     <div>
   <b-button v-b-modal.modal-2 >Launch demo modal</b-button>
 
@@ -19,6 +20,7 @@
         <b-button class="restart" @click="restart()">Restart</b-button>
       </b-col>
     </b-row>
+    -->
     <GameLeader/>
     <b-container fluid>
       <b-row class="some-row align-items-end">
@@ -34,7 +36,6 @@
       </b-row>
     </b-container>
     </div>
-  </div>
 </template>
 
 <script>
