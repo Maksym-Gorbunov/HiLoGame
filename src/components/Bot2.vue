@@ -14,7 +14,8 @@
       v-model="guess"
     ></b-form-textarea> -->
     <br>
-    <playerData v-bind:player="this.$store.getters.getBot2" v-bind:guess="guess"/>
+    <!-- <playerData v-bind:player="this.$store.getters.getBot2" v-bind:guess="guess"/> -->
+    <playerData v-bind:player="this.$store.getters.getPlayers[2]" v-bind:guess="guess"/>
   </b-col>
 </template>
 

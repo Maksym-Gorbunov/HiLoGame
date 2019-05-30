@@ -17,6 +17,21 @@
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
+          <select ref="bot1_name" name="Bot1">
+            <option value="Bot">Bot</option>
+            <option value="Einstein">Einstein</option>
+            <option value="Monkey">Monkey</option>
+            <option value="The thinker">The thinker</option>
+            <option value="Dwarf">Dwarf</option>
+          </select>
+          <select ref="bot2_name" name="Bot1">
+            <option value="Bot">Bot</option>
+            <option value="Einstein">Einstein</option>
+            <option value="Monkey">Monkey</option>
+            <option value="The thinker">The thinker</option>
+            <option value="Dwarf">Dwarf</option>
+          </select>
+					
 					<div class="wthree-text">
 						<div class="clear"> </div>
 					</div>
@@ -68,12 +83,19 @@ export default {
       name = name.charAt(0).toUpperCase() + name.slice(1);
       let score = this.$refs.score.value
       let difficulty = this.$refs.difficulty.value
+      let bot1_name = this.$refs.bot1_name.value
+      let bot2_name = this.$refs.bot2_name.value
+      let players = {
+        userName: name,
+        bot1Name: bot1_name,
+        bot2Name: bot2_name 
+      }
       let total = (score * 3) - 2
       this.getDataFromApi(total, difficulty)
       this.$router.push({ name: 'game' })
       this.sendName(name)
       this.$store.commit("setGameActive", true);
-      this.$store.commit("initPlayers");
+      this.$store.commit("initPlayers", players);
       this.$store.commit("setScoreToWin", score);
       }
       else {this.$refs.name.placeholder="You have to pick a name!"}
@@ -88,7 +110,7 @@ export default {
           if (xhr.status == 200) {
             var data = JSON.parse(xhr.responseText)
             that.sendData(data)
-            console.log(data)
+            // console.log(data)
           }
           if (xhr.status == 500) {
             console.log("serverfel");

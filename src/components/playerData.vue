@@ -12,6 +12,9 @@
 import UserImage from "@/assets/User.png";
 import RobotImage from "@/assets/Robot.png";
 import AlbertImage from "@/assets/Albert.png";
+import DwarfImage from "@/assets/Dwarf.png";
+import ThinkerImage from "@/assets/Thinker.png";
+import MonkeyImage from "@/assets/Monkey.png";
 import PlayerDefault from "@/assets/PlayerDefault.png";
 
 export default {
@@ -31,6 +34,12 @@ export default {
           return AlbertImage;
         case "Robot.png":
           return RobotImage;
+        case "Dwarf.png":
+          return DwarfImage;
+        case "Thinker.png":
+          return ThinkerImage;
+        case "Monkey.png":
+          return MonkeyImage;
         default:
           return PlayerDefault;
       }

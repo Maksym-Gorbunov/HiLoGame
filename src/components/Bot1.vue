@@ -4,7 +4,8 @@
 			<b-form-input v-model="guess" type="number" disabled></b-form-input>
 		</div>
     <br>
-    <playerData v-bind:player="this.$store.getters.getBot1" v-bind:guess="guess"/>
+    <!-- <playerData v-bind:player="this.$store.getters.getBot1" v-bind:guess="guess"/> -->
+    <playerData v-bind:player="this.$store.getters.getPlayers[1]" v-bind:guess="guess"/>
   </b-col>
 </template>
 

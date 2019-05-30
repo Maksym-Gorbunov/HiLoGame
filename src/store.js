@@ -61,10 +61,58 @@ export default new Vuex.Store({
         data: [] //maks 
     },
     mutations:{
-        initPlayers(state){
+        initPlayers(state, players){
+            console.log('initPlayers...')
+            console.log(players.userName)
+            console.log(players.bot1Name)
+            console.log(players.bot2Name)
+            // can delete set and get username in store.js, dont need to call set username in start.vue
+
+            state.user.name = players.userName;
             state.players.push(state.user);
-            state.players.push(state.bot1);
-            state.players.push(state.bot2);
+
+            switch(players.bot1Name){
+                case "Bot":
+                    state.players.push(state.bot1)
+                    break
+                case "Einstein":
+                    state.players.push(state.bot2)
+                    break
+                case "Monkey":
+                    state.players.push(state.bot3)
+                    break
+                case "The thinker":
+                    state.players.push(state.bot4)
+                    break
+                case "Dwarf":
+                    state.players.push(state.bot5)
+                    break
+                default: break
+            }
+
+            switch(players.bot2Name){
+                case "Bot":
+                    state.players.push(state.bot1)
+                    break
+                case "Einstein":
+                    state.players.push(state.bot2)
+                    break
+                case "Monkey":
+                    state.players.push(state.bot3)
+                    break
+                case "The thinker":
+                    state.players.push(state.bot4)
+                    break
+                case "Dwarf":
+                    state.players.push(state.bot5)
+                    break
+                default: break
+            }
+
+            console.log("<<<"+ state.players[0].name)
+            console.log("<<<"+ state.players[1].name)
+            console.log("<<<"+ state.players[2].name)
+            // state.players.push(state.bot2);
         },
         setData(state, data){
             state.data = data;
@@ -92,13 +140,13 @@ export default new Vuex.Store({
         },
         setUserName(state, name){
             state.user.name = name;
-            console.log(state.user.name);
+            // console.log(state.user.name);
         },
         setQuestions(state, data){
             state.questions = data;
-            console.log('question:' + data[0].question)
-            console.log('question:' + data[0].answer)
-            console.log('question:' + data[0].difficulty)
+            // console.log('question:' + data[0].question)
+            // console.log('question:' + data[0].answer)
+            // console.log('question:' + data[0].difficulty)
         },
         nextTurn(state){
             if(state.currentPlayer === null){
