@@ -154,6 +154,9 @@ export default new Vuex.Store({
             // console.log('question:' + data[0].answer)
             // console.log('question:' + data[0].difficulty)
         },
+        setTimeout(state, data){
+            state.timeout = data;
+        },
         nextTurn(state){
             if(state.currentPlayer === null){
                 state.currentPlayer = state.players[0];
@@ -190,13 +193,14 @@ export default new Vuex.Store({
                 else{
                     state.timerValue -= 1;
                 }
-            }, 50);
+            }, 70);
         },
         stopTimer(state){
             clearInterval(state.timer);
         },
         resetTimer(state) {
             state.timerValue = 100;
+            state.timeout = false;
         }
     },
     getters:{
@@ -250,6 +254,9 @@ export default new Vuex.Store({
         },
         getCurrentQuestion(state){
             return state.currentQuestion;
+        },
+        getTimeout(state){
+            return state.timeout;
         }
     }
 })
