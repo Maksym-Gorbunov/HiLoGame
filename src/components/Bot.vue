@@ -23,7 +23,8 @@
         },
         data() {
             return {
-            guess: ""
+            guess: undefined,
+            answerSent: false
             };
         },
         methods: {
@@ -45,30 +46,30 @@
                     max = 1000000;
                 }
                 
-                switch (this.name) {   //Funkar this.name? eller måste man ha getCurrentPlayer????
+                switch (this.bot.name) {   //Funkar this.name? eller måste man ha getCurrentPlayer????
                     case "Bot":
-                        answerTime = randomNr(1000, 2000);
-                        guess = botBot(difficulty, min, max, middle);
+                        answerTime = this.randomNr(1000, 2000);
+                        guess = this.botBot(difficulty, min, max, middle);
                         break;
 
                     case "Einstein":
-                        answerTime = randomNr(0, 1000);
-                        guess = botEinstein(difficulty, min, max, middle);
+                        answerTime = this.randomNr(0, 1000);
+                        guess = this.botEinstein(difficulty, min, max, middle);
                         break;
 
                     case "Monkey":  //Quick but random
-                        answerTime = randomNr(0, 1000);
-                        guess = botMonkey(difficulty, min, max, middle);
+                        answerTime = this.randomNr(0, 1000);
+                        guess = this.botMonkey(difficulty, min, max, middle);
                         break;
 
                     case "The thinker":  //Very slow but good thinker
-                        answerTime = randomNr(4000, 6000);
-                        guess = botTheThinker(difficulty, min, max, middle);
+                        answerTime = this.randomNr(4000, 6000);
+                        guess = this.botTheThinker(difficulty, min, max, middle);
                         break;
 
                     case "Dwarf":
-                        answerTime = randomNr(1500, 2500);
-                        guess = botDwarf(difficulty, min, max, middle);
+                        answerTime = this.randomNr(1500, 2500);
+                        guess = this.botDwarf(difficulty, min, max, middle);
                         break;
                 
                     default:
@@ -85,6 +86,7 @@
 
                 setTimeout(() => {
                     this.guess = guess;
+                    this.answerSent = true;
                     EventBus.$emit("answerSent", guess);
                 }, answerTime);
             },
@@ -202,14 +204,15 @@
             }
         },
         computed: {
-            currentPlayer() {
-                return this.$store.getters.getCurrentPlayer;
+            activePlayer() {
+                return this.bot.active;
             }
         },
         watch: {
-            currentPlayer() {
-                if (!this.$store.getters.getCurrentPlayer.active) {    //TODO: funkar getCurrentPlayer istället för getBot1???
-                    this.guess = "";//FIXA BÄTTRE LÖSNING
+            activePlayer() {
+                if (!this.activePlayer) {
+                    this.guess = undefined;
+                    this.answerSent = false;
                     return;
                 }
                 this.autoGuess(); 
