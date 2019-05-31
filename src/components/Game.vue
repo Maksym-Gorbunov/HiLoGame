@@ -60,15 +60,9 @@ export default {
       this.$refs.resultsModal.showModal();
     }
   },
-  // mounted() {
-  //     this.$refs.resultsModal.showModal();
-  //   },
   created() {
-    
-    console.log(fungerar)
     if (!this.$store.getters.getGameActive) {
       this.$router.replace("/");
-
     }
   },
 }
