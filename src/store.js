@@ -13,6 +13,7 @@ export default new Vuex.Store({
         scoreToWin: 0,
         gameActive: false,
         roundActive: false,
+        gameFinished: false,
         user: {
             type: "user",
             name: "",
@@ -59,6 +60,7 @@ export default new Vuex.Store({
         questions: [],
         currentPlayer: null,
         currentQuestion: null,
+        timer: null,
         data: [] //maks 
     },
     mutations:{
@@ -136,6 +138,9 @@ export default new Vuex.Store({
         setRoundActive(state, value){
             state.roundActive = value;
         },
+        setGameFinished(state, value){
+            state.gameFinished = value;
+        },
         setPlayers(state, value){
             state.players = value;
         },
@@ -177,10 +182,9 @@ export default new Vuex.Store({
             }
         },
         startTimer(state){
-            state.timerValue = 100;
-            var loop = setInterval(() => {
+            state.timer = setInterval(() => {
                 if(state.timerValue == 0){
-                    clearInterval(loop);
+                    clearInterval(state.timer);
                     state.timeout = true;
                 }
                 else{
@@ -188,8 +192,11 @@ export default new Vuex.Store({
                 }
             }, 50);
         },
-        stopTimer(){
-            clearInterval(loop);
+        stopTimer(state){
+            clearInterval(state.timer);
+        },
+        resetTimer(state) {
+            state.timerValue = 100;
         }
     },
     getters:{
@@ -210,6 +217,9 @@ export default new Vuex.Store({
         },
         getRoundActive(state){
             return state.roundActive;
+        },
+        getGameFinished(state){
+            return state.gameFinished;
         },
         getUser(state){
             return state.user;
