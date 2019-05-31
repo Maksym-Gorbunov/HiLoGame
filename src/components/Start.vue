@@ -53,10 +53,14 @@
           </select>
           </div>
           </div>
-          <button @click.prevent="start()" id="btnStart" type="button" class="btn btn-primary"
-            v-bind:disabled="startBtnListener()">
+          <button @click.prevent="start()" id="btnStart" type="button" class="btn btn-primary">
             START
           </button>
+
+          <!-- <button @click.prevent="start()" id="btnStart" type="button" class="btn btn-primary"
+            v-bind:disabled="startBtnListener()">
+            START
+          </button> -->
 				</form>
         </b-jumbotron>
       </b-col>
