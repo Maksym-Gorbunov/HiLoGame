@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-        <Results ref="resultsModal"/>
+        <Results v-if="this.$store.getters.gameActive" ref="resultsModal"/>
     </div>
     <div>
       <b-row>
