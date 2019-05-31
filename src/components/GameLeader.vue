@@ -82,7 +82,7 @@ export default {
       return true;
     },
     checkIfPlayerWon() {
-      if (this.$store.getters.getCurrentPlayer.score == this.$store.getters.getScoreToWin) { //Ändra till === när vi fixar number secure
+      if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) { 
         this.$store.commit("setGameActive", false);
         this.$store.commit("setGameFinished", true);
       } else {
