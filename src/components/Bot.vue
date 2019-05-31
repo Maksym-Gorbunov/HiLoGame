@@ -1,8 +1,9 @@
 <template>
-    <b-col sm="1" md="3" lg="4" align-self="center">   
+    <b-col>   
         <div class="speech-bubble" v-if="bot.active" v-bind:class="{active: bot.active}">
             <b-form-input v-model="guess" type="number" disabled></b-form-input>
         </div>
+        <br>
         <playerData v-bind:player="bot" v-bind:guess="guess"/>
     </b-col>
 </template>

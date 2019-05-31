@@ -7,34 +7,23 @@
         <b-jumbotron class="mt-5 bg-light" header="High Low Game" >
 				<form>
           <div class="form-group row py-1">
-            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-            <div class="col-sm-10">
             <input type="text" ref="name" class="form-control" id="inputName" placeholder="Name">
-            </div>
           </div>
-          <div class="form-group row py-1">
-            <label for="score" class="col-sm-2 col-form-label">Questions</label>
-            <div class="col-sm-10">               
+          <div class="form-group row py-1">               
           <select id="score" ref="score" name="Score To Win" class="form-control">
             <option value="3">3</option>
             <option value="5">5</option>
             <option value="10">10</option>
           </select>
-            </div>
           </div>
-          <div class="form-group row py-1">
-          <label for="difficulty" class="col-sm-2 col-form-label">Difficulty</label>
-          <div class="col-sm-10">     
+          <div class="form-group row py-1"> 
 					<select id="difficulty" ref="difficulty" name="difficulty" class="form-control">
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
           </div>
-          </div>
-          <div class="form-group row py-1">
-          <label for="bot1" class="col-sm-2 col-form-label">Bot 1</label>
-          <div class="col-sm-10">     
+          <div class="form-group row py-1">    
           <select ref="bot1_name" id="bot1" name="bot1" class="form-control">
             <option value="Bot">Bot</option>
             <option value="Einstein">Einstein</option>
@@ -43,10 +32,7 @@
             <option value="Dwarf">Dwarf</option>
           </select>
           </div>
-          </div>
-          <div class="form-group row py-1">
-          <label for="bot2" class="col-sm-2 col-form-label">Bot 2</label>
-          <div class="col-sm-10">     
+          <div class="form-group row py-1">     
           <select ref="bot2_name" id="bot2" name="bot2" class="form-control">
             <option value="Bot">Bot</option>
             <option value="Einstein">Einstein</option>
@@ -54,7 +40,6 @@
             <option value="The thinker">The thinker</option>
             <option value="Dwarf">Dwarf</option>
           </select>
-          </div>
           </div>
           <button @click.prevent="start()" id="btnStart" type="button" class="btn btn-primary">START</button>
 				</form>
@@ -174,5 +159,32 @@ export default {
 
   
 <style scoped>
+/* extra small devices (phones, up to 767px) */
+@media (max-width: 767px) {
+  .jumbotron h1 {
+    font-size: 2em;
+  }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .jumbotron h1 {
+        font-size: 4em;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .jumbotron h1 {
+        font-size: 6em;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .jumbotron h1 {
+        font-size: 8em;
+    }
+}
 
 </style>
