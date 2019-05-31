@@ -59,6 +59,7 @@ export default new Vuex.Store({
         questions: [],
         currentPlayer: null,
         currentQuestion: null,
+        timer: null,
         data: [] //maks 
     },
     mutations:{
@@ -177,10 +178,9 @@ export default new Vuex.Store({
             }
         },
         startTimer(state){
-            state.timerValue = 100;
-            var loop = setInterval(() => {
+            state.timer = setInterval(() => {
                 if(state.timerValue == 0){
-                    clearInterval(loop);
+                    clearInterval(state.timer);
                     state.timeout = true;
                 }
                 else{
@@ -188,8 +188,8 @@ export default new Vuex.Store({
                 }
             }, 50);
         },
-        stopTimer(){
-            clearInterval(loop);
+        stopTimer(state){
+            clearInterval(state.timer);
         }
     },
     getters:{
