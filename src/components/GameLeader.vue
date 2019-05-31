@@ -84,10 +84,7 @@ export default {
     checkIfPlayerWon() {
       if (this.$store.getters.getCurrentPlayer.score == this.$store.getters.getScoreToWin) { //Ändra till === när vi fixar number secure
         this.$store.commit("setGameActive", false);
-        this.$parent.showModal();
-        this.mainPhrase = "Congratulations " + this.$store.getters.getCurrentPlayer.name + "! You won!";
-        this.feedbackPhrase = "Play again?";
-        this.buttonText = "Ok!"
+        this.$store.commit("setGameFinished", true);
       } else {
         this.feedbackPhrase = "Correct!";
         this.feedbackType = "success";
