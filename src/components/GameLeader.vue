@@ -6,11 +6,6 @@
       </b-col>
       <b-col cols="6" lg="2">
         <b-row>
-          <!--
-            <b-card style="max-width: 20rem;">
-            <b-card-text v-html="mainPhrase" width="100"></b-card-text>
-          </b-card>
-          -->
           <div class="speech-bubble" v-html="mainPhrase" width="100">
           </div>
         </b-row>
@@ -131,6 +126,10 @@ export default {
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
+img {
+  height: 300px;
+}
+
 .rules {
   background: #000000; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -184,7 +183,7 @@ export default {
     margin: 1em 0;
     text-align: center;
     font-weight: bold;
-    font-size: 100%;
+    font-size: 13px;
 }
 
 .speech-bubble:after {
