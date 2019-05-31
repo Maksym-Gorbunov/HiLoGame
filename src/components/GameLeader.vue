@@ -107,6 +107,7 @@ export default {
           this.$store.commit("startTimer");
           this.showFeedback = false;
         }, 2000);
+        this.$store.commit("resetTimer");
       }
     }
   },
