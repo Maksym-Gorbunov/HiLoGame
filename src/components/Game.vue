@@ -28,10 +28,10 @@
           <User/>
         </b-col>
         <b-col md>
-          <Bot1/>
+          <Bot :bot= "this.$store.getters.getPlayers[1]"/>
         </b-col>
         <b-col md>
-          <Bot2/>
+          <Bot :bot = "this.$store.getters.getPlayers[2]"/>
         </b-col>
       </b-row>
     </b-container>
@@ -41,8 +41,9 @@
 <script>
 import GameLeader from './GameLeader.vue'
 import User from './User.vue'
-import Bot1 from './Bot1.vue'
-import Bot2 from './Bot2.vue'
+import Bot from './Bot.vue'
+// import Bot1 from './Bot1.vue'
+// import Bot2 from './Bot2.vue'
 
 
 export default {
@@ -50,8 +51,9 @@ export default {
   components: {
     GameLeader,
     User,
-    Bot1,
-    Bot2
+    Bot
+    // Bot1,
+    // Bot2
   },
   methods: {
     restart() {

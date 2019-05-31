@@ -35,19 +35,46 @@
           <div class="form-group row py-1">
           <label for="bot1" class="col-sm-2 col-form-label">Bot 1</label>
           <div class="col-sm-10">     
-					<select id="bot1" ref="bot1" name="bot1" class="form-control">
+
+
+             <select ref="bot1_name" id="bot1" name="bot1" class="form-control">
+            <option value="Bot">Bot</option>
+            <option value="Einstein">Einstein</option>
+            <option value="Monkey">Monkey</option>
+            <option value="The thinker">The thinker</option>
+            <option value="Dwarf">Dwarf</option>
+          </select>
+          
+
+
+
+
+
+
+					<!-- <select id="bot1" ref="bot1" name="bot1" class="form-control">
             <option value="monkey">Monkey</option>
             <option value="...">...</option>
-          </select>
+          </select> -->
           </div>
           </div>
           <div class="form-group row py-1">
           <label for="bot2" class="col-sm-2 col-form-label">Bot 2</label>
           <div class="col-sm-10">     
-					<select id="bot2" ref="bot2" name="bot2" class="form-control">
+					
+          <select ref="bot2_name" id="bot2" name="bot2" class="form-control">
+            <option value="Bot">Bot</option>
+            <option value="Einstein">Einstein</option>
+            <option value="Monkey">Monkey</option>
+            <option value="The thinker">The thinker</option>
+            <option value="Dwarf">Dwarf</option>
+          </select>
+
+          
+          
+          <!-- <select id="bot2" ref="bot2" name="bot2" class="form-control">
             <option value="the_thinker">The Thinker</option>
             <option value="...">...</option>
-          </select>
+          </select> -->
           </div>
           </div>
           <button @click.prevent="start()" id="btnStart" type="button" class="btn btn-primary">START</button>
@@ -92,12 +119,19 @@ export default {
       name = name.charAt(0).toUpperCase() + name.slice(1);
       let score = this.$refs.score.value
       let difficulty = this.$refs.difficulty.value
+      let bot1_name = this.$refs.bot1_name.value
+      let bot2_name = this.$refs.bot2_name.value
+      let players = {
+        userName: name,
+        bot1Name: bot1_name,
+        bot2Name: bot2_name 
+      }
       let total = (score * 3) - 2
       this.getDataFromApi(total, difficulty)
       this.$router.push({ name: 'game' })
       this.sendName(name)
       this.$store.commit("setGameActive", true);
-      this.$store.commit("initPlayers");
+      this.$store.commit("initPlayers", players);
       this.$store.commit("setScoreToWin", score);
       }
       else {this.$refs.name.placeholder="You have to pick a name!"}
@@ -112,7 +146,7 @@ export default {
           if (xhr.status == 200) {
             var data = JSON.parse(xhr.responseText)
             that.sendData(data)
-            console.log(data)
+            // console.log(data)
           }
           if (xhr.status == 500) {
             console.log("serverfel");
