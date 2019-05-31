@@ -5,7 +5,7 @@
       </b-col>
       <b-col md="6">
         <b-jumbotron class="mt-5 bg-light" header="High Low Game" >
-				<form>
+        <form>
           <div class="form-group row py-1">
             <input type="text" ref="name" class="form-control" id="inputName" placeholder="Name">
           </div>
@@ -17,33 +17,11 @@
           </select>
           </div>
           <div class="form-group row py-1"> 
-					<select id="difficulty" ref="difficulty" name="difficulty" class="form-control">
+          <select id="difficulty" ref="difficulty" name="difficulty" class="form-control">
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
-          </div>
-<<<<<<< HEAD
-          <div class="form-group row py-1">    
-          <select ref="bot1_name" id="bot1" name="bot1" class="form-control">
-            <option value="Bot">Bot</option>
-            <option value="Einstein">Einstein</option>
-            <option value="Monkey">Monkey</option>
-            <option value="The thinker">The thinker</option>
-            <option value="Dwarf">Dwarf</option>
-          </select>
-          </div>
-          <div class="form-group row py-1">     
-          <select ref="bot2_name" id="bot2" name="bot2" class="form-control">
-            <option value="Bot">Bot</option>
-            <option value="Einstein">Einstein</option>
-            <option value="Monkey">Monkey</option>
-            <option value="The thinker">The thinker</option>
-            <option value="Dwarf">Dwarf</option>
-          </select>
-          </div>
-          <button @click.prevent="start()" id="btnStart" type="button" class="btn btn-primary">START</button>
-=======
           </div>
           <div class="form-group row py-1">
           <label for="bot1" class="col-sm-2 col-form-label">Bot 1</label>
@@ -74,8 +52,7 @@
             v-bind:disabled="startBtnListener()">
             START
           </button> -->
->>>>>>> b485f7d1e280ce0534dcd5980688ceb1a2014d8c
-				</form>
+        </form>
         </b-jumbotron>
       </b-col>
     <b-col md="3"></b-col>
@@ -88,9 +65,9 @@
   </b-row>
   <br/>
     <button @click="settings()">Settings</button>
-		<div class="colorlibcopy-agile align-text-bottom">
-			<p>© 2019 IT-Högskolan &nbsp;|&nbsp; Source code on <a href="https://github.com/Maksym-Gorbunov/HiLoGame" target="_blank">GitHub</a></p>
-		</div>
+    <div class="colorlibcopy-agile align-text-bottom">
+      <p>© 2019 IT-Högskolan &nbsp;|&nbsp; Source code on <a href="https://github.com/Maksym-Gorbunov/HiLoGame" target="_blank">GitHub</a></p>
+    </div>
   </div>
 </template>
 
