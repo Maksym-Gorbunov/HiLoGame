@@ -87,6 +87,7 @@
                 setTimeout(() => {
                     this.guess = guess;
                     this.answerSent = true;
+                    this.$store.commit("stopTimer");
                     EventBus.$emit("answerSent", guess);
                 }, answerTime);
             },
