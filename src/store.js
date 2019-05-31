@@ -200,7 +200,6 @@ export default new Vuex.Store({
         },
         resetTimer(state) {
             state.timerValue = 100;
-            state.timeout = false;
         }
     },
     getters:{

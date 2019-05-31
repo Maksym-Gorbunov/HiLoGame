@@ -105,6 +105,7 @@ export default {
           this.$store.commit("nextTurn");
           this.$store.commit("startTimer");
           this.showFeedback = false;
+          this.$store.commit("setTimeout", false);
         }, 2000);
       }, 2000);
       this.showFeedback = true;
