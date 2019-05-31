@@ -38,9 +38,6 @@ import Results from './Results'
 import GameLeader from './GameLeader.vue'
 import User from './User.vue'
 import Bot from './Bot.vue'
-// import Bot1 from './Bot1.vue'
-// import Bot2 from './Bot2.vue'
-
 
 export default {
   name: 'game',
@@ -49,12 +46,10 @@ export default {
     GameLeader,
     User,
     Bot
-    // Bot1,
-    // Bot2
   },
   methods: {
     restart() {
-      this.$router.replace("/");
+      window.location.href = "http://localhost:5000";
     },
     showModal(){
       this.$refs.resultsModal.showModal();
@@ -62,7 +57,7 @@ export default {
   },
   created() {
     if (!this.$store.getters.getGameActive) {
-      this.$router.replace("/");
+      this.restart();
     }
   },
 }
