@@ -1,12 +1,8 @@
 <template>
   <div>
     <div>
-  <b-button v-b-modal.modal-2 >Launch demo modal</b-button>
-
-  <b-modal id="modal-2" title="BootstrapVue">
-    <p class="my-4">Hello from modal!</p>
-  </b-modal>
-  </div>
+        <Results ref="resultsModal"/>
+    </div>
     <div>
       <b-row>
       <b-col align-self="end">
@@ -19,7 +15,7 @@
         <b-button class="restart" @click="restart()">Restart</b-button>
       </b-col>
     </b-row>
-    <GameLeader/>
+    <GameLeader v-on:show-modal= "showModal"/>
     <b-container fluid>
       <b-row class="some-row align-items-end">
         <b-col md>
@@ -38,6 +34,7 @@
 </template>
 
 <script>
+import Results from './Results'
 import GameLeader from './GameLeader.vue'
 import User from './User.vue'
 import Bot1 from './Bot1.vue'
@@ -47,6 +44,7 @@ import Bot2 from './Bot2.vue'
 export default {
   name: 'game',
   components: {
+    Results,
     GameLeader,
     User,
     Bot1,
@@ -55,13 +53,22 @@ export default {
   methods: {
     restart() {
       this.$router.replace("/");
+    },
+    showModal(){
+      this.$refs.resultsModal.showModal();
     }
   },
+  // mounted() {
+  //     this.$refs.resultsModal.showModal();
+  //   },
   created() {
+    
+    console.log(fungerar)
     if (!this.$store.getters.getGameActive) {
       this.$router.replace("/");
+
     }
-  }
+  },
 }
 </script>
 
