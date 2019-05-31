@@ -104,7 +104,7 @@
                 }            
 
                 return this.randomNr(min, max);
-            }
+            },
 
             //Super smart bot, sometimes knows the answer
             botEinstein (difficulty, min, max, middle) {  
@@ -173,7 +173,7 @@
                 }
 
                 return this.randomNr(min, max);
-            }
+            },
 
             //Very slow but good thinker, sumtimes takes too long time
             botTheThinker (difficulty, min, max, middle) {    
@@ -202,7 +202,7 @@
                 }
 
                 return this.randomNr(min, max);
-            }
+            },
 
             //The dwarf allways guess on lower values close to min  
             botDwarf (difficulty, min, max, middle) {      

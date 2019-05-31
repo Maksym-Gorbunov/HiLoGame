@@ -1,10 +1,10 @@
 <template>
   <div>
-    <b-modal ref="my-modal" hide-footer title="Using Component Methods">
+    <b-modal id="modal-center" ref="my-modal" hide-footer title="Using Component Methods">
       <div class="d-block text-center">
         <h3>Congrats {{$store.getters.getCurrentPlayer.name}} you won!</h3>
       </div>
-      <b-button class="mt-3" variant="outline-danger" block @click="hideModal">Close Me</b-button>
+      <b-button class="mt-3" variant="outline-danger" block @click="restartGame()">Play Again</b-button>
     </b-modal>
   </div>
 </template>
@@ -17,6 +17,9 @@
       },
       hideModal() {
         this.$refs['my-modal'].hide()
+      },
+      restartGame(){
+        this.$emit('restart-game');
       }
     }
   }

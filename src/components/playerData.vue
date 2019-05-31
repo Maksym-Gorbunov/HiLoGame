@@ -4,10 +4,6 @@
     <div>{{player.name}}</div>
     <div>Score: {{player.score}}</div>
     <div>
-<<<<<<< HEAD
-=======
-    <b-progress :value="value" :max="max" show-progress animated></b-progress>
->>>>>>> andreas
   </div>
   </div>
 </template>
