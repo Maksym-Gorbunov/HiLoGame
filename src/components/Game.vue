@@ -6,16 +6,16 @@
     <div>
       <b-row>
       <b-col align-self="end">
-        <b-button v-b-modal.modal-1>Rules</b-button>
-          <b-modal id="modal-1" title="Rules">
-            <p class="my-4">This is a high-low game. Answer the question by entering a number in the input field.
+        <b-button v-b-modal.modal-center>Rules</b-button>
+          <b-modal id="modal-center" centered title="Rules">
+            <p class="my-4">This is a high-low game. Answer the question by entering a number in the input field and clicking submit.
               The game leader will then tell you higher, lower or correct depending on the answer.
             </p>
           </b-modal>
         <b-button class="restart" @click="restart()">Restart</b-button>
       </b-col>
     </b-row>
-    <GameLeader v-on:show-modal= "showModal"/>
+    <GameLeader v-on:show-modal= "showModal" v-on:restart-game= "restart"/>
     <b-container fluid>
       <b-row class="some-row align-items-end">
         <b-col md>
@@ -30,6 +30,7 @@
       </b-row>
     </b-container>
     </div>
+  </div>
 </template>
 
 <script>
