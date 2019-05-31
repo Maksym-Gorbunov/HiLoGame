@@ -190,6 +190,9 @@ export default new Vuex.Store({
         },
         stopTimer(state){
             clearInterval(state.timer);
+        },
+        resetTimer(state) {
+            state.timerValue = 100;
         }
     },
     getters:{
