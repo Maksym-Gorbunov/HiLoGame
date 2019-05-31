@@ -34,6 +34,12 @@ async function loadQuestionsCollection() {
 async function addQuestionsFromFileToDB(fileJson){
   const questions = await loadQuestionsCollection();
   questions.insertMany(fileJson, (err, result) => {
+    if (err) {
+      console.error(err)
+      return
+    } else{
+      console.log(result) 
+    }
   })
 }
 
@@ -41,6 +47,12 @@ async function addQuestionsFromFileToDB(fileJson){
 async function addQuestionToDB(item){
   const questions = await loadQuestionsCollection();
   questions.insertOne(item, (err, result) => {
+    if (err) {
+      console.error(err)
+      return
+    } else{
+      console.log(result) 
+    }
   })
 }
 
@@ -55,6 +67,12 @@ async function getQuestionsFromDB(){
 async function deleteQuestionFromDB(id){
   const questions = await loadQuestionsCollection();
   questions.deleteOne({_id: new mongodb.ObjectID(id)}, (err, item) => {
+    if (err) {
+      console.error(err)
+      return
+    } else{
+     console.log(item) 
+    }
   })
 }
 
@@ -74,6 +92,12 @@ async function updateQuestionInDB(item){
 async function deleteQuestionCollection(fileJson){
   const questions = await loadQuestionsCollection();
   questions.deleteMany({}, (err, result) => {
+    if (err) {
+      console.error(err)
+      return
+    } else{
+     console.log(result) 
+    }
   })
 }
 

@@ -25,7 +25,6 @@
         </button>
       </form>
     </header>
-
     <div class="table-responsive" id="my_table_box">
       <table id="my_table" class="table table-dark table-bordered table-striped">
         <thead>
@@ -143,32 +142,18 @@ export default {
       xhr.send();
     },
     addBtnListener(){
-    
-      //Set button disabled
       $("#addButton").attr("disabled", true);
- 
-      //Append a change event listener to you inputs
       $('input').change(function(){
-            //Validate your form here, example:
             var validated = true;
             if(($('#inputQuestion').val().length === 0) || ($('#inputAnswer').val().length === 0)){
               validated = false;
-              
-              } 
-              
- 
-            //If form is validated enable form
+            } 
             if(validated) $("#addButton").attr("disabled", false);                             
       });
- 
-      //Trigger change function once to check if the form is validated on page load
       $('input:first').trigger('change');
-
-  }
+    }
   },
-  
   created() {
-   
   },
   mounted(){
     this.addBtnListener()
@@ -192,7 +177,6 @@ body{
 }
 #addForm{
   display:grid;
-  /* grid-template-columns: 5fr 1fr 1fr 0.6fr; */
   grid-template-columns: 5fr 0.8fr 0.8fr 0.6fr;
   grid-gap: 1rem;
   padding: 1rem;
