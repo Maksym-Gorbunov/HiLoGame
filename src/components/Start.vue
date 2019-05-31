@@ -35,19 +35,46 @@
           <div class="form-group row py-1">
           <label for="bot1" class="col-sm-2 col-form-label">Bot 1</label>
           <div class="col-sm-10">     
-					<select id="bot1" ref="bot1" name="bot1" class="form-control">
+
+
+             <select ref="bot1_name" id="bot1" name="bot1" class="form-control">
+            <option value="Bot">Bot</option>
+            <option value="Einstein">Einstein</option>
+            <option value="Monkey">Monkey</option>
+            <option value="The thinker">The thinker</option>
+            <option value="Dwarf">Dwarf</option>
+          </select>
+          
+
+
+
+
+
+
+					<!-- <select id="bot1" ref="bot1" name="bot1" class="form-control">
             <option value="monkey">Monkey</option>
             <option value="...">...</option>
-          </select>
+          </select> -->
           </div>
           </div>
           <div class="form-group row py-1">
           <label for="bot2" class="col-sm-2 col-form-label">Bot 2</label>
           <div class="col-sm-10">     
-					<select id="bot2" ref="bot2" name="bot2" class="form-control">
+					
+          <select ref="bot2_name" id="bot2" name="bot2" class="form-control">
+            <option value="Bot">Bot</option>
+            <option value="Einstein">Einstein</option>
+            <option value="Monkey">Monkey</option>
+            <option value="The thinker">The thinker</option>
+            <option value="Dwarf">Dwarf</option>
+          </select>
+
+          
+          
+          <!-- <select id="bot2" ref="bot2" name="bot2" class="form-control">
             <option value="the_thinker">The Thinker</option>
             <option value="...">...</option>
-          </select>
+          </select> -->
           </div>
           </div>
           <button @click.prevent="start()" id="btnStart" type="button" class="btn btn-primary">START</button>

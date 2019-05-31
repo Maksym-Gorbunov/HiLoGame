@@ -1,9 +1,12 @@
 <template>
     <b-col sm="1" md="3" lg="4" align-self="center">    <!-- div class speech-bubble: aktuell bot istället för getBot1-->
-        <div class="speech-bubble" v-if="this.$store.getters.getCurrentPlayer.active" v-bind:class="{active:this.$store.getters.getCurrentPlayer.active}">
+        
+        <div class="speech-bubble" v-if="bot.active" v-bind:class="{active: bot.active}">
+        <!-- <div class="speech-bubble" v-if="this.$store.getters.getCurrentPlayer.active" v-bind:class="{active:this.$store.getters.getCurrentPlayer.active}"> -->
             <b-form-input v-model="guess" type="number" disabled></b-form-input>
         </div>
-        <playerData v-bind:player="this.$store.getters.getBot1" v-bind:guess="guess"/>
+        <!-- <playerData v-bind:player="this.$store.getters.getBot1" v-bind:guess="guess"/> -->
+        <playerData v-bind:player="bot" v-bind:guess="guess"/>
     </b-col>
 </template>
 
@@ -14,6 +17,7 @@
     export default {
         name: "",
         points: 0,
+        props: ['bot'],
         components: {
             playerData
         },
@@ -100,7 +104,7 @@
                 }
 
                 return this.randomNr(min, max);
-            }
+            },
             botEinstein (difficulty, min, max, middle) {
 
                 let correctGuess = false;  //correctGuess is used if Einstein knows the answer   
@@ -140,9 +144,14 @@
                 else {
                     return this.randomNr(min, max);
                 }
-            }
+            },
             botMonkey(difficulty, min, max, middle) {
-            
+                // test
+                if(difficulty == "easy"){
+                    min = min + Math.round((middle - min) / 6);
+                    max = max - Math.round((max - middle) / 6);
+                }
+                //
                 else if(difficulty == "medium") {
                     min = min + Math.round((middle - min) / 6);
                     max = max - Math.round((max - middle) / 6);
@@ -153,7 +162,7 @@
                 }
 
                 return this.randomNr(min, max);
-            }
+            },
             botTheThinker (difficulty, min, max, middle) {                
 
                 if(difficulty == "easy") {
@@ -170,7 +179,7 @@
                 }
 
                 return this.randomNr(min, max);
-            }
+            },
             botDwarf (difficulty, min, max, middle) {    //Alltid gissa lågt       
 
                 if(difficulty == "easy") {
@@ -187,7 +196,7 @@
                 }
 
                 return this.randomNr(min, max);
-            }
+            },
             randomNr(min, max) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;
             }
