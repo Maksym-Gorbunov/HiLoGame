@@ -193,7 +193,7 @@ export default new Vuex.Store({
                 else{
                     state.timerValue -= 1;
                 }
-            }, 70);
+            }, 100);
         },
         stopTimer(state){
             clearInterval(state.timer);
