@@ -35,28 +35,28 @@
           <div class="form-group row py-1">
           <label for="bot1" class="col-sm-2 col-form-label">Bot 1</label>
           <div class="col-sm-10">     
-          <select ref="bot1_name" id="bot1" name="bot1" class="form-control">
-            <option value="Bot">Bot</option>
-            <option value="Einstein">Einstein</option>
-            <option value="Monkey">Monkey</option>
-            <option value="The thinker">The thinker</option>
-            <option value="Dwarf">Dwarf</option>
+          <select ref="bot1_name" id="bot1" name="bot1" class="form-control" v-model="bot_1">
+            <option v-for="item in this.bots" v-bind:key="item.index"
+              v-bind:disabled="isDisabled1(item)" :value="item">{{item}}
+            </option>
           </select>
           </div>
           </div>
           <div class="form-group row py-1">
           <label for="bot2" class="col-sm-2 col-form-label">Bot 2</label>
           <div class="col-sm-10">     
-          <select ref="bot2_name" id="bot2" name="bot2" class="form-control">
-            <option value="Bot">Bot</option>
-            <option value="Einstein">Einstein</option>
-            <option value="Monkey">Monkey</option>
-            <option value="The thinker">The thinker</option>
-            <option value="Dwarf">Dwarf</option>
+          <select ref="bot2_name" id="bot2" name="bot2" class="form-control" v-model="bot_2">
+            <option v-for="item in this.bots" v-bind:key="item.index"
+              v-bind:disabled="isDisabled2(item)" :value="item"> 
+              {{item}}
+            </option>
           </select>
           </div>
           </div>
-          <button @click.prevent="start()" id="btnStart" type="button" class="btn btn-primary">START</button>
+          <button @click.prevent="start()" id="btnStart" type="button" class="btn btn-primary"
+            v-bind:disabled="startBtnListener()">
+            START
+          </button>
 				</form>
         </b-jumbotron>
       </b-col>
@@ -68,7 +68,7 @@
     </b-col>
     <b-col md="3"></b-col>
   </b-row>
-<br />
+  <br/>
     <button @click="settings()">Settings</button>
 		<div class="colorlibcopy-agile align-text-bottom">
 			<p>© 2019 IT-Högskolan &nbsp;|&nbsp; Source code on <a href="https://github.com/Maksym-Gorbunov/HiLoGame" target="_blank">GitHub</a></p>
@@ -76,11 +76,19 @@
   </div>
 </template>
 
+
 <script>
 export default {
   name: 'start',
   props: [],
   components: {},
+  data(){
+    return {
+      bot_1: 'Bot',
+      bot_2: 'Einstein',
+      bots: ['Bot', 'Einstein', 'Monkey', 'The thinker', 'Dwarf']
+    }
+  },
   methods: {
     hideUrlBarMobile(){
       addEventListener("load", function() { 
@@ -91,8 +99,26 @@ export default {
     settings(){
       this.$router.push({ name: 'settings' })
     },
+    startBtnListener(){
+      if(this.bot_1 == '' || this.bot_2 == ''){
+        return true
+      }
+    },
+    isDisabled1(value){
+      if((this.bot_1 != '') && (this.bot_2 != '')){
+        if(this.bot_2 == value){
+          return true
+        }
+      }
+    },
+    isDisabled2(value){
+      if((this.bot_1 != '') && (this.bot_2 != '')){
+        if(this.bot_1 == value){
+          return true
+        }
+      }
+    },
     start() {
-
       if(this.$refs.name.value){
       let name = this.$refs.name.value
       name = name.charAt(0).toUpperCase() + name.slice(1);
