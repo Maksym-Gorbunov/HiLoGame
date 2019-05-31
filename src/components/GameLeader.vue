@@ -212,3 +212,8 @@ img {
   margin-left: -7px;
 }
 </style>
+<style>
+  .progress-bar{
+    transition: width 0.2s ease;
+  }
+</style>
