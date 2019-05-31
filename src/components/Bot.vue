@@ -20,7 +20,8 @@
         },
         data() {
             return {
-            guess: ""
+            guess: undefined,
+            answerSent: false
             };
         },
         methods: {
@@ -43,30 +44,30 @@
                 }
                 
                 //Switch statement with each case representing each bot and calling for respective method
-                switch (this.name) {   //TODO: Funkar this.name? eller måste man ha getCurrentPlayer????
+                switch (this.bot.name) {   
                     case "Bot":
                         answerTime = randomNr(1000, 2000);  //Calling method randomNr to randomize thinking time
                         guess = botBot(difficulty, min, max, middle);
                         break;
 
                     case "Einstein":
-                        answerTime = randomNr(0, 1000);
-                        guess = botEinstein(difficulty, min, max, middle);
+                        answerTime = this.randomNr(0, 1000);
+                        guess = this.botEinstein(difficulty, min, max, middle);
                         break;
 
                     case "Monkey":  
-                        answerTime = randomNr(0, 1000);
-                        guess = botMonkey(difficulty, min, max, middle);
+                        answerTime = this.randomNr(0, 1000);
+                        guess = this.botMonkey(difficulty, min, max, middle);
                         break;
 
                     case "The thinker":  
-                        answerTime = randomNr(4000, 6000);
-                        guess = botTheThinker(difficulty, min, max, middle);
+                        answerTime = this.randomNr(4000, 6000);
+                        guess = this.botTheThinker(difficulty, min, max, middle);
                         break;
 
                     case "Dwarf":
-                        answerTime = randomNr(1500, 2500);
-                        guess = botDwarf(difficulty, min, max, middle);
+                        answerTime = this.randomNr(1500, 2500);
+                        guess = this.botDwarf(difficulty, min, max, middle);
                         break;
                 
                     default:
@@ -76,6 +77,8 @@
                 //Timeout for delaying the bots guess
                 setTimeout(() => {
                     this.guess = guess;
+                    this.answerSent = true;
+                    this.$store.commit("stopTimer");
                     EventBus.$emit("answerSent", guess);  //Eventbus directing the guesses to the game leader
                 }, answerTime);
             },
@@ -104,7 +107,7 @@
 
                 let correctAnswer = this.$store.getters.getCurrentQuestion.answer;  //Collecting the correct answer
                 let correctGuess = false;  //correctGuess is used if Einstein knows the answer   
-                let chanceToCorrectGuess = randomNr(0,100);  //Method randomNr used to randomize a % value deciding if Einstein knows the answer
+                let chanceToCorrectGuess = this.randomNr(0,100);  //Method randomNr used to randomize a % value deciding if Einstein knows the answer
 
                 //Einstein knows on what side of the "middle" the correct answer is
                 if(correctAnswer < middle) {
@@ -214,14 +217,15 @@
             }
         },
         computed: {
-            currentPlayer() {
-                return this.$store.getters.getCurrentPlayer;
+            activePlayer() {
+                return this.bot.active;
             }
         },
         watch: {
-            currentPlayer() {
-                if (!this.$store.getters.getCurrentPlayer.active) {    //TODO: funkar getCurrentPlayer istället för getBot1???
-                    this.guess = "";//TODO: FIXA BÄTTRE LÖSNING
+            activePlayer() {
+                if (!this.activePlayer) {
+                    this.guess = undefined;
+                    this.answerSent = false;
                     return;
                 }
                 this.autoGuess(); 

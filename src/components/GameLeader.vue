@@ -82,12 +82,9 @@ export default {
       return true;
     },
     checkIfPlayerWon() {
-      if (this.$store.getters.getCurrentPlayer.score == this.$store.getters.getScoreToWin) { //Ändra till === när vi fixar number secure
+      if (this.$store.getters.getCurrentPlayer.score === this.$store.getters.getScoreToWin) { 
         this.$store.commit("setGameActive", false);
-        this.$parent.showModal();
-        this.mainPhrase = "Congratulations " + this.$store.getters.getCurrentPlayer.name + "! You won!";
-        this.feedbackPhrase = "Play again?";
-        this.buttonText = "Ok!"
+        this.$emit('show-modal');
       } else {
         this.feedbackPhrase = "Correct!";
         this.feedbackType = "success";
@@ -107,6 +104,7 @@ export default {
           this.$store.commit("startTimer");
           this.showFeedback = false;
         }, 2000);
+        this.$store.commit("resetTimer");
       }
     }
   },

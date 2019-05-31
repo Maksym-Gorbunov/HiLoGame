@@ -38,6 +38,7 @@
 		methods: {
 			sendAnswer() {
 				this.answerSent = true;
+				this.$store.commit("stopTimer");
 				EventBus.$emit("answerSent", Number(this.userInput));
 			}
 		},

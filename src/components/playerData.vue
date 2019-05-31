@@ -22,7 +22,9 @@ export default {
   props: ["player"],
   data() {
     return {
-      text: ""
+      text: "",
+      value: null,
+      max: null
     };
   },
   methods: {

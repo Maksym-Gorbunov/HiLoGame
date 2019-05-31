@@ -1,27 +1,21 @@
 <template>
   <div>
-    <!--
     <div>
-  <b-button v-b-modal.modal-2 >Launch demo modal</b-button>
-
-  <b-modal id="modal-2" title="BootstrapVue">
-    <p class="my-4">Hello from modal!</p>
-  </b-modal>
-  </div>
+        <Results ref="resultsModal"/>
+    </div>
     <div>
       <b-row>
       <b-col align-self="end">
-        <b-button v-b-modal.modal-1>Rules</b-button>
-          <b-modal id="modal-1" title="Rules">
-            <p class="my-4">This is a high-low game. Answer the question by entering a number in the input field.
+        <b-button v-b-modal.modal-center>Rules</b-button>
+          <b-modal id="modal-center" centered title="Rules">
+            <p class="my-4">This is a high-low game. Answer the question by entering a number in the input field and clicking submit.
               The game leader will then tell you higher, lower or correct depending on the answer.
             </p>
           </b-modal>
         <b-button class="restart" @click="restart()">Restart</b-button>
       </b-col>
     </b-row>
-    -->
-    <GameLeader/>
+    <GameLeader v-on:show-modal= "showModal" v-on:restart-game= "restart"/>
     <b-container fluid>
       <b-row class="some-row align-items-end">
         <b-col md>
@@ -36,9 +30,11 @@
       </b-row>
     </b-container>
     </div>
+  </div>
 </template>
 
 <script>
+import Results from './Results'
 import GameLeader from './GameLeader.vue'
 import User from './User.vue'
 import Bot from './Bot.vue'
@@ -49,6 +45,7 @@ import Bot from './Bot.vue'
 export default {
   name: 'game',
   components: {
+    Results,
     GameLeader,
     User,
     Bot
@@ -58,13 +55,22 @@ export default {
   methods: {
     restart() {
       this.$router.replace("/");
+    },
+    showModal(){
+      this.$refs.resultsModal.showModal();
     }
   },
+  // mounted() {
+  //     this.$refs.resultsModal.showModal();
+  //   },
   created() {
+    
+    console.log(fungerar)
     if (!this.$store.getters.getGameActive) {
       this.$router.replace("/");
+
     }
-  }
+  },
 }
 </script>
 
