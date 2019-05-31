@@ -23,7 +23,8 @@
         },
         data() {
             return {
-            guess: ""
+            guess: undefined,
+            answerSent: false
             };
         },
         methods: {
@@ -45,30 +46,30 @@
                     max = 1000000;
                 }
                 
-                switch (this.name) {   //Funkar this.name? eller måste man ha getCurrentPlayer????
+                switch (this.bot.name) {   //Funkar this.name? eller måste man ha getCurrentPlayer????
                     case "Bot":
-                        answerTime = randomNr(1000, 2000);
-                        guess = botBot(difficulty, min, max, middle);
+                        answerTime = this.randomNr(1000, 2000);
+                        guess = this.botBot(difficulty, min, max, middle);
                         break;
 
                     case "Einstein":
-                        answerTime = randomNr(0, 1000);
-                        guess = botEinstein(difficulty, min, max, middle);
+                        answerTime = this.randomNr(0, 1000);
+                        guess = this.botEinstein(difficulty, min, max, middle);
                         break;
 
                     case "Monkey":  //Quick but random
-                        answerTime = randomNr(0, 1000);
-                        guess = botMonkey(difficulty, min, max, middle);
+                        answerTime = this.randomNr(0, 1000);
+                        guess = this.botMonkey(difficulty, min, max, middle);
                         break;
 
                     case "The thinker":  //Very slow but good thinker
-                        answerTime = randomNr(4000, 6000);
-                        guess = botTheThinker(difficulty, min, max, middle);
+                        answerTime = this.randomNr(4000, 6000);
+                        guess = this.botTheThinker(difficulty, min, max, middle);
                         break;
 
                     case "Dwarf":
-                        answerTime = randomNr(1500, 2500);
-                        guess = botDwarf(difficulty, min, max, middle);
+                        answerTime = this.randomNr(1500, 2500);
+                        guess = this.botDwarf(difficulty, min, max, middle);
                         break;
                 
                     default:
@@ -85,6 +86,8 @@
 
                 setTimeout(() => {
                     this.guess = guess;
+                    this.answerSent = true;
+                    this.$store.commit("stopTimer");
                     EventBus.$emit("answerSent", guess);
                 }, answerTime);
             },
@@ -101,45 +104,56 @@
                 else {
                     min = min + Math.round((middle - min) / 2);
                     max = max - Math.round((max - middle) / 2);
-                }
+                }            
 
                 return this.randomNr(min, max);
             },
-            botEinstein (difficulty, min, max, middle) {
 
+            //Super smart bot, sometimes knows the answer
+            botEinstein (difficulty, min, max, middle) {  
+
+                let correctAnswer = this.$store.getters.getCurrentQuestion.answer;
                 let correctGuess = false;  //correctGuess is used if Einstein knows the answer   
-                let chanceToCorrectAnswer = randomNr(0,100);
+                let chanceToCorrectGuess = this.randomNr(0,100);
+
+                //Einstein knows on what side of the "middle" the correct answer is
+                if(correctAnswer < middle) {
+                    max = middle;   
+                }
+                else if(correctAnswer > middle) {
+                    min = middle;  
+                }
 
                 if(difficulty == "easy") {
-                    if(chanceToCorrectAnswer < 31) {  //Einstein knows the answer
+                    if(chanceToCorrectGuess < 31) {  //Einstein knows the answer
                         correctGuess = true;                     
                     }
                     else {  
-                        min = min + Math.round((middle - min) / 3);
-                        max = max - Math.round((max - middle) / 3);
+                        min = min + Math.round((correctAnswer - min) / 3);  //Einstein works on the correct answer instead of "middle"
+                        max = max - Math.round((max - correctAnswer) / 3);
                     }
                 }
                 else if(difficulty == "medium") {
-                    if(chanceToCorrectAnswer < 51) {  //Einstein knows the answer
+                    if(chanceToCorrectGuess < 51) {  //Einstein knows the answer
                         correctGuess = true;                        
                     }
                     else {  
-                        min = min + Math.round((middle - min) / 2);
-                        max = max - Math.round((max - middle) / 2);
+                        min = min + Math.round((correctAnswer - min) / 2);  //Einstein works on the correct answer instead of "middle"
+                        max = max - Math.round((max - correctAnswer) / 2);
                     }
                 }
                 else {
-                    if(chanceToCorrectAnswer < 71) {  //Einstein knows the answer
+                    if(chanceToCorrectGuess < 71) {  //Einstein knows the answer
                         correctGuess = true;  
                     }
                     else {  
-                        min = middle - Math.round((middle - min) / 10);
-                        max = middle + Math.round((max - middle) / 10);
+                        min = correctAnswer - Math.round((correctAnswer - min) / 10);  //Einstein works on the correct answer instead of "middle"
+                        max = correctAnswer + Math.round((max - correctAnswer) / 10);
                     }
                 }                
 
-                if(correctGuess) {   
-                    return this.$store.getters.getCurrentQuestion.answer;                    
+                if(correctGuess) {   //Einstein knows the answer
+                    return correctAnswer;           
                 }
                 else {
                     return this.randomNr(min, max);
@@ -163,7 +177,19 @@
 
                 return this.randomNr(min, max);
             },
-            botTheThinker (difficulty, min, max, middle) {                
+
+            //Very slow but good thinker, sumtimes takes too long time
+            botTheThinker (difficulty, min, max, middle) {    
+
+                let correctAnswer = this.$store.getters.getCurrentQuestion.answer;
+                
+                //The Thinker knows on what side of the "middle" the correct answer is
+                if(correctAnswer < middle) {
+                    max = middle;   
+                }
+                else if(correctAnswer > middle) {
+                    min = middle;  
+                }
 
                 if(difficulty == "easy") {
                     min = min + Math.round((middle - min) / 3);
@@ -180,19 +206,18 @@
 
                 return this.randomNr(min, max);
             },
-            botDwarf (difficulty, min, max, middle) {    //Alltid gissa lågt       
 
-                if(difficulty == "easy") {
-                    min = min + Math.round((middle - min) / 5);
-                    max = max - Math.round((max - middle) / 5);
+            //The dwarf allways guess on lower values close to min  
+            botDwarf (difficulty, min, max, middle) {      
+
+                if(difficulty == "easy") {                    
+                    max = min + Math.round((middle - min) / 10);
                 }
-                else if(difficulty == "medium") {
-                    min = min + Math.round((middle - min) / 4);
-                    max = max - Math.round((max - middle) / 4);
+                else if(difficulty == "medium") {                    
+                    max = min + Math.round((middle - min) / 5);
                 }
-                else {
-                    min = min + Math.round((middle - min) / 3);
-                    max = max - Math.round((max - middle) / 3);
+                else {                    
+                    max = min + Math.round((middle - min) / 2);
                 }
 
                 return this.randomNr(min, max);
@@ -202,14 +227,15 @@
             }
         },
         computed: {
-            currentPlayer() {
-                return this.$store.getters.getCurrentPlayer;
+            activePlayer() {
+                return this.bot.active;
             }
         },
         watch: {
-            currentPlayer() {
-                if (!this.$store.getters.getCurrentPlayer.active) {    //TODO: funkar getCurrentPlayer istället för getBot1???
-                    this.guess = "";//FIXA BÄTTRE LÖSNING
+            activePlayer() {
+                if (!this.activePlayer) {
+                    this.guess = undefined;
+                    this.answerSent = false;
                     return;
                 }
                 this.autoGuess(); 
