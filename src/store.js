@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        timeout: false,
         timerMax: 100,
         timerValue: 100,
         answerMin: null,
@@ -180,11 +181,15 @@ export default new Vuex.Store({
             var loop = setInterval(() => {
                 if(state.timerValue == 0){
                     clearInterval(loop);
+                    state.timeout = true;
                 }
                 else{
                     state.timerValue -= 1;
                 }
             }, 50);
+        },
+        stopTimer(){
+            clearInterval(loop);
         }
     },
     getters:{
