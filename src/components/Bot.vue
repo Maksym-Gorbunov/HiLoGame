@@ -1,11 +1,8 @@
 <template>
-    <b-col sm="1" md="3" lg="4" align-self="center">    <!-- div class speech-bubble: aktuell bot istället för getBot1-->
-        
+    <b-col sm="1" md="3" lg="4" align-self="center">   
         <div class="speech-bubble" v-if="bot.active" v-bind:class="{active: bot.active}">
-        <!-- <div class="speech-bubble" v-if="this.$store.getters.getCurrentPlayer.active" v-bind:class="{active:this.$store.getters.getCurrentPlayer.active}"> -->
             <b-form-input v-model="guess" type="number" disabled></b-form-input>
         </div>
-        <!-- <playerData v-bind:player="this.$store.getters.getBot1" v-bind:guess="guess"/> -->
         <playerData v-bind:player="bot" v-bind:guess="guess"/>
     </b-col>
 </template>
@@ -30,14 +27,14 @@
         methods: {
             autoGuess() {    
 
-                let difficulty = this.$store.getters.getCurrentQuestion.difficulty;
-                let guess;
-                let answerTime;
-                //let correctGuess = false;  //correctGuess is used if Einstein knows the answer                               
+                let difficulty = this.$store.getters.getCurrentQuestion.difficulty;  //Loads diffuculty level
+                let guess;  
+                let answerTime;  //The time a bot put on thinking before guessing
                 let min = this.$store.getters.getAnswerMin; //Get min and max values from question
-                let max = this.$store.getters.getAnswerMax;
-                let middle = Math.round((max - min) / 2);
+                let max = this.$store.getters.getAnswerMax; //Min and max are used for deciding the guessing interval
+                let middle = Math.round((max - min) / 2);  //Calculation for deciding middle between min and max
 
+                //If there is no min or max they are set to a default value
                 if (min == null) {
                     min = 1;
                 }
@@ -46,10 +43,11 @@
                     max = 1000000;
                 }
                 
-                switch (this.bot.name) {   //Funkar this.name? eller måste man ha getCurrentPlayer????
+                //Switch statement with each case representing each bot and calling for respective method
+                switch (this.bot.name) {   
                     case "Bot":
-                        answerTime = this.randomNr(1000, 2000);
-                        guess = this.botBot(difficulty, min, max, middle);
+                        answerTime = randomNr(1000, 2000);  //Calling method randomNr to randomize thinking time
+                        guess = botBot(difficulty, min, max, middle);
                         break;
 
                     case "Einstein":
@@ -57,12 +55,12 @@
                         guess = this.botEinstein(difficulty, min, max, middle);
                         break;
 
-                    case "Monkey":  //Quick but random
+                    case "Monkey":  
                         answerTime = this.randomNr(0, 1000);
                         guess = this.botMonkey(difficulty, min, max, middle);
                         break;
 
-                    case "The thinker":  //Very slow but good thinker
+                    case "The thinker":  
                         answerTime = this.randomNr(4000, 6000);
                         guess = this.botTheThinker(difficulty, min, max, middle);
                         break;
@@ -75,22 +73,17 @@
                     default:
                         answerTime = 2000;                        
                         break;
-                }             
-                
-                /*if(!correctGuess) {   
-                    guess = this.randomNr(min, max);
-                }
-                else {
-                    guess = this.$store.getters.getCurrentQuestion.answer;
-                }*/
-
+                }    
+                //Timeout for delaying the bots guess
                 setTimeout(() => {
                     this.guess = guess;
                     this.answerSent = true;
                     this.$store.commit("stopTimer");
-                    EventBus.$emit("answerSent", guess);
+                    EventBus.$emit("answerSent", guess);  //Eventbus directing the guesses to the game leader
                 }, answerTime);
             },
+
+            //Regular bot, nothing more nothing less
             botBot(difficulty, min, max, middle) {                
 
                 if(difficulty == "easy") {
@@ -106,15 +99,15 @@
                     max = max - Math.round((max - middle) / 2);
                 }            
 
-                return this.randomNr(min, max);
+                return this.randomNr(min, max);  //Calling method randomNr to randomize a guess
             },
 
             //Super smart bot, sometimes knows the answer
             botEinstein (difficulty, min, max, middle) {  
 
-                let correctAnswer = this.$store.getters.getCurrentQuestion.answer;
+                let correctAnswer = this.$store.getters.getCurrentQuestion.answer;  //Collecting the correct answer
                 let correctGuess = false;  //correctGuess is used if Einstein knows the answer   
-                let chanceToCorrectGuess = this.randomNr(0,100);
+                let chanceToCorrectGuess = this.randomNr(0,100);  //Method randomNr used to randomize a % value deciding if Einstein knows the answer
 
                 //Einstein knows on what side of the "middle" the correct answer is
                 if(correctAnswer < middle) {
@@ -125,8 +118,8 @@
                 }
 
                 if(difficulty == "easy") {
-                    if(chanceToCorrectGuess < 31) {  //Einstein knows the answer
-                        correctGuess = true;                     
+                    if(chanceToCorrectGuess < 31) {  //Einstein knows the answer if chanceToCorrectGuess is under 31 (30% chance)
+                        correctGuess = true;  //correctGuess gets the value true to indicate Einstein knows the answer
                     }
                     else {  
                         min = min + Math.round((correctAnswer - min) / 3);  //Einstein works on the correct answer instead of "middle"
@@ -134,8 +127,8 @@
                     }
                 }
                 else if(difficulty == "medium") {
-                    if(chanceToCorrectGuess < 51) {  //Einstein knows the answer
-                        correctGuess = true;                        
+                    if(chanceToCorrectGuess < 51) {  //Einstein knows the answer if chanceToCorrectGuess is under 51 (50% chance)
+                        correctGuess = true;  //correctGuess gets the value true to indicate Einstein knows the answer                 
                     }
                     else {  
                         min = min + Math.round((correctAnswer - min) / 2);  //Einstein works on the correct answer instead of "middle"
@@ -143,8 +136,8 @@
                     }
                 }
                 else {
-                    if(chanceToCorrectGuess < 71) {  //Einstein knows the answer
-                        correctGuess = true;  
+                    if(chanceToCorrectGuess < 71) {  //Einstein knows the answer if chanceToCorrectGuess is under 71 (70% chance)
+                        correctGuess = true;  //correctGuess gets the value true to indicate Einstein knows the answer
                     }
                     else {  
                         min = correctAnswer - Math.round((correctAnswer - min) / 10);  //Einstein works on the correct answer instead of "middle"
@@ -156,32 +149,29 @@
                     return correctAnswer;           
                 }
                 else {
-                    return this.randomNr(min, max);
+                    return this.randomNr(min, max);  //Calling method randomNr to randomize a guess
                 }
             },
+
+            //The monkey is crazy and dont know much
             botMonkey(difficulty, min, max, middle) {
-                // test
-                if(difficulty == "easy"){
-                    min = min + Math.round((middle - min) / 6);
-                    max = max - Math.round((max - middle) / 6);
+                
+                if(difficulty == "medium") {
+                    min = min + Math.round((middle - min) / 10);
+                    max = max - Math.round((max - middle) / 10);
                 }
-                //
-                else if(difficulty == "medium") {
-                    min = min + Math.round((middle - min) / 6);
-                    max = max - Math.round((max - middle) / 6);
-                }
-                else {
+                else if(difficulty == "hard"){
                     min = min + Math.round((middle - min) / 5);
                     max = max - Math.round((max - middle) / 5);
                 }
 
-                return this.randomNr(min, max);
+                return this.randomNr(min, max);  //Calling method randomNr to randomize a guess
             },
 
-            //Very slow but good thinker, sumtimes takes too long time
+            //Very slow but good thinker, sometimes takes too long time
             botTheThinker (difficulty, min, max, middle) {    
 
-                let correctAnswer = this.$store.getters.getCurrentQuestion.answer;
+                let correctAnswer = this.$store.getters.getCurrentQuestion.answer;  //Collecting the correct answer
                 
                 //The Thinker knows on what side of the "middle" the correct answer is
                 if(correctAnswer < middle) {
@@ -204,7 +194,7 @@
                     max = middle + Math.round((max - middle) / 10);
                 }
 
-                return this.randomNr(min, max);
+                return this.randomNr(min, max);  //Calling method randomNr to randomize a guess
             },
 
             //The dwarf allways guess on lower values close to min  
@@ -220,7 +210,7 @@
                     max = min + Math.round((middle - min) / 2);
                 }
 
-                return this.randomNr(min, max);
+                return this.randomNr(min, max);  //Calling method randomNr to randomize a guess
             },
             randomNr(min, max) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;
