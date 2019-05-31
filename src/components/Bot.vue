@@ -110,7 +110,7 @@
             botEinstein (difficulty, min, max, middle) {
 
                 let correctGuess = false;  //correctGuess is used if Einstein knows the answer   
-                let chanceToCorrectAnswer = randomNr(0,100);
+                let chanceToCorrectAnswer = this.randomNr(0,100);
 
                 if(difficulty == "easy") {
                     if(chanceToCorrectAnswer < 31) {  //Einstein knows the answer
