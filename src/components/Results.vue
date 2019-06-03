@@ -37,7 +37,7 @@
       EventBus.$off("answerSent");
     },
     mounted() {
-      EventBus.$on("winnerNameSent", player => {
+      EventBus.$on("winnerSent", player => {
         this.player = player;
       });
     },
