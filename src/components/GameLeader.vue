@@ -168,6 +168,7 @@ export default {
     timeout() {
       if (this.timeout) {
         this.setFeedback("Too slow!", "danger");
+        this.showFeedback = true;
         this.proceedToNextPlayer();
       }
     }
