@@ -29,12 +29,12 @@
             autoGuess() {    
 
                 let difficulty = this.$store.getters.getCurrentQuestion.difficulty;  //Loads diffuculty level
-                let timeLimit = this.$store.getters.getTimeLimit;
+                let timeLimit = this.$store.getters.getTimeLimit;  //Collecting time limit from store to use for setting different time limits 
                 let guess;  
                 let answerTime;  //The time a bot put on thinking before guessing
                 let min = this.$store.getters.getAnswerMin; //Get min and max values from question
                 let max = this.$store.getters.getAnswerMax; //Min and max are used for deciding the guessing interval
-                let middle = Math.round((max - min) / 2);  //Calculation for deciding middle between min and max
+                let middle = Math.round((max + min) / 2);  //Calculation for deciding middle between min and max
 
                 //If there is no min or max they are set to a default value
                 if (min == null) {
@@ -107,6 +107,8 @@
             //Super smart bot, sometimes knows the answer
             botEinstein (difficulty, min, max, middle) {  
 
+                let realMin = min;  //Saving incoming min and max to make shure the bot cant guess on those values
+                let realMax = max;
                 let correctAnswer = this.$store.getters.getCurrentQuestion.answer;  //Collecting the correct answer
                 let correctGuess = false;  //correctGuess is used if Einstein knows the answer   
                 let chanceToCorrectGuess = this.randomNr(0,100);  //Method randomNr used to randomize a % value deciding if Einstein knows the answer
@@ -151,6 +153,13 @@
                     return correctAnswer;           
                 }
                 else {
+                    //Comparing min and max to realMin and realMax to make shure that the bot cant guess on those values
+                    if(min <= realMin) {
+                        min = realMin + 1;
+                    }
+                    if(max >= realMax) {
+                        max = realMax - 1;
+                    }
                     return this.randomNr(min, max);  //Calling method randomNr to randomize a guess
                 }
             },
@@ -173,6 +182,8 @@
             //Very slow but good thinker, sometimes takes too long time
             botTheThinker (difficulty, min, max, middle) {    
 
+                let realMin = min;  //Saving incoming min and max to make shure the bot cant guess on those values
+                let realMax = max;
                 let correctAnswer = this.$store.getters.getCurrentQuestion.answer;  //Collecting the correct answer
                 
                 //The Thinker knows on what side of the "middle" the correct answer is
@@ -194,6 +205,14 @@
                 else {
                     min = middle - Math.round((middle - min) / 10);
                     max = middle + Math.round((max - middle) / 10);
+                }
+                
+                //Comparing min and max to realMin and realMax to make shure that the bot cant guess on those values
+                if(min <= realMin) {
+                    min = realMin + 1;
+                }
+                if(max >= realMax) {
+                    max = realMax - 1;
                 }
 
                 return this.randomNr(min, max);  //Calling method randomNr to randomize a guess
