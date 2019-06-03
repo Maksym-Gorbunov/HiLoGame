@@ -77,12 +77,14 @@
                         break;
                 }    
                 //Timeout for delaying the bots guess
-                setTimeout(() => {
-                    this.guess = guess;
-                    this.answerSent = true;
-                    this.$store.commit("stopTimer");
-                    EventBus.$emit("answerSent", guess);  //Eventbus directing the guesses to the game leader
-                }, answerTime);
+                if (timeLimit > answerTime) {
+                    setTimeout(() => {
+                        this.guess = guess;
+                        this.answerSent = true;
+                        this.$store.commit("stopTimer");
+                        EventBus.$emit("answerSent", guess);  //Eventbus directing the guesses to the game leader
+                    }, answerTime);
+                }
             },
 
             //Regular bot, nothing more nothing less
