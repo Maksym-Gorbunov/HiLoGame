@@ -15,12 +15,11 @@
             v-if="!this.roundActive && this.gameActive"
             v-on:click="startNewRound()"
             class="newQuestion"
-          >Next Question</b-button>
+          >{{ buttonText}}</b-button>
         </b-row>
       </b-col>
     </b-row>
     <b-row>&nbsp;</b-row>
-    <b-progress :value="this.$store.state.timerValue" :max="this.$store.state.timerMax"></b-progress>
   </b-container>
 </template>
   
@@ -28,6 +27,7 @@
 import { EventBus } from "../event-bus.js";
 import { setTimeout } from "timers";
 import Master from "@/assets/Master.png";
+import { constants } from 'crypto';
 
 export default {
   name: "GameLeader",
@@ -39,7 +39,8 @@ export default {
       mainPhrase: "Welcome to the HiLo game!",
       feedbackPhrase: "Are you ready?",
       feedbackType: "info",
-      showFeedback: true
+      showFeedback: true,
+      buttonText: "Yes!"
     };
   },
   methods: {
@@ -82,6 +83,7 @@ export default {
           this.proceedToNextPlayer();
         }
         this.showFeedback = true;
+        this.buttonText = "Next Question";
       }
     },
 
@@ -129,6 +131,9 @@ export default {
       setTimeout(() => {
         this.$store.commit("resetTimer");
         setTimeout(() => {
+          console.log(this.answerMin);
+          console.log(this.answerMax);
+
           this.$store.commit("nextTurn");
           this.$store.commit("startTimer");
           this.$store.commit("setTimeout", false);
@@ -174,7 +179,7 @@ export default {
     },
     timeout() {
       return this.$store.getters.getTimeout;
-    }
+    },
   },
   watch: {
     //Procedure if answer time has expired 
@@ -266,10 +271,5 @@ img {
   border-left: 0;
   margin-top: -7px;
   margin-left: -7px;
-}
-</style>
-<style>
-.progress-bar {
-  transition: width 0.2s ease;
 }
 </style>
