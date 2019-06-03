@@ -20,7 +20,6 @@
       </b-col>
     </b-row>
     <b-row>&nbsp;</b-row>
-    <b-progress :value="this.$store.state.timerValue" :max="this.$store.state.timerMax"></b-progress>
   </b-container>
 </template>
   
@@ -253,10 +252,5 @@ img {
   border-left: 0;
   margin-top: -7px;
   margin-left: -7px;
-}
-</style>
-<style>
-.progress-bar {
-  transition: width 0.2s ease;
 }
 </style>
