@@ -48,11 +48,7 @@
                 //Switch statement with each case representing each bot and calling for respective method
                 switch (this.bot.name) {   
                     case "Bot":
-<<<<<<< HEAD
                         answerTime = this.randomNr(timeLimit * 0.1, timeLimit * 0.3);  //Calling method randomNr to randomize thinking time
-=======
-                        answerTime = this.randomNr(1000, 2000);  //Calling method randomNr to randomize thinking time
->>>>>>> master
                         guess = this.botBot(difficulty, min, max, middle);
                         break;
 
