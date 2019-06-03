@@ -60,8 +60,8 @@ export default {
       this.$store.commit("setRoundActive", true);
     },
     initMinMax() {
-      offsetPercentage = 50;
-      offset = this.currentQuestion.answer * offsetPercentage / 100;
+      let offsetPercentage = 50;
+      let offset = Math.floor(this.currentQuestion.answer * offsetPercentage / 100);
 
       let initMin = this.currentQuestion.answer - offset;
       let initMax = this.currentQuestion.answer + offset;
