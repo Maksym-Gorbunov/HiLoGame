@@ -132,9 +132,6 @@ export default {
       setTimeout(() => {
         this.$store.commit("resetTimer");
         setTimeout(() => {
-          console.log(this.answerMin);
-          console.log(this.answerMax);
-
           this.$store.commit("nextTurn");
           this.$store.commit("startTimer");
           this.$store.commit("setTimeout", false);
