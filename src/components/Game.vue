@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-        <Results v-if="this.$store.getters.gameActive" ref="resultsModal"/>
+        <Results ref="resultsModal" v-on:restart-game= "restart"/>
     </div>
     <div>
       <b-row>
@@ -15,7 +15,7 @@
         <b-button class="restart" @click="restart()">Restart</b-button>
       </b-col>
     </b-row>
-    <GameLeader v-on:show-modal= "showModal" v-on:restart-game= "restart"/>
+    <GameLeader v-on:show-modal= "showModal"/>
     <b-container fluid>
       <b-row class="some-row align-items-end">
         <b-col md>

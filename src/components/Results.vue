@@ -19,7 +19,7 @@
         this.$refs['my-modal'].hide()
       },
       restartGame(){
-        this.$emit('restart-game');
+        this.$emit("restart-game");
       }
     }
   }
