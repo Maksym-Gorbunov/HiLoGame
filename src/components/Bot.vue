@@ -28,23 +28,44 @@
         methods: {
             autoGuess() {    
 
-                let difficulty = this.$store.getters.getCurrentQuestion.difficulty;  //Loads diffuculty level
+                let currentYear = new Date().getFullYear();  //Getting the current year to limit the bots guessing interval
+                let currentQuestion = this.$store.getters.getCurrentQuestion;  //Getting the current question from store
+                let difficulty = currentQuestion.difficulty;  //Loads diffuculty level from current question 
+                let question = currentQuestion.question;  //Getting the actual question from the current question to check if the answer is a year in the if below
                 let timeLimit = this.$store.getters.getTimeLimit;  //Collecting time limit from store to use for setting different time limits 
                 let guess;  
                 let answerTime;  //The time a bot put on thinking before guessing
                 let min = this.$store.getters.getAnswerMin; //Get min and max values from question
-                let max = this.$store.getters.getAnswerMax; //Min and max are used for deciding the guessing interval
-                let middle = Math.round((max + min) / 2);  //Calculation for deciding middle between min and max
-
+                let max = this.$store.getters.getAnswerMax; //Min and max are used for deciding the guessing interval                
+                
                 //If there is no min or max they are set to a default value
                 if (min == null) {
                     min = 1;
                 }
-
                 if (max == null) {
                     max = 1000000;
                 }
-                
+
+                //The bots should not be able to guess on a negative value if the answer is´nt negative
+                if(currentQuestion.answer > 0 && min < 1) {
+                    min = 1;
+                }                
+
+                //The bots should not be able to guess on a year in the future if the answer is´nt a year in the future
+                if(question.toUpperCase().includes("year".toUpperCase()) || question.toUpperCase().includes("when".toUpperCase())) {
+                    if(currentQuestion.answer <= currentYear && max > currentYear) {
+                        max = currentYear;
+                    }
+                    if(currentQuestion.answer >= 1990 && min < 1970) {
+                        min = 1970;
+                    }
+                    else if(currentQuestion.answer >= 1960 && min < 1930) {
+                        min = 1930;
+                    }
+                } 
+
+                let middle = Math.round((max + min) / 2);  //Calculation for deciding middle between min and max
+
                 //Switch statement with each case representing each bot and calling for respective method
                 switch (this.bot.name) {   
                     case "Bot":
@@ -53,12 +74,12 @@
                         break;
 
                     case "Einstein":
-                        answerTime = this.randomNr(0, timeLimit * 0.1);
+                        answerTime = this.randomNr(500, timeLimit * 0.1);
                         guess = this.botEinstein(difficulty, min, max, middle);
                         break;
 
                     case "Monkey":  
-                        answerTime = this.randomNr(0, timeLimit * 0.1);
+                        answerTime = this.randomNr(500, timeLimit * 0.1);
                         guess = this.botMonkey(difficulty, min, max, middle);
                         break;
 
@@ -88,7 +109,10 @@
             },
 
             //Regular bot, nothing more nothing less
-            botBot(difficulty, min, max, middle) {                
+            botBot(difficulty, min, max, middle) {   
+                
+                let realMin = min;  //Saving incoming min and max to make shure the bot cant guess on those values
+                let realMax = max;
 
                 if(difficulty == "easy") {
                     min = min + Math.round((middle - min) / 4);
@@ -102,6 +126,14 @@
                     min = min + Math.round((middle - min) / 2);
                     max = max - Math.round((max - middle) / 2);
                 }            
+
+                //Comparing min and max to realMin and realMax to make shure that the bot cant guess on those values
+                if(min <= realMin) {
+                    min = realMin + 1;
+                }
+                if(max >= realMax) {
+                    max = realMax - 1;
+                }
 
                 return this.randomNr(min, max);  //Calling method randomNr to randomize a guess
             },
@@ -168,6 +200,9 @@
 
             //The monkey is crazy and dont know much
             botMonkey(difficulty, min, max, middle) {
+
+                let realMin = min;  //Saving incoming min and max to make shure the bot cant guess on those values
+                let realMax = max;
                 
                 if(difficulty == "medium") {
                     min = min + Math.round((middle - min) / 10);
@@ -176,6 +211,14 @@
                 else if(difficulty == "hard"){
                     min = min + Math.round((middle - min) / 5);
                     max = max - Math.round((max - middle) / 5);
+                }
+
+                //Comparing min and max to realMin and realMax to make shure that the bot cant guess on those values
+                if(min <= realMin) {
+                    min = realMin + 1;
+                }
+                if(max >= realMax) {
+                    max = realMax - 1;
                 }
 
                 return this.randomNr(min, max);  //Calling method randomNr to randomize a guess
@@ -223,6 +266,9 @@
             //The dwarf allways guess on lower values close to min  
             botDwarf (difficulty, min, max, middle) {      
 
+                let realMin = min;  //Saving incoming min and max to make shure the bot cant guess on those values
+                let realMax = max;
+
                 if(difficulty == "easy") {                    
                     max = min + Math.round((middle - min) / 10);
                 }
@@ -231,6 +277,14 @@
                 }
                 else {                    
                     max = min + Math.round((middle - min) / 2);
+                }
+
+                //Comparing min and max to realMin and realMax to make shure that the bot cant guess on those values
+                if(min <= realMin) {
+                    min = realMin + 1;
+                }
+                if(max >= realMax) {
+                    max = realMax - 1;
                 }
 
                 return this.randomNr(min, max);  //Calling method randomNr to randomize a guess
