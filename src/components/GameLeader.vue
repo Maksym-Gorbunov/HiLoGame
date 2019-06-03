@@ -6,29 +6,26 @@
       </b-col>
       <b-col cols="6" lg="2">
         <b-row>
-          <!--
-            <b-card style="max-width: 20rem;">
-            <b-card-text v-html="mainPhrase" width="100"></b-card-text>
-          </b-card>
-          -->
-          <div class="speech-bubble" v-html="mainPhrase" width="100">
-          </div>
+          <div class="speech-bubble" v-html="mainPhrase" width="100"></div>
         </b-row>
         <br>
         <b-row>
           <b-alert v-bind:variant="feedbackType" v-bind:show="showFeedback">{{ feedbackPhrase }}</b-alert>
-          <b-button v-if="!this.$store.getters.getRoundActive" v-on:click="buttonClicked()" class="newQuestion">{{ buttonText }}</b-button>
+          <b-button
+            v-if="!this.roundActive && this.gameActive"
+            v-on:click="startNewRound()"
+            class="newQuestion"
+          >Next Question</b-button>
         </b-row>
       </b-col>
     </b-row>
     <b-row>&nbsp;</b-row>
-    <b-progress :value="this.$store.state.timerValue" :max="this.$store.state.timerMax"></b-progress>
   </b-container>
 </template>
   
 <script>
 import { EventBus } from "../event-bus.js";
-import { setTimeout } from 'timers';
+import { setTimeout } from "timers";
 import Master from "@/assets/Master.png";
 
 export default {
@@ -41,95 +38,151 @@ export default {
       mainPhrase: "Welcome to the HiLo game!",
       feedbackPhrase: "Are you ready?",
       feedbackType: "info",
-      showFeedback: true,
-      buttonText: "Ok!"
-    }
+      showFeedback: true
+    };
   },
   methods: {
-    getImgUrl(){
-      return Master
+    getImgUrl() {
+      return Master;
     },
-    buttonClicked() {
-      if (this.$store.getters.getGameActive) {
-        this.newRound();
-      } else {
-        //TODO
-        // this.$store.commit("resetState");
-        // this.$router.replace("/"); //Route to start page
-      }
-    },
-    newRound() {
+
+    //Set up states and start new game round
+    startNewRound() {
       this.$store.commit("nextQuestion");
+      this.mainPhrase = this.currentQuestion.question;
+      this.showFeedback = false;
+
       this.$store.commit("nextTurn");
       this.$store.commit("startTimer");
-      this.mainPhrase = this.$store.getters.getCurrentQuestion.question;
-      this.showFeedback = false;
-      this.$store.commit("setAnswerMin", 0);//Kontrollera
-      this.$store.commit("setAnswerMax", this.$store.getters.getCurrentQuestion.answer * 2);//Kontrollera
+      this.$store.commit("setAnswerMin", 0); //Kontrollera
+      this.$store.commit("setAnswerMax", this.currentQuestion.answer * 2); //Kontrollera
       this.$store.commit("setRoundActive", true);
     },
-    checkAnswer(answer) {
-      if (answer > this.$store.getters.getCurrentQuestion.answer) {
-        this.feedbackPhrase = "Lower!";
-        this.feedbackType = "danger";
-        if (answer < this.$store.getters.getAnswerMax) {
-          this.$store.commit("setAnswerMax", answer);
+    evaluatePlayerAnswer(answer) {
+      let answerCheck = this.checkAnswer(answer);
+      this.setAnswerCheckStates(answer, answerCheck);
+
+      if (this.checkIfPlayerWon()) {
+        this.setGameFinishedState();
+      } else {
+        if (answerCheck !== 0) {
+          this.proceedToNextPlayer();
         }
-        return false;
-      } else if (answer < this.$store.getters.getCurrentQuestion.answer) {
-        this.feedbackPhrase = "Higher!";
-        this.feedbackType = "danger";
-        if (answer > this.$store.getters.getAnswerMin) {
-          this.$store.commit("setAnswerMin", answer);
-        }
-        return false;
+        this.showFeedback = true;
       }
-      return true;
+    },
+
+    //Check wether player answer is too high/too low/correct
+    checkAnswer(answer) {
+      if (answer > this.currentQuestion.answer) {
+        return 1;
+      } else if (answer < this.currentQuestion.answer) {
+        return -1;
+      }
+      return 0;
+    },
+
+    //Set particular states depending on answer check return 
+    setAnswerCheckStates(answer, answerCheck) {
+      switch(answerCheck) {
+        case -1: 
+          this.setFeedback("Higher!", "danger");
+          if (answer > this.answerMin) {
+            this.$store.commit("setAnswerMin", answer);
+          }
+          break;
+        case 0:
+          this.setFeedback("Correct!", "success");
+          this.currentPlayer.score++;
+          this.$store.commit("setRoundActive", false);
+          this.$store.commit("resetTimer");
+          break;
+        case 1: 
+          this.setFeedback("Lower!", "danger");
+          if (answer < this.answerMax) {
+            this.$store.commit("setAnswerMax", answer);
+          }
+          break;
+      }
     },
     checkIfPlayerWon() {
-      if (this.$store.getters.getCurrentPlayer.score == this.$store.getters.getScoreToWin) { //Ändra till === när vi fixar number secure
-        this.$store.commit("setGameActive", false);
-        this.$parent.showModal();
-        this.mainPhrase = "Congratulations " + this.$store.getters.getCurrentPlayer.name + "! You won!";
-        this.feedbackPhrase = "Play again?";
-        this.buttonText = "Ok!"
-      } else {
-        this.feedbackPhrase = "Correct!";
-        this.feedbackType = "success";
-        this.buttonText = "Next question"
-      }
+      return this.currentPlayer.score == this.scoreToWin; //ScoreToWin är text atm
     },
-    evaluatePlayerAnswer(answer) {
-      if (this.checkAnswer(answer)) {
-        this.$store.getters.getCurrentPlayer.score++; 
-        this.checkIfPlayerWon();
-        this.showFeedback = true;
-        this.$store.commit("setRoundActive", false);
-      } else {
-        this.showFeedback = true;
+    setGameFinishedState() {
+      this.$store.commit("setGameActive", false);
+      this.$emit("show-modal");
+    },
+    proceedToNextPlayer() {
+      setTimeout(() => {
+        this.$store.commit("resetTimer");
         setTimeout(() => {
           this.$store.commit("nextTurn");
           this.$store.commit("startTimer");
+          this.$store.commit("setTimeout", false);
           this.showFeedback = false;
         }, 2000);
-      }
+      }, 2000);
+    },
+    setFeedback(phrase, type) {
+      this.feedbackPhrase = phrase;
+      this.feedbackType = type;
     }
   },
   mounted() {
+    //Listen for player answer and evaluate it when it has arrived
     EventBus.$on("answerSent", answer => {
       setTimeout(() => {
         this.evaluatePlayerAnswer(answer);
       }, 2000);
     });
   },
+  computed: {
+    //Store getters
+    gameActive() {
+      return this.$store.getters.getGameActive;
+    },
+    roundActive() {
+      return this.$store.getters.getRoundActive;
+    },
+    scoreToWin() {
+      return this.$store.getters.getScoreToWin;
+    },
+    answerMin() {
+      return this.$store.getters.getAnswerMin;
+    },
+    answerMax() {
+      return this.$store.getters.getAnswerMax;
+    },
+    currentPlayer() {
+      return this.$store.getters.getCurrentPlayer;
+    },
+    currentQuestion() {
+      return this.$store.getters.getCurrentQuestion;
+    },
+    timeout() {
+      return this.$store.getters.getTimeout;
+    }
+  },
+  watch: {
+    //Procedure if answer time has expired 
+    timeout() {
+      if (this.timeout) {
+        this.setFeedback("Too slow!", "danger");
+        this.proceedToNextPlayer();
+      }
+    }
+  },
   beforeDestroy() {
-    EventBus.$off('answerSent')
+    EventBus.$off("answerSent");
   }
 };
 </script>
 
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+img {
+  height: 300px;
+}
 
 .rules {
   background: #000000; /* fallback for old browsers */
@@ -176,28 +229,28 @@ export default {
 }
 
 .speech-bubble {
-	position: relative;
-	background: #ffffff;
-	border-radius: .4em;
+  position: relative;
+  background: #ffffff;
+  border-radius: 0.4em;
   width: 260px;
-    padding: 40px 10px;
-    margin: 1em 0;
-    text-align: center;
-    font-weight: bold;
-    font-size: 100%;
+  padding: 40px 10px;
+  margin: 1em 0;
+  text-align: center;
+  font-weight: bold;
+  font-size: 13px;
 }
 
 .speech-bubble:after {
-	content: '';
-	position: absolute;
-	left: 0;
-	top: 50%;
-	width: 0;
-	height: 0;
-	border: 7px solid transparent;
-	border-right-color: #ffffff;
-	border-left: 0;
-	margin-top: -7px;
-	margin-left: -7px;
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+  border-right-color: #ffffff;
+  border-left: 0;
+  margin-top: -7px;
+  margin-left: -7px;
 }
 </style>

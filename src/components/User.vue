@@ -2,9 +2,9 @@
 	<b-col>
 		<div class="speech-bubble" v-if="activePlayer" v-bind:class="{active: activePlayer}">
 			<b-input-group>
-			<b-form-input v-model="userInput" type="number" v-bind:disabled="answerSent"></b-form-input>
+			<b-form-input v-model="userInput" type="number" v-bind:disabled="answerSent || this.$store.getters.getTimeout"></b-form-input>
 			<b-input-group-append>
-			<b-button variant="info" v-on:click="sendAnswer()" v-bind:disabled="!validUserInput || answerSent">Submit</b-button>
+			<b-button variant="info" v-on:click="sendAnswer()" v-bind:disabled="!validUserInput || answerSent || this.$store.getters.getTimeout">Submit</b-button>
 			</b-input-group-append>
 			</b-input-group>
 		</div>
@@ -38,6 +38,7 @@
 		methods: {
 			sendAnswer() {
 				this.answerSent = true;
+				this.$store.commit("stopTimer");
 				EventBus.$emit("answerSent", Number(this.userInput));
 			}
 		},

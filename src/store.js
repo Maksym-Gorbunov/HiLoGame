@@ -5,6 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        timeLimit: 10000,
+        timeout: false,
         timerMax: 100,
         timerValue: 100,
         answerMin: null,
@@ -12,6 +14,7 @@ export default new Vuex.Store({
         scoreToWin: 0,
         gameActive: false,
         roundActive: false,
+        gameFinished: false,
         user: {
             type: "user",
             name: "",
@@ -58,13 +61,62 @@ export default new Vuex.Store({
         questions: [],
         currentPlayer: null,
         currentQuestion: null,
+        timer: null,
         data: [] //maks 
     },
     mutations:{
-        initPlayers(state){
+        initPlayers(state, players){
+            console.log('initPlayers...')
+            console.log(players.userName)
+            console.log(players.bot1Name)
+            console.log(players.bot2Name)
+            // can delete set and get username in store.js, dont need to call set username in start.vue
+
+            state.user.name = players.userName;
             state.players.push(state.user);
-            state.players.push(state.bot1);
-            state.players.push(state.bot2);
+
+            switch(players.bot1Name){
+                case "Bot":
+                    state.players.push(state.bot1)
+                    break
+                case "Einstein":
+                    state.players.push(state.bot2)
+                    break
+                case "Monkey":
+                    state.players.push(state.bot3)
+                    break
+                case "The thinker":
+                    state.players.push(state.bot4)
+                    break
+                case "Dwarf":
+                    state.players.push(state.bot5)
+                    break
+                default: break
+            }
+
+            switch(players.bot2Name){
+                case "Bot":
+                    state.players.push(state.bot1)
+                    break
+                case "Einstein":
+                    state.players.push(state.bot2)
+                    break
+                case "Monkey":
+                    state.players.push(state.bot3)
+                    break
+                case "The thinker":
+                    state.players.push(state.bot4)
+                    break
+                case "Dwarf":
+                    state.players.push(state.bot5)
+                    break
+                default: break
+            }
+
+            console.log("<<<"+ state.players[0].name)
+            console.log("<<<"+ state.players[1].name)
+            console.log("<<<"+ state.players[2].name)
+            // state.players.push(state.bot2);
         },
         setData(state, data){
             state.data = data;
@@ -87,18 +139,24 @@ export default new Vuex.Store({
         setRoundActive(state, value){
             state.roundActive = value;
         },
+        setGameFinished(state, value){
+            state.gameFinished = value;
+        },
         setPlayers(state, value){
             state.players = value;
         },
         setUserName(state, name){
             state.user.name = name;
-            console.log(state.user.name);
+            // console.log(state.user.name);
         },
         setQuestions(state, data){
             state.questions = data;
-            console.log('question:' + data[0].question)
-            console.log('question:' + data[0].answer)
-            console.log('question:' + data[0].difficulty)
+            // console.log('question:' + data[0].question)
+            // console.log('question:' + data[0].answer)
+            // console.log('question:' + data[0].difficulty)
+        },
+        setTimeout(state, data){
+            state.timeout = data;
         },
         nextTurn(state){
             if(state.currentPlayer === null){
@@ -128,15 +186,21 @@ export default new Vuex.Store({
             }
         },
         startTimer(state){
-            state.timerValue = 100;
-            var loop = setInterval(() => {
+            state.timer = setInterval(() => {
                 if(state.timerValue == 0){
-                    clearInterval(loop);
+                    clearInterval(state.timer);
+                    state.timeout = true;
                 }
                 else{
                     state.timerValue -= 1;
                 }
-            }, 50);
+            }, state.timeLimit/state.timerMax);
+        },
+        stopTimer(state){
+            clearInterval(state.timer);
+        },
+        resetTimer(state) {
+            state.timerValue = state.timerMax;
         }
     },
     getters:{
@@ -157,6 +221,9 @@ export default new Vuex.Store({
         },
         getRoundActive(state){
             return state.roundActive;
+        },
+        getGameFinished(state){
+            return state.gameFinished;
         },
         getUser(state){
             return state.user;
@@ -187,6 +254,12 @@ export default new Vuex.Store({
         },
         getCurrentQuestion(state){
             return state.currentQuestion;
+        },
+        getTimeout(state){
+            return state.timeout;
+        },
+        getTimeLimit(state){
+            return state.timeLimit;
         }
     }
 })

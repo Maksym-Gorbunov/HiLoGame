@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-img class="img-responsive" v-if="player.imgURL" v-bind:src="getImgUrl(player.imgURL)"></b-img>
+    <b-img class="mx-auto d-none d-md-block" v-if="player.imgURL" v-bind:src="getImgUrl(player.imgURL)"></b-img>
     <div>{{player.name}}</div>
     <div>Score: {{player.score}}</div>
     <div>
@@ -12,6 +12,9 @@
 import UserImage from "@/assets/User.png";
 import RobotImage from "@/assets/Robot.png";
 import AlbertImage from "@/assets/Albert.png";
+import DwarfImage from "@/assets/Dwarf.png";
+import ThinkerImage from "@/assets/Thinker.png";
+import MonkeyImage from "@/assets/Monkey.png";
 import PlayerDefault from "@/assets/PlayerDefault.png";
 
 export default {
@@ -19,7 +22,9 @@ export default {
   props: ["player"],
   data() {
     return {
-      text: ""
+      text: "",
+      value: null,
+      max: null
     };
   },
   methods: {
@@ -31,6 +36,12 @@ export default {
           return AlbertImage;
         case "Robot.png":
           return RobotImage;
+        case "Dwarf.png":
+          return DwarfImage;
+        case "Thinker.png":
+          return ThinkerImage;
+        case "Monkey.png":
+          return MonkeyImage;
         default:
           return PlayerDefault;
       }
@@ -45,7 +56,7 @@ export default {
 }
 
 img {
-  height: 250px;
+  height: 200px;
   padding-top: 10px;
 }
 </style>
