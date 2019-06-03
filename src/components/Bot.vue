@@ -1,8 +1,9 @@
 <template>
-    <b-col sm="1" md="3" lg="4" align-self="center">   
+    <b-col>   
         <div class="speech-bubble" v-if="bot.active" v-bind:class="{active: bot.active}">
             <b-form-input v-model="guess" type="number" disabled></b-form-input>
         </div>
+        <br>
         <playerData v-bind:player="bot" v-bind:guess="guess"/>
     </b-col>
 </template>
@@ -28,6 +29,7 @@
             autoGuess() {    
 
                 let difficulty = this.$store.getters.getCurrentQuestion.difficulty;  //Loads diffuculty level
+                let timeLimit = this.$store.getters.getTimeLimit;
                 let guess;  
                 let answerTime;  //The time a bot put on thinking before guessing
                 let min = this.$store.getters.getAnswerMin; //Get min and max values from question
@@ -46,27 +48,27 @@
                 //Switch statement with each case representing each bot and calling for respective method
                 switch (this.bot.name) {   
                     case "Bot":
-                        answerTime = randomNr(1000, 2000);  //Calling method randomNr to randomize thinking time
-                        guess = botBot(difficulty, min, max, middle);
+                        answerTime = this.randomNr(timeLimit * 0.1, timeLimit * 0.3);  //Calling method randomNr to randomize thinking time
+                        guess = this.botBot(difficulty, min, max, middle);
                         break;
 
                     case "Einstein":
-                        answerTime = this.randomNr(0, 1000);
+                        answerTime = this.randomNr(0, timeLimit * 0.1);
                         guess = this.botEinstein(difficulty, min, max, middle);
                         break;
 
                     case "Monkey":  
-                        answerTime = this.randomNr(0, 1000);
+                        answerTime = this.randomNr(0, timeLimit * 0.1);
                         guess = this.botMonkey(difficulty, min, max, middle);
                         break;
 
                     case "The thinker":  
-                        answerTime = this.randomNr(4000, 6000);
+                        answerTime = this.randomNr(timeLimit * 0.8, timeLimit * 1.2);
                         guess = this.botTheThinker(difficulty, min, max, middle);
                         break;
 
                     case "Dwarf":
-                        answerTime = this.randomNr(1500, 2500);
+                        answerTime = this.randomNr(timeLimit * 0.4, timeLimit * 0.6);
                         guess = this.botDwarf(difficulty, min, max, middle);
                         break;
                 
