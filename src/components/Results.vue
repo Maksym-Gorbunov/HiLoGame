@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal id="modal-center" ref="my-modal" hide-footer title="Game Finished!">
+    <b-modal id="modal-center" ref="my-modal" hide-footer centered title="Game Finished!">
       <div class="d-block text-center">
         <h3 v-if="player.type == 'user'">Congrats {{player.name}} you won!</h3>
         <h3 v-else>{{player.name}} won! Better luck next time!</h3>
