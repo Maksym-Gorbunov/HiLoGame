@@ -126,6 +126,7 @@ export default {
     setGameFinishedState() {
       this.$store.commit("setGameActive", false);
       this.$emit("show-modal");
+      EventBus.$emit("winnerNameSent", this.currentPlayer.name);
     },
     proceedToNextPlayer() {
       setTimeout(() => {
