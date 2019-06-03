@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     restart() {
-      window.location.href = "http://localhost:5000";
+      window.location.href = window.location.hostname;
     },
     showModal(){
       this.$refs.resultsModal.showModal();
