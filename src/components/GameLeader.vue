@@ -55,9 +55,21 @@ export default {
 
       this.$store.commit("nextTurn");
       this.$store.commit("startTimer");
-      this.$store.commit("setAnswerMin", 0); //Kontrollera
-      this.$store.commit("setAnswerMax", this.currentQuestion.answer * 2); //Kontrollera
+      this.initMinMax();
       this.$store.commit("setRoundActive", true);
+    },
+    initMinMax() {
+      offsetPercentage = 50;
+      offset = this.currentQuestion.answer * offsetPercentage / 100;
+
+      let initMin = this.currentQuestion.answer - offset;
+      let initMax = this.currentQuestion.answer + offset;
+      if (initMin < 0 && this.currentQuestion.answer > 0) {
+        initMin = 0;
+      }
+
+      this.$store.commit("setAnswerMin", initMin);
+      this.$store.commit("setAnswerMax", initMax); 
     },
     evaluatePlayerAnswer(answer) {
       let answerCheck = this.checkAnswer(answer);
