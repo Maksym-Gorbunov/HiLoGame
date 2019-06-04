@@ -23,11 +23,19 @@ describe('Start.vue', ()=>{
 
         it('renders start button', ()=>{
             const button = wrapper.find('button');
-            expect(wrapper.find('button').exists()).to.be.true 
+            expect(button.exists()).to.be.true 
         })
 
-        it('start button calls start() on click',()=>{
+        it.skip('start button calls start() on click',()=>{
 
         })
     })
+    describe('Input', ()=>{
+        
+
+        it('renders input', ()=>{
+            const input = wrapper.find('input');
+            expect(input.exists()).to.be.true 
+        })
+})
 })
