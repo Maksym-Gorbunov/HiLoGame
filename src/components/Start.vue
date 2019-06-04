@@ -23,26 +23,20 @@
             <option value="hard">Hard</option>
           </select>
           </div>
-          <div class="form-group row py-1">
-          <label for="bot1" class="col-sm-2 col-form-label">Bot 1</label>
-          <div class="col-sm-10">     
+          <div class="form-group row py-1">     
           <select ref="bot1_name" id="bot1" name="bot1" class="form-control" v-model="bot_1">
             <option v-for="item in this.bots" v-bind:key="item.index"
               v-bind:disabled="isDisabled1(item)" :value="item">{{item}}
             </option>
           </select>
           </div>
-          </div>
           <div class="form-group row py-1">
-          <label for="bot2" class="col-sm-2 col-form-label">Bot 2</label>
-          <div class="col-sm-10">     
           <select ref="bot2_name" id="bot2" name="bot2" class="form-control" v-model="bot_2">
             <option v-for="item in this.bots" v-bind:key="item.index"
               v-bind:disabled="isDisabled2(item)" :value="item"> 
               {{item}}
             </option>
           </select>
-          </div>
           </div>
           <button @click.prevent="start()" id="btnStart" type="button" class="btn btn-primary">
             START

@@ -26,7 +26,7 @@
       </form>
     </header>
     <div class="table-responsive" id="my_table_box">
-      <table id="my_table" class="table table-dark table-bordered table-striped">
+      <table id="my_table" class="table table-light table-bordered table-striped">
         <thead>
           <tr>
             <th scope="col"></th>
@@ -169,9 +169,13 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 body{
   background-image: linear-gradient(to right, #bbb , #fff);
+  background-color: whitesmoke;
+}
+h2 {
+  color: white;
 }
 .my_btn {
   color: black;

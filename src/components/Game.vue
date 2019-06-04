@@ -1,13 +1,13 @@
 <template>
   <div>
     <div>
-        <Results v-if="this.$store.getters.gameActive" ref="resultsModal"/>
+        <Results ref="resultsModal" v-on:restart-game= "restart"/>
     </div>
     <div>
       <b-row>
       <b-col align-self="end">
-        <b-button v-b-modal.modal-center>Rules</b-button>
-          <b-modal id="modal-center" centered title="Rules">
+        <b-button v-b-modal.modal-1>Rules</b-button>
+          <b-modal id="modal-1" title="Rules">
             <p class="my-4">This is a high-low game. Answer the question by entering a number in the input field and clicking submit.
               The game leader will then tell you higher, lower or correct depending on the answer.
             </p>
@@ -15,7 +15,7 @@
         <b-button class="restart" @click="restart()">Restart</b-button>
       </b-col>
     </b-row>
-    <GameLeader v-on:show-modal= "showModal" v-on:restart-game= "restart"/>
+    <GameLeader v-on:show-modal= "showModal"/>
     <b-container fluid>
       <b-row class="some-row align-items-end">
         <b-col md>
@@ -29,6 +29,7 @@
         </b-col>
       </b-row>
     </b-container>
+    <b-progress :value="this.$store.state.timerValue" :max="this.$store.state.timerMax"></b-progress>
     </div>
   </div>
 </template>
@@ -49,7 +50,7 @@ export default {
   },
   methods: {
     restart() {
-      window.location.href = "http://localhost:5000";
+      window.location.href = window.location.hostname;
     },
     showModal(){
       this.$refs.resultsModal.showModal();
@@ -92,5 +93,9 @@ body {
 
 .some-row {
   min-height: 5rem;
+}
+
+.progress-bar {
+  transition: width 0.2s ease;
 }
 </style>

@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        timeLimit: 10000,
         timeout: false,
         timerMax: 100,
         timerValue: 100,
@@ -193,13 +194,13 @@ export default new Vuex.Store({
                 else{
                     state.timerValue -= 1;
                 }
-            }, 100);
+            }, state.timeLimit/state.timerMax);
         },
         stopTimer(state){
             clearInterval(state.timer);
         },
         resetTimer(state) {
-            state.timerValue = 100;
+            state.timerValue = state.timerMax;
         }
     },
     getters:{
@@ -256,6 +257,9 @@ export default new Vuex.Store({
         },
         getTimeout(state){
             return state.timeout;
+        },
+        getTimeLimit(state){
+            return state.timeLimit;
         }
     }
 })
