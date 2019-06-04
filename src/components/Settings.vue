@@ -54,9 +54,11 @@ export default {
   props: [],
   components: { TableItem },
   methods: {
+    // Back to startpage
     back() {
       this.$router.push({ name: "start" });
     },
+    // Add new question
     add() {
       let newQuestion = {
         question: this.$refs.question.value,
@@ -68,6 +70,7 @@ export default {
       $("#inputQuestion").val('')
       $("#inputAnswer").val('')
     },
+    // Send new question object to api
     addNewQuestionToAPI(item){
       var url = "http://localhost:3000/data/add";
       var json = JSON.stringify(item);
@@ -82,6 +85,7 @@ export default {
       };
       xhr.send(json);
     },
+    // Backup, load data from file, 250 questions
     loadFile() {
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
       var apiUrl = `http://localhost:3000/data/loadFile`;
@@ -102,6 +106,7 @@ export default {
       xhr.responseType = "json";
       xhr.send();
     },
+    // Get all data from api
     getAllDataFromApi() {
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
       var apiUrl = `http://localhost:3000/data`;
@@ -122,6 +127,7 @@ export default {
       xhr.responseType = "json";
       xhr.send();
     },
+    // Remove all questions
     clear() {
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
       var apiUrl = `http://localhost:3000/delete/all`;
@@ -141,6 +147,7 @@ export default {
       xhr.responseType = "json";
       xhr.send();
     },
+    // Add button lystener, activ if all fields not empty
     addBtnListener(){
       $("#addButton").attr("disabled", true);
       $('input').change(function(){
