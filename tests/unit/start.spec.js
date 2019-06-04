@@ -26,13 +26,19 @@ describe('Start.vue', ()=>{
             expect(button.exists()).to.be.true 
         })
 
-        it.skip('start button calls start() on click',()=>{
+        it('start button calls start() on click',()=>{
+            const buttonSpy = sinon.spy(
+                Start.methods,
+                'start'
+            );
+                wrapper.find('button').trigger('click');
+                expect(buttonSpy.calledOnce);
 
+                buttonSpy.restore();
         })
     })
     describe('Input', ()=>{
         
-
         it('renders input', ()=>{
             const input = wrapper.find('input');
             expect(input.exists()).to.be.true 
