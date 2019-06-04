@@ -8,15 +8,26 @@ const sinon = require('sinon');
 
 describe('Start.vue', ()=>{
     
-    
     const wrapper = shallowMount(Start);
+    
     it('Start.vue should be an instance of vue', ()=>{
         expect(wrapper.isVueInstance())
     })
-    describe('Start', ()=>{
         it('name should equal \'start\'', ()=>{
             const name = wrapper.name();
             name.should.equal('start');
 
+    })
+    describe('Start Button', ()=>{
+        
+
+        it('renders start button', ()=>{
+            const button = wrapper.find('button');
+            expect(wrapper.find('button').exists()).to.be.true 
+        })
+
+        it('start button calls start() on click',()=>{
+
+        })
     })
 })
