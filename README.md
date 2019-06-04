@@ -4,11 +4,16 @@
 ```
 npm install
 ```
+### VueJs + API with CRUD to MongoDB Cloud
+```
+Run Game: npm run serve
+Run API: node src/api/api.js
+```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+
+
+
+
 
 ### Compiles and minifies for production
 ```
