@@ -127,7 +127,7 @@ export default {
       xhr.responseType = "json";
       xhr.send();
     },
-    // Remove all questions
+    // Remove all questions from Mongo DB
     clear() {
       var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
       var apiUrl = `http://localhost:3000/delete/all`;
